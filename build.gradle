@@ -1,0 +1,36 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "config.gradle"
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        //gradle支持java8的lambda特性
+        classpath 'me.tatarka:gradle-retrolambda:3.2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1' //适配库支持
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+        classpath 'com.novoda:bintray-release:0.3.4'
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven { url "https://clojars.org/repo/" }
+        maven { // this is for realm-db
+            url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'
+        }
+        maven { url 'https://dl.bintray.com/cjt/maven' }
+        maven { url "http://dl.bintray.com/journeyapps/maven" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,47 @@
+ext {
+
+    android = [
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.2",
+            minSdkVersion    : 19,
+            targetSdkVersion : 19,
+            versionCode      : 3,
+            versionName      : "1.3",
+    ]
+
+
+    dependencies = [
+            "support-v4"            : 'com.android.support:support-v4:25.3.0',
+            "appcompat-v7"          : 'com.android.support:appcompat-v7:25.3.0',
+            "recyclerview-v7"       : 'com.android.support:recyclerview-v7:25.3.0',
+            "design"                : 'com.android.support:design:25.3.0',
+            "animation"             : 'com.android.support:support-dynamic-animation:25.3.0',
+            "logger"                : 'com.github.orhanobut:logger:1.12',
+            "glide"                 : 'com.github.bumptech.glide:glide:3.7.0',
+            "glide-transformations" : 'jp.wasabeef:glide-transformations:2.0.1',
+            "autolayout"            : 'com.zhy:autolayout:1.4.5',
+            // Retrofit网络请求
+            "retrofit"              : 'com.squareup.retrofit2:retrofit:2.1.0',
+            "converter-gson"        : 'com.squareup.retrofit2:converter-gson:2.1.0',
+            "logging-interceptor"   : 'com.squareup.okhttp3:logging-interceptor:3.5.0',
+            // Rx
+            "rxjava"                : 'io.reactivex:rxjava:1.2.3',
+            "rxandroid"             : 'io.reactivex:rxandroid:1.2.1',
+            "rxbinding"             : 'com.jakewharton.rxbinding:rxbinding:0.4.0',
+            "rxbinding-support-v4"  : 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0',
+            "rxlifecycle-components": 'com.trello:rxlifecycle-components:1.0',
+            "adapter-rxjava"        : 'com.squareup.retrofit2:adapter-rxjava:2.1.0',
+
+            "nucleus"               : 'info.android15.nucleus:nucleus:4.0.0',
+            "icepick"               : 'frankiesardo:icepick:3.2.0',
+            "icepick-processor"     : 'frankiesardo:icepick-processor:3.2.0',
+            "eventbus"              : 'org.greenrobot:eventbus:3.0.0',
+            "okhttputils"           : 'com.zhy:okhttputils:2.6.2',
+            "materialish-progress"  : 'com.pnikosis:materialish-progress:1.7',
+            "ultra-ptr"             : 'in.srain.cube:ultra-ptr:1.0.11',
+            "disklrucache"          : 'com.jakewharton:disklrucache:2.0.2',
+            "photoview"             : 'com.github.chrisbanes.photoview:library:1.2.4',
+            "bugly"                 : 'com.tencent.bugly:crashreport:latest.release',    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
+
+    ]
+}

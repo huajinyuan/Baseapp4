@@ -1,16 +1,17 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 //apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 def dbflow_version = "4.0.0-beta7"
 apply plugin: 'android-apt'
+apply plugin: 'com.jakewharton.butterknife'
 
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
-        applicationId "com.zt.baseapp"
+//        applicationId "com.zt.baseapp"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -86,6 +87,9 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
+
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 
 

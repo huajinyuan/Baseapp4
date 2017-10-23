@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cj</string>
+    <string name="app_name">抽奖</string>
 
     <string name="load_system_busy">系统现在有点忙</string>
     <string name="load_no_network">网络没连上哦</string>

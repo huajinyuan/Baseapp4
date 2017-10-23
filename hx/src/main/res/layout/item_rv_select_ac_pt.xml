@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="101dp"
+    android:background="@color/color_backGrey"
+    android:paddingLeft="11dp"
+    android:paddingTop="11dp"
+    android:paddingRight="11dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_radius5_white">
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="61dp"
+            android:layout_height="61dp"
+            android:layout_marginLeft="11dp"
+            android:scaleType="centerCrop"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="13dp">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张滨华"
+                android:textColor="@color/color_black"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+            <TextView
+                android:id="@+id/tv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="剩余100"
+                android:layout_marginTop="4dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cb_staff"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="11dp"
+            android:button="@null"
+            android:clickable="false"
+            android:background="@drawable/selector_cb"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"/>
+    </LinearLayout>
+
+</RelativeLayout>
+

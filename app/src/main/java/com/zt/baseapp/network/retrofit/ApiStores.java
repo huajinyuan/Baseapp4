@@ -53,6 +53,18 @@ public interface ApiStores {
     @POST("api/pt/ptActivityStaff/submit")
     Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("activityIds") String activityIds, @Query("userId") int userId);
 
+    //活动停用/作废 2停用 3作废
+    @POST("api/pt/ptActivities/state")
+    Observable<Response> changeAcStatus(@Header("authorization") String authorization, @Query("actId") String actId, @Query("status") int status);
+
+    //活动报表-0全部 1本日 2本月 3本年
+    @GET("api/pt/ptActivities/report")
+    Observable<Response<ArrayList<Activity_pt>>> getAcReport_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+
+    //员工排行-0全部 1本日 2本月 3本年
+    @GET("api/pt/ptActivities/report/staffRanking")
+    Observable<Response<ArrayList<Staff_pt>>> getStaffRanking_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+
     @GET("/api/pt/ptOrderDetail/exChangeRecord")
     Observable<Response<LoginData_pt>> exChangeRecord(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("authorization")String authorization);
 

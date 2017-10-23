@@ -1,4 +1,4 @@
-package com.zt.baseapp.pt.ac_ptList.adapter;
+package com.zt.baseapp.pt.ac_ptbb.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 /**
  * Created by  on 2016/9/2.
  */
-public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.AnchorHotViewHolder> {
+public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHotViewHolder> {
     private ArrayList<Activity_pt> data;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public AcListAdapter_pt(Context mContext, ArrayList<Activity_pt> mData) {
+    public AcBbAdapter_pt(Context mContext, ArrayList<Activity_pt> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -33,7 +33,7 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_staff_detail_pt,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_bb_pt,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
@@ -43,17 +43,15 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
         Activity_pt activity_pt = data.get(position);
 
         holder.tv_name.setText(activity_pt.name);
-        holder.tv_money.setText("￥" + activity_pt.ptGood.price);
-        holder.tv_peopleNum.setText(activity_pt.num + "");
-        holder.tv_acNum.setText(activity_pt.saleNum);
-        holder.tv_ac_status.setText(getStatus(activity_pt.status));
+        holder.tv_money.setText(activity_pt.drivingTurnover);
+        holder.tv_totalNum.setText(activity_pt.groupSize);
+        holder.tv_succeed.setText(activity_pt.cliqueNumber);
+        holder.tv_inProgress.setText(activity_pt.spellTogether);
 
-        UiUtil.setImage(holder.iv_ac, activity_pt.imgUrl);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.tv_staffRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, AcInfoActivity_pt.class).putExtra("ac",activity_pt));
+
             }
         });
     }
@@ -70,21 +68,21 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
     }
 
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_ac;
-        TextView tv_ac_status;
         TextView tv_name;
         TextView tv_money;
-        TextView tv_peopleNum;
-        TextView tv_acNum;
+        TextView tv_totalNum;
+        TextView tv_succeed;
+        TextView tv_inProgress;
+        TextView tv_staffRanking;
 
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
-            iv_ac = (ImageView) itemView.findViewById(R.id.iv_ac);
-            tv_ac_status = (TextView) itemView.findViewById(R.id.tv_ac_status);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_money = (TextView) itemView.findViewById(R.id.tv_money);
-            tv_peopleNum = (TextView) itemView.findViewById(R.id.tv_peopleNum);
-            tv_acNum = (TextView) itemView.findViewById(R.id.tv_acNum);
+            tv_totalNum = (TextView) itemView.findViewById(R.id.tv_totalNum);
+            tv_succeed = (TextView) itemView.findViewById(R.id.tv_succeed);
+            tv_inProgress = (TextView) itemView.findViewById(R.id.tv_inProgress);
+            tv_staffRanking = (TextView) itemView.findViewById(R.id.tv_staffRanking);
         }
     }
 

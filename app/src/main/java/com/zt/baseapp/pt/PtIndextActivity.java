@@ -11,11 +11,11 @@ import com.zt.baseapp.R;
 import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
+import com.zt.baseapp.pt.ac_ptbb.AcBbActivity_pt;
 import com.zt.baseapp.pt.m.LoginData_pt;
 import com.zt.baseapp.pt.m.PtReport_pt;
 import com.zt.baseapp.pt.ac_memberget.MemberGetActivity;
-import com.zt.baseapp.pt.ac_ptbb.BbActivityActivity;
-import com.zt.baseapp.pt.ac_ptbb.MemberListActivity;
+import com.zt.baseapp.pt.ac_ptbb.StaffRankingActivity_pt;
 import com.zt.baseapp.pt.ac_ptbb.PdListActivity;
 import com.zt.baseapp.pt.ac_ptList.AcListActivity_pt;
 import com.zt.baseapp.pt.ac_staffSend.StaffSendActivity_pt;
@@ -102,7 +102,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
         findViewById(R.id.ll_pt_acList).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, BbActivityActivity.class));
+                context.startActivity(new Intent(context, AcBbActivity_pt.class));
             }
         });
         findViewById(R.id.ll_pt_ptHistory).setOnClickListener(new View.OnClickListener() {
@@ -114,7 +114,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
         findViewById(R.id.ll_pt_staffRanking).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, MemberListActivity.class));
+                context.startActivity(new Intent(context, StaffRankingActivity_pt.class));
             }
         });
         findViewById(R.id.ll_pt_pt_ac).setOnClickListener(new View.OnClickListener() {
@@ -184,8 +184,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
         });
     }
     void getReport(int status){
-        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
-
+        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_pt(token, status), new Subscriber<Response<PtReport_pt>>() {
             @Override
             public void onStart() {
                 super.onStart();

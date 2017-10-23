@@ -52,8 +52,8 @@
         <activity android:name=".rxpicture.ui.RxCropActivity" />
 
         <!--拼团-->
-        <activity android:name=".pt.ac_ptbb.BbActivityActivity" />
-        <activity android:name=".pt.ac_ptbb.MemberListActivity" />
+        <activity android:name=".pt.ac_ptbb.AcBbActivity_pt" />
+        <activity android:name=".pt.ac_ptbb.StaffRankingActivity_pt" />
         <activity android:name=".pt.ac_memberget.MemberGetActivity" />
         <activity android:name=".pt.ac_memberget.MemberGetListActivity" />
         <activity android:name=".pt.ac_ptbb.PdListActivity" />

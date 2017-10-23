@@ -59,7 +59,7 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
 //        findViewById(R.id.ll_pt_acList).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                context.startActivity(new Intent(context, BbActivityActivity.class));
+//                context.startActivity(new Intent(context, AcBbActivity_pt.class));
 //            }
 //        });
     }

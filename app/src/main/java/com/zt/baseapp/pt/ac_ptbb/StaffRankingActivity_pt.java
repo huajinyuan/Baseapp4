@@ -1,4 +1,4 @@
-package com.zt.baseapp.pt.ac_ptList;
+package com.zt.baseapp.pt.ac_ptbb;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,20 +12,19 @@ import com.zt.baseapp.R;
 import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
-import com.zt.baseapp.pt.ac_ptList.adapter.AcListAdapter_pt;
+import com.zt.baseapp.pt.ac_ptbb.adapter.AcBbAdapter_pt;
+import com.zt.baseapp.pt.ac_ptbb.adapter.StaffRankingAdapter_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
-import com.zt.baseapp.pt.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
+import com.zt.baseapp.pt.ac_staffSend.m.Staff_pt;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
 
 import java.util.ArrayList;
 
-import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
 
-@RequiresPresenter(AcListPresenter_pt.class)
-public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
+public class StaffRankingActivity_pt extends BaseActivity<StaffRankingPresenter_pt> {
     Context context;
     ACache aCache;
     public String token;
@@ -37,7 +36,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_ac_list_pt;
+        return R.layout.activity_staff_ranking_pt;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动列表");
+        tv_topbar_title.setText("活动报表");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.VISIBLE);
@@ -56,16 +55,17 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
     }
 
-    @Override
-    protected void initData() {
-        token = aCache.getAsString(ACacheKey.TOKEN);
-    }
-
-    void setRv(ArrayList<Activity_pt> activity_pts) {
-        AcListAdapter_pt adapter = new AcListAdapter_pt(context, activity_pts);
+    void setRv(ArrayList<Staff_pt> staff_pts) {
+        StaffRankingAdapter_pt adapter = new StaffRankingAdapter_pt(context, staff_pts);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rv_staffSend.setLayoutManager(layoutManager);
         rv_staffSend.setAdapter(adapter);
+    }
+
+    @Override
+    protected void initData() {
+        token = aCache.getAsString(ACacheKey.TOKEN);
+        getData();
     }
 
     @Override
@@ -82,16 +82,10 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
 
             }
         });
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_pt(token, 1, 100, 0), new Subscriber<Response<ArrayList<Activity_pt>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffRanking_pt(token, 1, 100, 0), new Subscriber<Response<ArrayList<Staff_pt>>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -103,15 +97,10 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
             }
 
             @Override
-            public void onNext(Response<ArrayList<Activity_pt>> arrayListResponse) {
+            public void onNext(Response<ArrayList<Staff_pt>> arrayListResponse) {
                 setRv(arrayListResponse.data);
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getData();
-    }
 }

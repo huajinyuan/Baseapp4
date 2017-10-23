@@ -13,4 +13,10 @@ public class Staff_pt {
     public String admin;
     public String roleNames;
     public String storeName;
+
+    public String groupSize;
+    public String cliqueNumber;
+    public String drivingTurnover;
+    public String loginName;
+
 }

@@ -44,7 +44,7 @@ public class PdListPresenter extends BasePresenter<PdListActivity> {
                 getView().finish();
                 break;
             case R.id.tv_action_aclist:
-                intent = new Intent(mContext, BbActivityActivity.class);
+                intent = new Intent(mContext, AcBbActivity_pt.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_ptlist:
@@ -52,7 +52,7 @@ public class PdListPresenter extends BasePresenter<PdListActivity> {
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberlist:
-                intent = new Intent(mContext, MemberListActivity.class);
+                intent = new Intent(mContext, StaffRankingActivity_pt.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_pt_ac:

@@ -1,4 +1,4 @@
-package com.zt.baseapp.pt.adapter;
+package com.zt.baseapp.pt.ac_ptbb.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,12 +13,12 @@ import com.zt.baseapp.R;
  * Created by gtgs on 17/10/8.
  */
 
-public class MemberlistAdapter extends BaseAdapter {
+public class PdlistAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 //    ArrayList<String>
 
-    public MemberlistAdapter(Context context) {
+    public PdlistAdapter(Context context) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
     }
@@ -41,7 +41,8 @@ public class MemberlistAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        View v = inflater.inflate(R.layout.layout_member_list, null);
+        View v = inflater.inflate(R.layout.layout_ptlist_item, null);
         return v;
     }
+
 }

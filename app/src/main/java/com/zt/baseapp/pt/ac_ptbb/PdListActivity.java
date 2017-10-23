@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.zt.baseapp.R;
 import com.zt.baseapp.module.base.BaseActivity;
-import com.zt.baseapp.pt.adapter.PdlistAdapter;
+import com.zt.baseapp.pt.ac_ptbb.adapter.PdlistAdapter;
 
 
 public class PdListActivity extends BaseActivity<PdListPresenter> {

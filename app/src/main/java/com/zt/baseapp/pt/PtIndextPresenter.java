@@ -1,23 +1,17 @@
 package com.zt.baseapp.pt;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 
-import com.zt.baseapp.R;
 import com.zt.baseapp.di.BaseAppManager;
-import com.zt.baseapp.di.EnumFile;
+import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BasePresenter;
-import com.zt.baseapp.pt.memberget.MemberGetActivity;
-import com.zt.baseapp.pt.ptbb.BbActivityActivity;
-import com.zt.baseapp.pt.ptbb.MemberListActivity;
-import com.zt.baseapp.pt.ptbb.PdListActivity;
-import com.zt.baseapp.pt.ptsetting.AcListActivity;
-import com.zt.baseapp.rxpicture.ui.RxCropActivity;
-import com.zt.baseapp.utils.TimeUtils;
+import com.zt.baseapp.network.retrofit.HttpMethods;
+import com.zt.baseapp.pt.m.LoginData_pt;
+import com.zt.baseapp.pt.m.PtReport_pt;
+import com.zt.baseapp.utils.ACacheKey;
 
-import java.io.File;
+import rx.Subscriber;
 
 
 /**
@@ -25,62 +19,76 @@ import java.io.File;
  */
 
 public class PtIndextPresenter extends BasePresenter<PtIndextActivity> {
-    //    @Inject
-//    @Named(EnumFile.CACHE)
-//    public File mCacheFile;
-//    private Unbinder unbinder;
-//    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedState) {
         super.onCreate(savedState);
         BaseAppManager.getInstance().inject(this);
-//        unbinder = ButterKnife.bind(getView());
-//        mContext = getView().getBaseContext();
+        Log.e("aaa", "Presenter onCreate");
     }
 
-//    public String getFilePath() {
-//        String fileName = "scv" + TimeUtils.getNowTimeString("yyyyMMdd_HHmmss") + ".jpeg";
-//        return new File(mCacheFile, fileName).getAbsolutePath();
+//    void login(){
+//        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
+//
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//                Log.e("=============", "onStart");
+//            }
+//
+//            @Override
+//            public void onCompleted() {
+//                Log.e("=============", "onCompleted");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("=======onError", e.toString() + "");
+//            }
+//
+//            @Override
+//            public void onNext(Response<LoginData_pt> logdResponse) {
+//                if (logdResponse.code==0){
+//                    getView().aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
+//                    getView().token = logdResponse.data.getToken();
+//                    Log.e("aaa========Token:", getView().token);
+//                    getReport_pt(0);
+//
+//                }else {
+//                    Log.e("=======onNext", logdResponse.msg);
+//                }
+//            }
+//        });
+//    }
+//    void getReport_pt(int status){
+//        HttpMethods.getInstance().getReport_pt(getView().token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+//
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//                Log.e("aaa", "onStart");
+//            }
+//
+//            @Override
+//            public void onCompleted() {
+//                Log.e("aaa", "onCompleted");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("aaa======onError", e.toString() + "");
+//            }
+//
+//            @Override
+//            public void onNext(Response<PtReport_pt> response) {
+//                if (response.code == 0) {
+//                    getView().setReport(response.data);
+//                    Log.e("aaa======onNext", response.data.toString());
+//                } else {
+//                    Log.e("aaa======onNext", response.msg);
+//                }
+//            }
+//        });
 //    }
 
-
-   /* @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-    @OnClick({R.id.img_topbar_back, R.id.tv_action_aclist, R.id.tv_action_ptlist, R.id.tv_action_memberlist, R.id.tv_action_pt_ac, R.id.tv_action_memberget})
-    public void Onclick(View v) {
-        Intent intent;
-        switch (v.getId()) {
-            case R.id.img_topbar_back:
-                getView().finish();
-                break;
-            case R.id.tv_action_aclist:
-                intent = new Intent(mContext, BbActivityActivity.class);
-                mContext.startActivity(intent);
-                break;
-            case R.id.tv_action_ptlist:
-                intent = new Intent(mContext, PdListActivity.class);
-                mContext.startActivity(intent);
-                break;
-            case R.id.tv_action_memberlist:
-                intent = new Intent(mContext, MemberListActivity.class);
-                mContext.startActivity(intent);
-                break;
-            case R.id.tv_action_pt_ac:
-                intent = new Intent(mContext, AcListActivity.class);
-                mContext.startActivity(intent);
-                break;
-            case R.id.tv_action_memberget:
-                intent = new Intent(mContext, MemberGetActivity.class);
-                mContext.startActivity(intent);
-                break;
-
-        }
-
-
-    }*/
 }

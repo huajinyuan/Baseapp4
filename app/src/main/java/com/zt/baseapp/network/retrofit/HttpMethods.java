@@ -3,10 +3,12 @@ package com.zt.baseapp.network.retrofit;
 import android.util.Log;
 
 import com.zt.baseapp.model.Response;
-import com.zt.baseapp.network.ComposeData;
 import com.zt.baseapp.network.ComposeResponseData;
-import com.zt.baseapp.network.exception.ErrorThrowable;
-import com.zt.baseapp.pt.model.Logd;
+import com.zt.baseapp.pt.m.LoginData_pt;
+import com.zt.baseapp.pt.m.PtReport_pt;
+import com.zt.baseapp.pt.ac_staffSend.m.StaffSend_pt;
+
+import java.util.ArrayList;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -26,7 +28,7 @@ public class HttpMethods {
     private static final int DEFAULT_TIMEOUT = 5;
 
     private Retrofit retrofit;
-    private ApiStores demoService;
+    public ApiStores demoService;
 
     //构造方法私有
     private HttpMethods() {
@@ -48,22 +50,6 @@ public class HttpMethods {
         return SingletonHolder.INSTANCE;
     }
 
-    public Observable<Response<Logd>> login2(String username, String password) {
-        return demoService.doLogin(username, password)
-                .compose(new ComposeResponseData<Response<Logd>>());
-
-    }
-
-
-    public Observable<Logd> login(String username, String password) {
-        return demoService.doLogin(username, password)
-                .map(new ServerResultFunc<Logd>())
-                .onErrorResumeNext(new HttpResultFunc<Logd>())
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
     private class ServerResultFunc<T> implements Func1<Response<T>, T> {
         @Override
         public T call(Response<T> httpResult) {
@@ -83,6 +69,43 @@ public class HttpMethods {
 //            return Observable.error(ExceptionEngine.handleException(throwable));
             return Observable.error(throwable);
         }
+    }
+
+//    public Observable<LoginData_pt> login(String username, String password) {
+//        return demoService.doLogin_pt(username, password)
+//                .map(new ServerResultFunc<LoginData_pt>())
+//                .onErrorResumeNext(new HttpResultFunc<LoginData_pt>())
+//                .subscribeOn(Schedulers.io())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+//    }
+
+    public static void start(Observable observable, Subscriber subscriber) {
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+    public Observable<Response<LoginData_pt>> login(String username, String password) {
+        return demoService.doLogin_pt(username, password)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<LoginData_pt>> login2(String username, String password) {
+        return demoService.doLogin_pt(username, password)
+                .compose(new ComposeResponseData<Response<LoginData_pt>>());
+    }
+
+    public Observable<Response<PtReport_pt>> getReport(String authorization, int status) {
+        return demoService.getReport_pt(authorization, status)
+                .compose(new ComposeResponseData<Response<PtReport_pt>>());
+    }
+
+    public Observable<Response<ArrayList<StaffSend_pt>>> getStaffSends(String authorization, int pageNo, int pageSize) {
+        return demoService.getStaffSends_pt(authorization, pageNo, pageSize)
+                .compose(new ComposeResponseData<Response<ArrayList<StaffSend_pt>>>());
     }
 
 

@@ -6,13 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zt.baseapp.R;
-import com.zt.baseapp.pt.ac_ptList.AcInfoActivity_pt;
+import com.zt.baseapp.pt.ac_ptbb.PdListActivity_pt;
+import com.zt.baseapp.pt.ac_ptbb.PtListActivity_pt;
+import com.zt.baseapp.pt.ac_ptbb.StaffRankingActivity_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
-import com.zt.baseapp.utils.UiUtil;
 
 import java.util.ArrayList;
 
@@ -43,15 +44,39 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
         Activity_pt activity_pt = data.get(position);
 
         holder.tv_name.setText(activity_pt.name);
-        holder.tv_money.setText(activity_pt.drivingTurnover);
-        holder.tv_totalNum.setText(activity_pt.groupSize);
-        holder.tv_succeed.setText(activity_pt.cliqueNumber);
-        holder.tv_inProgress.setText(activity_pt.spellTogether);
+        holder.tv_money.setText(activity_pt.drivingTurnover + "");
+        holder.tv_totalNum.setText(activity_pt.groupSize + "");
+        holder.tv_succeed.setText(activity_pt.cliqueNumber + "");
+        holder.tv_inProgress.setText(activity_pt.spellTogether + "");
 
         holder.tv_staffRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                context.startActivity(new Intent(context, StaffRankingActivity_pt.class).putExtra("actId", activity_pt.id));
+            }
+        });
+        holder.ll_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PdListActivity_pt.class));
+            }
+        });
+        holder.ll_ptNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PdListActivity_pt.class));
+            }
+        });
+        holder.ll_succeedNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PtListActivity_pt.class));
+            }
+        });
+        holder.ll_inProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PtListActivity_pt.class));
             }
         });
     }
@@ -75,6 +100,11 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
         TextView tv_inProgress;
         TextView tv_staffRanking;
 
+        LinearLayout ll_money;
+        LinearLayout ll_ptNum;
+        LinearLayout ll_succeedNum;
+        LinearLayout ll_inProgress;
+
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
@@ -83,6 +113,11 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
             tv_succeed = (TextView) itemView.findViewById(R.id.tv_succeed);
             tv_inProgress = (TextView) itemView.findViewById(R.id.tv_inProgress);
             tv_staffRanking = (TextView) itemView.findViewById(R.id.tv_staffRanking);
+
+            ll_money = (LinearLayout) itemView.findViewById(R.id.ll_money);
+            ll_ptNum = (LinearLayout) itemView.findViewById(R.id.ll_ptNum);
+            ll_succeedNum = (LinearLayout) itemView.findViewById(R.id.ll_succeedNum);
+            ll_inProgress = (LinearLayout) itemView.findViewById(R.id.ll_inProgress);
         }
     }
 

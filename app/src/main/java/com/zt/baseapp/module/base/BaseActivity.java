@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import com.zt.baseapp.module.dialog.ProgressDialog;
 import com.zt.baseapp.module.titlebar.BaseTitleBar;
 import com.zt.baseapp.module.titlebar.TitleBarBuilder;
 import com.zt.baseapp.network.exception.ErrorThrowable;
+import com.zt.baseapp.utils.BarUtils;
 import com.zt.baseapp.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -54,6 +56,7 @@ public abstract class BaseActivity<P extends Presenter> extends BaseAutoLayoutAc
         mBaseTitleBar.attach(this, titleBarBuild);
         contentView = LayoutInflater.from(this).inflate(getLayoutId(), null);
         setContentView(contentView);
+        BarUtils.setColor(this, ContextCompat.getColor(this, R.color.color_appBlue), 0);
         initView();
         initData();
         setListener();

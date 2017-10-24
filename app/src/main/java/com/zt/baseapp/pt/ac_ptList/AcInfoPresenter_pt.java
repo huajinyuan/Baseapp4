@@ -48,7 +48,7 @@ public class AcInfoPresenter_pt extends BasePresenter<AcInfoActivity_pt> {
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_ptlist:
-                intent = new Intent(mContext, PdListActivity.class);
+                intent = new Intent(mContext, PtListActivity_pt.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberlist:

@@ -60,7 +60,7 @@
             android:layout_width="68dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="9dp"
-            android:background="@drawable/shape_radius5_red"
+            android:background="@drawable/shape_radius5_appred"
             android:text="删除"
             android:textColor="@color/color_white"
             android:textSize="15sp"

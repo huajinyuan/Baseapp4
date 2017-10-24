@@ -1,4 +1,4 @@
-package com.zt.baseapp.pt.ac_memberget;
+package com.zt.baseapp.pt.ac_ptbb;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import com.zt.baseapp.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class MemberGetListPresenter extends BasePresenter<MemberGetListActivity> {
+public class PtListPresenter_pt extends BasePresenter<PtListActivity_pt> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;

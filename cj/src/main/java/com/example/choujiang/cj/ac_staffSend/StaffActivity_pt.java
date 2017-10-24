@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_staffSend.adapter.StaffAdapter_pt;
 import com.example.choujiang.cj.ac_staffSend.m.Staff_pt;
@@ -51,7 +50,6 @@ public class StaffActivity_pt extends BaseActivity<StaffPresenter_pt> {
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
-
     }
 
     @Override

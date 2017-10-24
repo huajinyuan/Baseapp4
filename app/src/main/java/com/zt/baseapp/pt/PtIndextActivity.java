@@ -16,7 +16,7 @@ import com.zt.baseapp.pt.m.LoginData_pt;
 import com.zt.baseapp.pt.m.PtReport_pt;
 import com.zt.baseapp.pt.ac_memberget.MemberGetActivity;
 import com.zt.baseapp.pt.ac_ptbb.StaffRankingActivity_pt;
-import com.zt.baseapp.pt.ac_ptbb.PdListActivity;
+import com.zt.baseapp.pt.ac_ptbb.PtListActivity_pt;
 import com.zt.baseapp.pt.ac_ptList.AcListActivity_pt;
 import com.zt.baseapp.pt.ac_staffSend.StaffSendActivity_pt;
 import com.zt.baseapp.pt.ac_withdrawSetting.SettingActivity_pt;
@@ -108,7 +108,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
         findViewById(R.id.ll_pt_ptHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, PdListActivity.class));
+                context.startActivity(new Intent(context, PtListActivity_pt.class));
             }
         });
         findViewById(R.id.ll_pt_staffRanking).setOnClickListener(new View.OnClickListener() {

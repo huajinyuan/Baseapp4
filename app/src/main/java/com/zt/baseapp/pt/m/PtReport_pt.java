@@ -9,40 +9,40 @@ import java.io.Serializable;
  */
 
 public class PtReport_pt extends BaseInfo implements Serializable {
-    private String cliqueNumber;
-    private String groupSize;
-    private String spellTogether;
-    private String drivingTurnover;
+    private int cliqueNumber;
+    private int groupSize;
+    private int spellTogether;
+    private double drivingTurnover;
 
-    public String getCliqueNumber() {
+    public int getCliqueNumber() {
         return cliqueNumber;
     }
 
-    public void setCliqueNumber(String cliqueNumber) {
+    public void setCliqueNumber(int cliqueNumber) {
         this.cliqueNumber = cliqueNumber;
     }
 
-    public String getGroupSize() {
+    public int getGroupSize() {
         return groupSize;
     }
 
-    public void setGroupSize(String groupSize) {
+    public void setGroupSize(int groupSize) {
         this.groupSize = groupSize;
     }
 
-    public String getSpellTogether() {
+    public int getSpellTogether() {
         return spellTogether;
     }
 
-    public void setSpellTogether(String spellTogether) {
+    public void setSpellTogether(int spellTogether) {
         this.spellTogether = spellTogether;
     }
 
-    public String getDrivingTurnover() {
+    public double getDrivingTurnover() {
         return drivingTurnover;
     }
 
-    public void setDrivingTurnover(String drivingTurnover) {
+    public void setDrivingTurnover(double drivingTurnover) {
         this.drivingTurnover = drivingTurnover;
     }
 

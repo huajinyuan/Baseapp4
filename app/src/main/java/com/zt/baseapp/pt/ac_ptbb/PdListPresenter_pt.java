@@ -9,7 +9,7 @@ import com.zt.baseapp.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class PdListPresenter extends BasePresenter<PdListActivity> {
+public class PdListPresenter_pt extends BasePresenter<PdListActivity_pt> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;
@@ -48,7 +48,7 @@ public class PdListPresenter extends BasePresenter<PdListActivity> {
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_ptlist:
-                intent = new Intent(mContext, PdListActivity.class);
+                intent = new Intent(mContext, PtListActivity_pt.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberlist:

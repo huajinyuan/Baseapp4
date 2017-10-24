@@ -56,7 +56,8 @@
         <activity android:name=".pt.ac_ptbb.StaffRankingActivity_pt" />
         <activity android:name=".pt.ac_memberget.MemberGetActivity" />
         <activity android:name=".pt.ac_memberget.MemberGetListActivity" />
-        <activity android:name=".pt.ac_ptbb.PdListActivity" />
+        <activity android:name=".pt.ac_ptbb.PtListActivity_pt" />
+        <activity android:name=".pt.ac_ptbb.PdListActivity_pt" />
         <activity android:name=".pt.ac_ptList.AcInfoActivity_pt" />
         <activity android:name=".pt.ac_ptList.AcListActivity_pt" />
         <activity android:name=".pt.ac_staffSend.AddShopActivity_pt" />

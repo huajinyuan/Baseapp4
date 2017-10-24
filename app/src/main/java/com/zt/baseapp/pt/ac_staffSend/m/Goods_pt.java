@@ -11,7 +11,7 @@ public class Goods_pt implements Serializable{
     public String isNewRecord;
     public String name;
     public String originalPrice;
-    public String price;
+    public double price;
     public int count;
     public String videoUrl;
     public String imgUrl;

@@ -19,7 +19,7 @@ import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
 @RequiresPresenter(AcListPresenter_pt.class)
-public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
+public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
     Context context;
     ACache aCache;
     public String token;
@@ -43,7 +43,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_ac_info_pt;
+        return R.layout.activity_create_ac_pt;
     }
 
     @Override

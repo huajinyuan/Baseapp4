@@ -41,6 +41,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_money"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
@@ -66,6 +67,7 @@
             android:layout_marginTop="@dimen/dp_8"
             android:orientation="horizontal">
             <LinearLayout
+                android:id="@+id/ll_ptNum"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -87,6 +89,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_succeedNum"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_8"
@@ -110,6 +113,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_inProgress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_8"

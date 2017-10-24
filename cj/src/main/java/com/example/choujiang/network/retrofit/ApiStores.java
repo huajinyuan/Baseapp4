@@ -29,7 +29,7 @@ public interface ApiStores {
     @DELETE("api/common/tokens")
     Observable<Response<LoginData_pt>> doLogout(@Query("authorization") String authorization);
 
-    //拼团汇总报表
+    //抽奖汇总报表
     @GET("api/pt/report/total/report")
     Observable<Response<PtReport_pt>> getReport_pt(@Header("authorization") String authorization, @Query("status") int status);
 

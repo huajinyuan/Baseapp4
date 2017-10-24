@@ -2,6 +2,8 @@ package com.zt.baseapp.network.retrofit;
 
 
 import com.zt.baseapp.model.Response;
+import com.zt.baseapp.pt.ac_ptbb.m.PinDan_pt;
+import com.zt.baseapp.pt.ac_ptbb.m.PinTuan_pt;
 import com.zt.baseapp.pt.m.LoginData_pt;
 import com.zt.baseapp.pt.m.PtReport_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
@@ -64,6 +66,16 @@ public interface ApiStores {
     //员工排行-0全部 1本日 2本月 3本年
     @GET("api/pt/ptActivities/report/staffRanking")
     Observable<Response<ArrayList<Staff_pt>>> getStaffRanking_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+    @GET("api/pt/ptActivities/report/staffRanking")
+    Observable<Response<ArrayList<Staff_pt>>> getStaffRanking_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("actId") String actId);
+
+    //拼团记录 0全部 1待成团 2已成团 3拼团失败
+    @GET("api/pt/ptAppGroupOrder/list")
+    Observable<Response<ArrayList<PinTuan_pt>>> getPtList_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+
+    //拼单记录 0全部 1待成团 2已成团 3拼团失败 4退款
+    @GET("api/pt/ptAppGroupOrder/order/list")
+    Observable<Response<ArrayList<PinDan_pt>>> getPdList_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
     @GET("/api/pt/ptOrderDetail/exChangeRecord")
     Observable<Response<LoginData_pt>> exChangeRecord(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("authorization")String authorization);

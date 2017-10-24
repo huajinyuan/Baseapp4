@@ -29,8 +29,8 @@ public class Activity_pt implements Serializable {
     public String status;
     public Goods_pt ptGood;
 
-    public String drivingTurnover;
-    public String groupSize;
-    public String cliqueNumber;
-    public String spellTogether;
+    public double drivingTurnover;
+    public int groupSize;
+    public int cliqueNumber;
+    public int spellTogether;
 }

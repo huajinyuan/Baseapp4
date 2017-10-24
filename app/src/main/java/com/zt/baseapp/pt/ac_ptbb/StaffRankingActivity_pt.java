@@ -12,9 +12,7 @@ import com.zt.baseapp.R;
 import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
-import com.zt.baseapp.pt.ac_ptbb.adapter.AcBbAdapter_pt;
 import com.zt.baseapp.pt.ac_ptbb.adapter.StaffRankingAdapter_pt;
-import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Staff_pt;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
@@ -32,6 +30,7 @@ public class StaffRankingActivity_pt extends BaseActivity<StaffRankingPresenter_
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
 
+    String actId;
     RecyclerView rv_staffSend;
 
     @Override
@@ -65,6 +64,7 @@ public class StaffRankingActivity_pt extends BaseActivity<StaffRankingPresenter_
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
+        actId = getIntent().getStringExtra("actId");
         getData();
     }
 
@@ -85,22 +85,45 @@ public class StaffRankingActivity_pt extends BaseActivity<StaffRankingPresenter_
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffRanking_pt(token, 1, 100, 0), new Subscriber<Response<ArrayList<Staff_pt>>>() {
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
+        if (actId == null) {
+            HttpMethods.start(HttpMethods.getInstance().demoService.getStaffRanking_pt(token, 1, 100, 0), new Subscriber<Response<ArrayList<Staff_pt>>>() {
+                @Override
+                public void onCompleted() {
+                    Log.e("aaa", "onCompleted");
+                }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
-            }
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("aaa", "onError" + e.getMessage());
+                }
 
-            @Override
-            public void onNext(Response<ArrayList<Staff_pt>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-            }
-        });
+                @Override
+                public void onNext(Response<ArrayList<Staff_pt>> arrayListResponse) {
+                    if (arrayListResponse.data != null) {
+                        setRv(arrayListResponse.data);
+                    }
+                }
+            });
+        } else {
+            HttpMethods.start(HttpMethods.getInstance().demoService.getStaffRanking_pt(token, 1, 100, 0, actId), new Subscriber<Response<ArrayList<Staff_pt>>>() {
+                @Override
+                public void onCompleted() {
+                    Log.e("aaa", "onCompleted");
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("aaa", "onError" + e.getMessage());
+                }
+
+                @Override
+                public void onNext(Response<ArrayList<Staff_pt>> arrayListResponse) {
+                    if (arrayListResponse.data != null) {
+                        setRv(arrayListResponse.data);
+                    }
+                }
+            });
+        }
     }
 
 }

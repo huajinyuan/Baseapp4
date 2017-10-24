@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color_backGrey">
 
-    <include layout="@layout/layout_com_topbar" />
+    <include layout="@layout/layout_topbar_pt" />
 
-    <ListView
-        android:id="@+id/lv_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_staffSend"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

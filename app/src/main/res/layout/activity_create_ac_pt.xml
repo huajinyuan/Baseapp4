@@ -16,10 +16,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
+            <com.zt.baseapp.pt.widget.CarouselView.CarouselView
+                android:id="@+id/cv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_300"
-                android:background="@color/color_line" />
+                android:layout_height="wrap_content">
+            </com.zt.baseapp.pt.widget.CarouselView.CarouselView>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.zt.baseapp.R;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.utils.ACache;
-import com.zt.baseapp.utils.AppContext;
 
 import nucleus.factory.RequiresPresenter;
 
@@ -30,7 +29,6 @@ public class AddStaffActivity_pt extends BaseActivity<AddStaffPresenter_pt> {
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);

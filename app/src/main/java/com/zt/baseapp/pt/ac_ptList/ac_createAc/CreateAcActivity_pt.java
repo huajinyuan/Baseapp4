@@ -1,7 +1,9 @@
-package com.zt.baseapp.pt.ac_ptList;
+package com.zt.baseapp.pt.ac_ptList.ac_createAc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,15 +13,21 @@ import com.zt.baseapp.R;
 import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
+import com.zt.baseapp.pt.ac_ptList.AcInfoPresenter_pt;
+import com.zt.baseapp.pt.ac_ptList.AcListPresenter_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
+import com.zt.baseapp.pt.widget.CarouselView.CarouselView;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
+import com.zt.baseapp.utils.ScreenUtils;
+import com.zt.baseapp.utils.UiUtil;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
 @RequiresPresenter(AcListPresenter_pt.class)
 public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
+    public static CreateAcActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -40,6 +48,7 @@ public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
     TextView tv_tip;
     TextView tv_stop;
     TextView tv_abandon;
+    CarouselView cv;
 
     @Override
     protected int getLayoutId() {
@@ -48,13 +57,14 @@ public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动详情");
-        tv_topbar_right.setVisibility(View.VISIBLE);
+        tv_topbar_title.setText("新增活动");
+        tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("编辑");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
@@ -70,6 +80,8 @@ public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         tv_stop = (TextView) findViewById(R.id.tv_stop);
         tv_abandon = (TextView) findViewById(R.id.tv_abandon);
+
+        cv.getLayoutParams().height = ScreenUtils.getScreenWidth();
     }
 
     @Override
@@ -93,6 +105,48 @@ public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         tv_address.setText(activity_pt.merchantAddress);
         tv_availableTime.setText("有效期：" + activity_pt.beginTime + " 至 " + activity_pt.endTime);
         tv_tip.setText(activity_pt.saleRemarks);
+
+        if (activity_pt.ptGood != null || activity_pt.ptGood.imgUrl != null) {
+            String[] imgs = activity_pt.ptGood.imgUrl.split(",");
+            if (imgs.length != 0) {
+                setCv(imgs);
+            }
+        }
+    }
+
+    void setCv(String[] strArray){
+        cv.setAdapter(new CarouselView.Adapter() {
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public View getView(final int position) {
+                View view = LayoutInflater.from(context).inflate(R.layout.item_cv_img, null);
+                ImageView iv = (ImageView) view.findViewById(R.id.iv_cv);
+                UiUtil.setImage(iv, strArray[position]);
+
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(context, CreateAddGoodsActivity_pt.class).putExtra("imgUrl", activity_pt.ptGood.imgUrl));
+                    }
+                });
+                return view;
+            }
+
+            @Override
+            public int getCount() {
+                return strArray.length;
+            }
+        });
+        cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, CreateAddGoodsActivity_pt.class).putExtra("imgUrl", activity_pt.ptGood.imgUrl));
+            }
+        });
     }
 
     @Override
@@ -162,5 +216,11 @@ public class CreateAcActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
     }
 }

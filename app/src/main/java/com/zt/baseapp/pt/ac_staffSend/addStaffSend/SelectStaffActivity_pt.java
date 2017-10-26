@@ -17,7 +17,6 @@ import com.zt.baseapp.pt.ac_staffSend.addStaffSend.adapter.SelectStaffAdapter_pt
 import com.zt.baseapp.pt.ac_staffSend.m.Staff_pt;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
-import com.zt.baseapp.utils.AppContext;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,6 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         instance = this;
         aCache = ACache.get(context);

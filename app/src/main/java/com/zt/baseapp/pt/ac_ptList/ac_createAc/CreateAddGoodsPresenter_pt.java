@@ -1,4 +1,4 @@
-package com.zt.baseapp.pt.ac_ptList;
+package com.zt.baseapp.pt.ac_ptList.ac_createAc;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import com.zt.baseapp.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class CreateAcPresenter_pt extends BasePresenter<AcInfoActivity_pt> {
+public class CreateAddGoodsPresenter_pt extends BasePresenter<CreateAddGoodsActivity_pt> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;

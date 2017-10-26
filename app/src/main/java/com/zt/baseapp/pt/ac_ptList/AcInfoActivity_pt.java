@@ -2,6 +2,7 @@ package com.zt.baseapp.pt.ac_ptList;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,8 +13,11 @@ import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
+import com.zt.baseapp.pt.widget.CarouselView.CarouselView;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
+import com.zt.baseapp.utils.ScreenUtils;
+import com.zt.baseapp.utils.UiUtil;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -40,6 +44,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
     TextView tv_tip;
     TextView tv_stop;
     TextView tv_abandon;
+    CarouselView cv;
 
     @Override
     protected int getLayoutId() {
@@ -70,6 +75,9 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         tv_stop = (TextView) findViewById(R.id.tv_stop);
         tv_abandon = (TextView) findViewById(R.id.tv_abandon);
+        cv = (CarouselView) findViewById(R.id.cv);
+
+        cv.getLayoutParams().height = ScreenUtils.getScreenWidth();
     }
 
     @Override
@@ -83,9 +91,9 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
 
     }
 
-    void setData(){
+    void setData() {
         tv_name.setText(activity_pt.name);
-        tv_price.setText( "￥" +activity_pt.ptGood.price);
+        tv_price.setText("￥" + activity_pt.ptGood.price);
         tv_oldPrice.setText("原价￥" + activity_pt.ptGood.originalPrice);
         tv_soldNum.setText("已售" + activity_pt.saleNum);
         tv_leftTime.setText(activity_pt.endTime);
@@ -93,6 +101,41 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         tv_address.setText(activity_pt.merchantAddress);
         tv_availableTime.setText("有效期：" + activity_pt.beginTime + " 至 " + activity_pt.endTime);
         tv_tip.setText(activity_pt.saleRemarks);
+
+        if (activity_pt.ptGood != null || activity_pt.ptGood.imgUrl != null) {
+            String[] imgs = activity_pt.ptGood.imgUrl.split(",");
+            if (imgs.length != 0) {
+                setCv(imgs);
+            }
+        }
+    }
+
+     void setCv(String[] strArray){
+        cv.setAdapter(new CarouselView.Adapter() {
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public View getView(final int position) {
+                View view = LayoutInflater.from(context).inflate(R.layout.item_cv_img, null);
+                ImageView iv = (ImageView) view.findViewById(R.id.iv_cv);
+                UiUtil.setImage(iv, strArray[position]);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.e("aaa", "click view");
+                    }
+                });
+                return view;
+            }
+
+            @Override
+            public int getCount() {
+                return strArray.length;
+            }
+        });
     }
 
     @Override

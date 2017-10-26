@@ -16,7 +16,6 @@ import com.zt.baseapp.pt.ac_staffSend.addStaffSend.adapter.SelectAcAdapter_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
-import com.zt.baseapp.utils.AppContext;
 import com.zt.baseapp.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);

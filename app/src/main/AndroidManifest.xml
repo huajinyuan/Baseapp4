@@ -72,6 +72,8 @@
         <activity android:name=".pt.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
         <activity android:name=".pt.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
         <activity android:name=".pt.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
+        <activity android:name=".pt.ac_ptList.ac_createAc.CreateAcActivity_pt" />
+        <activity android:name=".pt.ac_ptList.ac_createAc.CreateAddGoodsActivity_pt" />
     </application>
 
 </manifest>

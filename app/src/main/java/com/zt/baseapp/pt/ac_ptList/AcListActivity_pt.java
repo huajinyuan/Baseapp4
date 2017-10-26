@@ -1,6 +1,7 @@
 package com.zt.baseapp.pt.ac_ptList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,9 +13,9 @@ import com.zt.baseapp.R;
 import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
+import com.zt.baseapp.pt.ac_ptList.ac_createAc.CreateAcActivity_pt;
 import com.zt.baseapp.pt.ac_ptList.adapter.AcListAdapter_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
-import com.zt.baseapp.pt.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
 
@@ -85,7 +86,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt>{
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context, CreateAcActivity_pt.class));
             }
         });
     }

@@ -4,13 +4,12 @@ import android.os.Bundle;
 
 import com.zt.baseapp.di.BaseAppManager;
 import com.zt.baseapp.module.base.BasePresenter;
-import com.zt.baseapp.pt.ac_ptList.AcInfoActivity_pt;
 
 /**
  * Created by caiyk on 2017/9/28.
  */
 
-public class CreateAcPresenter_pt extends BasePresenter<AcInfoActivity_pt> {
+public class CreateAcPresenter_pt extends BasePresenter<CreateAcActivity_pt> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;

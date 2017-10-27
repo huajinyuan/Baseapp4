@@ -2,6 +2,7 @@ package com.zt.baseapp.network.retrofit;
 
 
 import com.zt.baseapp.model.Response;
+import com.zt.baseapp.pt.ac_ptList.m.QiniuToKen;
 import com.zt.baseapp.pt.ac_ptbb.m.PinDan_pt;
 import com.zt.baseapp.pt.ac_ptbb.m.PinTuan_pt;
 import com.zt.baseapp.pt.m.LoginData_pt;
@@ -76,6 +77,10 @@ public interface ApiStores {
     //拼单记录 0全部 1待成团 2已成团 3拼团失败 4退款
     @GET("api/pt/ptAppGroupOrder/order/list")
     Observable<Response<ArrayList<PinDan_pt>>> getPdList_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+
+    //获取七牛上传token
+    @GET("api/common/uploadTokens")
+    Observable<QiniuToKen> getQiniuToken(@Header("authorization") String authorization);
 
     @GET("/api/pt/ptOrderDetail/exChangeRecord")
     Observable<Response<LoginData_pt>> exChangeRecord(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("authorization")String authorization);

@@ -1,21 +1,47 @@
 package com.zt.baseapp.pt.ac_ptList.ac_createAc;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
 import com.zt.baseapp.R;
+import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
+import com.zt.baseapp.network.retrofit.HttpMethods;
+import com.zt.baseapp.network.retrofit.QiniuUpload;
 import com.zt.baseapp.pt.ac_ptList.AcListPresenter_pt;
-import com.zt.baseapp.pt.widget.CarouselView.CarouselView;
+import com.zt.baseapp.pt.ac_ptList.ac_createAc.adapter.RvImgAdapter_pt;
+import com.zt.baseapp.pt.ac_ptList.m.MyBitmapUtil;
+import com.zt.baseapp.pt.ac_ptList.m.QiniuToKen;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
-import com.zt.baseapp.utils.UiUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import nucleus.factory.RequiresPresenter;
+import rx.Subscriber;
+
+import static com.zt.baseapp.pt.m.StringConfig.QiniuBase;
 
 @RequiresPresenter(AcListPresenter_pt.class)
 public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresenter_pt> {
@@ -28,22 +54,19 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
 
     String imgUrl;
 
-    TextView tv_name;
-    TextView tv_price;
-    TextView tv_oldPrice;
-    TextView tv_soldNum;
-    TextView tv_leftTime;
-    TextView tv_shop;
-    TextView tv_address;
-    TextView tv_availableTime;
-    TextView tv_tip;
-    TextView tv_stop;
-    TextView tv_abandon;
-    CarouselView cv;
+    EditText et_name;
+    EditText et_oldPrice;
+    EditText et_price;
+    EditText et_num;
+    EditText et_url;
+    RecyclerView rv_imgs;
+    ArrayList<String> list_imgs=new ArrayList<>();
+    RvImgAdapter_pt adapter;
+    String sdcardPath;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_ac_info_pt;
+        return R.layout.activity_create_add_goods_pt;
     }
 
     @Override
@@ -53,12 +76,22 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动详情");
-        tv_topbar_right.setVisibility(View.VISIBLE);
+        tv_topbar_title.setText("设置商品");
+        tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("编辑");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
+        et_name = (EditText) findViewById(R.id.et_name);
+        et_oldPrice = (EditText) findViewById(R.id.et_oldPrice);
+        et_price = (EditText) findViewById(R.id.et_price);
+        et_num = (EditText) findViewById(R.id.et_num);
+        et_url = (EditText) findViewById(R.id.et_url);
+        rv_imgs = (RecyclerView) findViewById(R.id.rv_imgs);
+
+        getPermissions(this);
+        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
+//        sdcardPath = Environment.getExternalStorageDirectory().getPath();
     }
 
     @Override
@@ -66,55 +99,30 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
         token = aCache.getAsString(ACacheKey.TOKEN);
         imgUrl = getIntent().getStringExtra("imgUrl");
 
+        if (imgUrl != null) {
+            String[] imgs = imgUrl.split(",");
+            if (imgs.length != 0) {
+                for (String str : imgs) {
+                    list_imgs.add(str);
+                }
+            }
+        }
+        adapter = new RvImgAdapter_pt(context, list_imgs);
+        GridLayoutManager layoutManager = new GridLayoutManager(context, 4);
+        rv_imgs.setLayoutManager(layoutManager);
+        rv_imgs.setAdapter(adapter);
+
 
     }
 
     void setData() {
-//        tv_name.setText(activity_pt.name);
-//        tv_price.setText("￥" + activity_pt.ptGood.price);
-//        tv_oldPrice.setText("原价￥" + activity_pt.ptGood.originalPrice);
-//        tv_soldNum.setText("已售" + activity_pt.saleNum);
-//        tv_leftTime.setText(activity_pt.endTime);
-//        tv_shop.setText(activity_pt.storeName);
-//        tv_address.setText(activity_pt.merchantAddress);
-//        tv_availableTime.setText("有效期：" + activity_pt.beginTime + " 至 " + activity_pt.endTime);
-//        tv_tip.setText(activity_pt.saleRemarks);
-//
-//        if (activity_pt.ptGood != null || activity_pt.ptGood.imgUrl != null) {
-//            String[] imgs = activity_pt.ptGood.imgUrl.split(",");
-//            if (imgs.length != 0) {
-//                setCv(imgs);
-//            }
-//        }
+
     }
 
-     void setCv(String[] strArray){
-        cv.setAdapter(new CarouselView.Adapter() {
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-            @Override
-            public View getView(final int position) {
-                View view = LayoutInflater.from(context).inflate(R.layout.item_cv_img, null);
-                ImageView iv = (ImageView) view.findViewById(R.id.iv_cv);
-                UiUtil.setImage(iv, strArray[position]);
-
-                iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.e("aaa", position + "");
-                    }
-                });
-                return view;
-            }
-
-            @Override
-            public int getCount() {
-                return strArray.length;
-            }
-        });
     }
 
     @Override
@@ -125,64 +133,117 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
                 finish();
             }
         });
-        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
+    void getPermissions(Activity mActivity){
+        String[] PERMISSIONS_STORAGE = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.CAMERA"};
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(mActivity,
+                    "android.permission.CAMERA");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(mActivity, PERMISSIONS_STORAGE, 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showPhotodialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTransBackGround);
+        final AlertDialog mydialog = builder.create();
+        View view = LayoutInflater.from(this).inflate(R.layout.item_dialog_pickimg_takephoto_pt, null);
+        mydialog.show();
+        mydialog.setContentView(view);
+
+        // dialog内部的点击事件
+        view.findViewById(R.id.bt_dialog_select).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mydialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 2);
             }
         });
-        findViewById(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.bt_dialog_capture).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                if (activity_pt != null) {
-//                    HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, activity_pt.id, 2), new Subscriber<Response>() {
-//                        @Override
-//                        public void onCompleted() {
-//                            Log.e("aaa", "onCompleted");
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Log.e("aaa", "onError" + e.getMessage());
-//                        }
-//
-//                        @Override
-//                        public void onNext(Response arrayListResponse) {
-//                            if (arrayListResponse.code == 0) {
-//                                Toast.makeText(context, "已停用", Toast.LENGTH_SHORT).show();
-//                                tv_stop.setClickable(false);
-//                                tv_stop.setText("已停用");
-//                            }
-//                        }
-//                    });
-//                }
-            }
-        });
-        findViewById(R.id.tv_abandon).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (activity_pt != null) {
-//                    HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, activity_pt.id, 3), new Subscriber<Response>() {
-//                        @Override
-//                        public void onCompleted() {
-//                            Log.e("aaa", "onCompleted");
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Log.e("aaa", "onError" + e.getMessage());
-//                        }
-//
-//                        @Override
-//                        public void onNext(Response arrayListResponse) {
-//                            if (arrayListResponse.code == 0) {
-//                                Toast.makeText(context, "已作废", Toast.LENGTH_SHORT).show();
-//                                finish();
-//                            }
-//                        }
-//                    });
-//                }
+            public void onClick(View view) {
+                takePicture();
+                mydialog.dismiss();
             }
         });
     }
+
+    String mPhotoPath;
+    File mPhotoFile;
+    void takePicture() {
+        mPhotoPath = sdcardPath + "/icon.png";
+        mPhotoFile = new File(mPhotoPath);
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            mPhotoPath = sdcardPath + "/icon.png";
+            String pathurl = null;
+            if (requestCode == 1) {
+                pathurl = mPhotoPath;
+            } else {
+                Uri uri = data.getData();
+                pathurl = MyBitmapUtil.getFilePath(context, uri);
+            }
+            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), mPhotoPath));
+        }
+    }
+
+    //qiniu
+    public void uploadphoto(final File file) {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getQiniuToken(token), new Subscriber<Response<QiniuToKen>>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<QiniuToKen> arrayListResponse) {
+                String qiniuToken = arrayListResponse.data.token;
+                if (qiniuToken != null) {
+                    QiniuUpload.getInstance().uploadFile(token, file, handler);
+                }
+            }
+        });
+    }
+
+    UpCompletionHandler handler = new UpCompletionHandler() {
+        @Override
+        public void complete(String key, ResponseInfo info, JSONObject res) {
+            //res包含hash、key等信息，具体字段取决于上传策略的设置
+            if (info.isOK()) {
+                try {
+                    Log.e("qiniu", "Upload Success token:" + res.getString("key"));
+                    list_imgs.add(QiniuBase + res.getString("key"));
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Log.e("qiniu", "Upload Success, token getString wrong!");
+                    Toast.makeText(context, "Upload Exception", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }

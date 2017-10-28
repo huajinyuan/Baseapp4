@@ -2,7 +2,6 @@ package com.zt.baseapp.pt.ac_ptList.ac_createAc.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ public class RvImgAdapter_pt extends RecyclerView.Adapter<RvImgAdapter_pt.Anchor
     private ArrayList<String> data;
     private Context context;
     LayoutInflater layoutInflater;
+    ClickListener listener;
 
     public RvImgAdapter_pt(Context mContext, ArrayList<String> mData) {
         data = mData;
@@ -47,7 +47,7 @@ public class RvImgAdapter_pt extends RecyclerView.Adapter<RvImgAdapter_pt.Anchor
                 holder.iv_ac.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.e("aaa", "click");
+                        listener.click();
                     }
                 });
             } else {
@@ -77,5 +77,13 @@ public class RvImgAdapter_pt extends RecyclerView.Adapter<RvImgAdapter_pt.Anchor
             super(itemView);
             iv_ac = (ImageView) itemView.findViewById(R.id.iv_ac);
         }
+    }
+
+    public interface ClickListener{
+        void click ();
+    }
+
+    public void setClickListener(ClickListener mListener){
+        listener = mListener;
     }
 }

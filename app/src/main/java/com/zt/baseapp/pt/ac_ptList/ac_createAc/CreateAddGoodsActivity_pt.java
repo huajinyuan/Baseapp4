@@ -1,13 +1,16 @@
 package com.zt.baseapp.pt.ac_ptList.ac_createAc;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,6 +32,7 @@ import com.zt.baseapp.pt.ac_ptList.AcListPresenter_pt;
 import com.zt.baseapp.pt.ac_ptList.ac_createAc.adapter.RvImgAdapter_pt;
 import com.zt.baseapp.pt.ac_ptList.m.MyBitmapUtil;
 import com.zt.baseapp.pt.ac_ptList.m.QiniuToKen;
+import com.zt.baseapp.pt.ac_staffSend.m.Goods_pt;
 import com.zt.baseapp.utils.ACache;
 import com.zt.baseapp.utils.ACacheKey;
 
@@ -61,7 +65,6 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
     EditText et_url;
     RecyclerView rv_imgs;
     ArrayList<String> list_imgs=new ArrayList<>();
-    RvImgAdapter_pt adapter;
     String sdcardPath;
 
     @Override
@@ -107,22 +110,51 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
                 }
             }
         }
-        adapter = new RvImgAdapter_pt(context, list_imgs);
-        GridLayoutManager layoutManager = new GridLayoutManager(context, 4);
-        rv_imgs.setLayoutManager(layoutManager);
-        rv_imgs.setAdapter(adapter);
-
+        setRv_imgs();
 
     }
 
-    void setData() {
-
+    void setRv_imgs(){
+        RvImgAdapter_pt adapter = new RvImgAdapter_pt(context, list_imgs);
+        adapter.setClickListener(new RvImgAdapter_pt.ClickListener() {
+            @Override
+            public void click() {
+                showPhotodialog();
+            }
+        });
+        GridLayoutManager layoutManager = new GridLayoutManager(context, 4);
+        rv_imgs.setLayoutManager(layoutManager);
+        rv_imgs.setAdapter(adapter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        imgUrl = "";
+        for (String str : list_imgs) {
+            imgUrl += str + ",";
+        }
+        if (imgUrl.length() > 0) {
+            imgUrl = imgUrl.substring(0, imgUrl.length() - 1);
+        }
 
+        String name, oldPrice, price, num;
+        name = et_name.getText().toString().trim();
+        oldPrice = et_oldPrice.getText().toString().trim();
+        price = et_price.getText().toString().trim();
+        num = et_num.getText().toString().trim();
+
+        Goods_pt goods_pt = new Goods_pt();
+        goods_pt.name = name;
+        goods_pt.originalPrice = oldPrice;
+        if(!price.isEmpty())
+            goods_pt.price = Double.parseDouble(price);
+        if(!num.isEmpty())
+            goods_pt.count = Integer.parseInt(num);
+        goods_pt.imgUrl = imgUrl;
+
+        CreateAcActivity_pt.instance.activity_pt.ptGood = goods_pt;
+        CreateAcActivity_pt.instance.setData();
     }
 
     @Override
@@ -140,16 +172,20 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
                 "android.permission.READ_EXTERNAL_STORAGE",
                 "android.permission.WRITE_EXTERNAL_STORAGE",
                 "android.permission.CAMERA"};
-        try {
-            //检测是否有写的权限
-            int permission = ActivityCompat.checkSelfPermission(mActivity,
-                    "android.permission.CAMERA");
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                // 没有写的权限，去申请写的权限，会弹出对话框
-                ActivityCompat.requestPermissions(mActivity, PERMISSIONS_STORAGE, 1);
+        if (Build.VERSION.SDK_INT >= 23) {
+            Log.e("permission", ">23");
+            try {
+                //检测是否有写的权限
+                int permissionCAMERA = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+                if (permissionCAMERA != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("permission", "permission 1");
+                    // 没有写的权限，去申请写的权限，会弹出对话框
+                    ActivityCompat.requestPermissions(mActivity, PERMISSIONS_STORAGE, 1);
+                }
+            } catch (Exception e) {
+                Log.e("permission", "permission 2" + e.toString());
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -185,7 +221,17 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
         mPhotoPath = sdcardPath + "/icon.png";
         mPhotoFile = new File(mPhotoPath);
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", mPhotoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            } catch (Exception e) {
+
+            }
+        } else {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+        }
         startActivityForResult(intent, 1);
     }
 
@@ -222,7 +268,7 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
             public void onNext(Response<QiniuToKen> arrayListResponse) {
                 String qiniuToken = arrayListResponse.data.token;
                 if (qiniuToken != null) {
-                    QiniuUpload.getInstance().uploadFile(token, file, handler);
+                    QiniuUpload.getInstance().uploadFile(qiniuToken, file, handler);
                 }
             }
         });
@@ -236,13 +282,14 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
                 try {
                     Log.e("qiniu", "Upload Success token:" + res.getString("key"));
                     list_imgs.add(QiniuBase + res.getString("key"));
-                    adapter.notifyDataSetChanged();
+                    setRv_imgs();
                 } catch (JSONException e) {
                     Log.e("qiniu", "Upload Success, token getString wrong!");
                     Toast.makeText(context, "Upload Exception", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
+                Log.e("aaa", info.toString()+" error:"+info.error);
             }
         }
     };

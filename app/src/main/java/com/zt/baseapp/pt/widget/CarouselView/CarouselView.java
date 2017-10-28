@@ -60,6 +60,16 @@ public class CarouselView extends FrameLayout implements ViewPager.OnPageChangeL
         if (this.mTimer != null) {
             this.mTimer.cancel();
         }
+        mTimer = new Timer();
+        mTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (!isUserTouched) {
+                    currentPosition = (currentPosition + 1) % totalCount;
+                    handler.sendEmptyMessage(100);
+                }
+            }
+        };
     }
 
     private Handler handler = new Handler() {
@@ -137,6 +147,7 @@ public class CarouselView extends FrameLayout implements ViewPager.OnPageChangeL
     }
 
     public void setAdapter(Adapter adapter) {
+        cancelTimer();
         this.adapter = adapter;
         if (adapter != null) {
             init();

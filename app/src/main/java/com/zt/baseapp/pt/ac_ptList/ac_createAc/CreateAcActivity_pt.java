@@ -39,8 +39,7 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
     TextView tv_address;
     TextView tv_availableTime;
     TextView tv_tip;
-    TextView tv_stop;
-    TextView tv_abandon;
+    TextView tv_save;
     CarouselView cv;
 
     @Override
@@ -71,17 +70,10 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
         tv_address = (TextView) findViewById(R.id.tv_address);
         tv_availableTime = (TextView) findViewById(R.id.tv_availableTime);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
-        tv_stop = (TextView) findViewById(R.id.tv_stop);
-        tv_abandon = (TextView) findViewById(R.id.tv_abandon);
+        tv_save = (TextView) findViewById(R.id.tv_save);
         cv = (CarouselView) findViewById(R.id.cv);
 
         cv.getLayoutParams().height = ScreenUtils.getScreenWidth();
-        cv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context, CreateAddGoodsActivity_pt.class));
-            }
-        });
     }
 
     @Override
@@ -94,24 +86,44 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
         } else {
             activity_pt = new Activity_pt();
         }
+        cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, CreateAddGoodsActivity_pt.class));
+            }
+        });
+
 
     }
 
     void setData(){
-        tv_name.setText(activity_pt.name);
-        tv_price.setText( "￥" +activity_pt.ptGood.price);
-        tv_oldPrice.setText("原价￥" + activity_pt.ptGood.originalPrice);
-        tv_soldNum.setText("已售" + activity_pt.saleNum);
-        tv_leftTime.setText(activity_pt.endTime);
-        tv_shop.setText(activity_pt.storeName);
-        tv_address.setText(activity_pt.merchantAddress);
-        tv_availableTime.setText("有效期：" + activity_pt.beginTime + " 至 " + activity_pt.endTime);
-        tv_tip.setText(activity_pt.saleRemarks);
+        if(activity_pt.endTime!=null)
+            tv_leftTime.setText(activity_pt.endTime);
+        if(activity_pt.storeName!=null)
+            tv_shop.setText(activity_pt.storeName);
+        if(activity_pt.merchantAddress!=null)
+            tv_address.setText(activity_pt.merchantAddress);
+        if (activity_pt.beginTime != null && activity_pt.endTime != null)
+            tv_availableTime.setText("有效期：" + activity_pt.beginTime + " 至 " + activity_pt.endTime);
+        if(activity_pt.saleRemarks!=null)
+            tv_tip.setText(activity_pt.saleRemarks);
+        if(activity_pt.saleNum!=null)
+            tv_soldNum.setText("已售" + activity_pt.saleNum);
 
-        if (activity_pt.ptGood != null || activity_pt.ptGood.imgUrl != null) {
-            String[] imgs = activity_pt.ptGood.imgUrl.split(",");
-            if (imgs.length != 0) {
-                setCv(imgs);
+        if (activity_pt.ptGood != null) {
+            if(activity_pt.ptGood.name!=null)
+                tv_name.setText(activity_pt.ptGood.name);
+            if(activity_pt.ptGood.price!=0)
+                tv_price.setText("￥" + activity_pt.ptGood.price);
+            if(activity_pt.ptGood.originalPrice!=null)
+                tv_oldPrice.setText("原价￥" + activity_pt.ptGood.originalPrice);
+            if (activity_pt.ptGood.imgUrl != null) {
+                if (!activity_pt.ptGood.imgUrl.equals("")) {
+                    String[] imgs = activity_pt.ptGood.imgUrl.split(",");
+                    if (imgs.length != 0) {
+                        setCv(imgs);
+                    }
+                }
             }
         }
     }
@@ -154,6 +166,12 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
             }
         });
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

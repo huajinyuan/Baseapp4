@@ -5,11 +5,11 @@ import com.zt.baseapp.model.Response;
 import com.zt.baseapp.pt.ac_ptList.m.QiniuToKen;
 import com.zt.baseapp.pt.ac_ptbb.m.PinDan_pt;
 import com.zt.baseapp.pt.ac_ptbb.m.PinTuan_pt;
-import com.zt.baseapp.pt.m.LoginData_pt;
-import com.zt.baseapp.pt.m.PtReport_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Activity_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.StaffSend_pt;
 import com.zt.baseapp.pt.ac_staffSend.m.Staff_pt;
+import com.zt.baseapp.pt.m.LoginData_pt;
+import com.zt.baseapp.pt.m.PtReport_pt;
 
 import java.util.ArrayList;
 
@@ -80,7 +80,7 @@ public interface ApiStores {
 
     //获取七牛上传token
     @GET("api/common/uploadTokens")
-    Observable<QiniuToKen> getQiniuToken(@Header("authorization") String authorization);
+    Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);
 
     @GET("/api/pt/ptOrderDetail/exChangeRecord")
     Observable<Response<LoginData_pt>> exChangeRecord(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("authorization")String authorization);

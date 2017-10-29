@@ -28,7 +28,6 @@ import com.zt.baseapp.model.Response;
 import com.zt.baseapp.module.base.BaseActivity;
 import com.zt.baseapp.network.retrofit.HttpMethods;
 import com.zt.baseapp.network.retrofit.QiniuUpload;
-import com.zt.baseapp.pt.ac_ptList.AcListPresenter_pt;
 import com.zt.baseapp.pt.ac_ptList.ac_createAc.adapter.RvImgAdapter_pt;
 import com.zt.baseapp.pt.ac_ptList.m.MyBitmapUtil;
 import com.zt.baseapp.pt.ac_ptList.m.QiniuToKen;
@@ -47,7 +46,7 @@ import rx.Subscriber;
 
 import static com.zt.baseapp.pt.m.StringConfig.QiniuBase;
 
-@RequiresPresenter(AcListPresenter_pt.class)
+@RequiresPresenter(CreateAddGoodsPresenter_pt.class)
 public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresenter_pt> {
     Context context;
     ACache aCache;

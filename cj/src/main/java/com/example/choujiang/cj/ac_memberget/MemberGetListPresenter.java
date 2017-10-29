@@ -49,7 +49,7 @@ public class MemberGetListPresenter extends BasePresenter<MemberGetListActivity>
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_ptlist:
-                intent = new Intent(mContext, PdListActivity.class);
+                intent = new Intent(mContext, CjHistoryActivity.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberlist:
@@ -57,7 +57,7 @@ public class MemberGetListPresenter extends BasePresenter<MemberGetListActivity>
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_pt_ac:
-                intent = new Intent(mContext, AcListActivity_pt.class);
+                intent = new Intent(mContext, AcListActivity_cj.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberget:

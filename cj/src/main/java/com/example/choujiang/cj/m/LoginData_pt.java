@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class LoginData_pt extends BaseInfo implements Serializable {
 
-    private String userId;
+    public String userId;
     private String token;
 
     public String getUserId() {

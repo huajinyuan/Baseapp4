@@ -1,7 +1,6 @@
 package com.example.choujiang.cj.ac_staffSend.staffDetail;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_staffSend.StaffActivity_pt;
-import com.example.choujiang.cj.ac_staffSend.m.Activity_pt;
+import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.cj.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
@@ -39,6 +36,12 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     RecyclerView rv_staffSend;
     ImageView iv_qr_bottom;
     int userId;
+
+    StaffDetailAdapter_pt adapter;
+    LinearLayoutManager layoutManager;
+    ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -68,15 +71,32 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         userId = getIntent().getIntExtra("userId", 0);
-        getStaffDetails();
+        getData();
+
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
 
     }
 
-    void setRv(ArrayList<Activity_pt> activity_pts) {
-        StaffDetailAdapter_pt adapter = new StaffDetailAdapter_pt(context, activity_pts);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
+    void setRv(ArrayList<Activity_cj> pinDans) {
+        if (adapter == null) {
+            pinDan_pts.addAll(pinDans);
+            adapter = new StaffDetailAdapter_pt(context, pinDan_pts);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            pinDan_pts.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
 
@@ -91,7 +111,6 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, StaffActivity_pt.class));
             }
         });
         findViewById(R.id.iv_qr_bottom).setOnClickListener(new View.OnClickListener() {
@@ -103,8 +122,14 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         });
     }
 
-    void getStaffDetails(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffDetail_pt(token, 1, 100, 0, userId), new Subscriber<Response<ArrayList<Activity_pt>>>() {
+    void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, page, 100, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                canGet = false;
+            }
+
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -116,10 +141,13 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
             }
 
             @Override
-            public void onNext(Response<ArrayList<Activity_pt>> arrayListResponse) {
+            public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
                 setRv(arrayListResponse.data);
+                canGet = true;
+                page++;
             }
         });
+
     }
 
 

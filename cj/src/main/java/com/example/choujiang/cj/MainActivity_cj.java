@@ -8,15 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_acSetting.AcListActivity_cj;
+import com.example.choujiang.cj.ac_cjbb.AcBbActivity;
+import com.example.choujiang.cj.ac_cjbb.CjHistoryActivity;
+import com.example.choujiang.cj.ac_cjbb.StaffRankingActivity;
 import com.example.choujiang.cj.ac_memberget.MemberGetActivity;
-import com.example.choujiang.cj.ac_ptList.AcListActivity_pt;
-import com.example.choujiang.cj.ac_ptbb.BbActivityActivity;
-import com.example.choujiang.cj.ac_ptbb.MemberListActivity;
-import com.example.choujiang.cj.ac_ptbb.PdListActivity;
 import com.example.choujiang.cj.ac_staffSend.StaffSendActivity_pt;
-import com.example.choujiang.cj.ac_withdrawSetting.SettingActivity_pt;
+import com.example.choujiang.cj.ac_withdrawSetting.SettingActivity_cj;
 import com.example.choujiang.cj.m.LoginData_pt;
-import com.example.choujiang.cj.m.PtReport_pt;
+import com.example.choujiang.cj.m.Report_cj;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -36,14 +36,14 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
 
-    TextView tv_drivingTurnover;
-    TextView tv_groupSize;
-    TextView tv_cliqueNumber;
-    TextView tv_spellTogether;
+    TextView tv_totalManCount;
+    TextView tv_totalShareCount;
+    TextView tv_totalCount;
+    TextView tv_totalAwardCount;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_pt_index;
+        return R.layout.activity_main_cj;
     }
 
     @Override
@@ -54,15 +54,15 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("拼团");
+        tv_topbar_title.setText("幸运抽奖");
         tv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setVisibility(View.VISIBLE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
-        tv_drivingTurnover = (TextView) findViewById(R.id.tv_drivingTurnover);
-        tv_groupSize = (TextView) findViewById(R.id.tv_groupSize);
-        tv_cliqueNumber = (TextView) findViewById(R.id.tv_cliqueNumber);
-        tv_spellTogether = (TextView) findViewById(R.id.tv_spellTogether);
+        tv_totalManCount = (TextView) findViewById(R.id.tv_totalManCount);
+        tv_totalShareCount = (TextView) findViewById(R.id.tv_totalShareCount);
+        tv_totalCount = (TextView) findViewById(R.id.tv_totalCount);
+        tv_totalAwardCount = (TextView) findViewById(R.id.tv_totalAwardCount);
 
 //        ResponseHandle.IRetryListener listener = new ResponseHandle.IRetryListener() {
 //            @Override
@@ -102,25 +102,25 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         findViewById(R.id.ll_pt_acList).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, BbActivityActivity.class));
+                context.startActivity(new Intent(context, AcBbActivity.class));
             }
         });
         findViewById(R.id.ll_pt_ptHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, PdListActivity.class));
+                context.startActivity(new Intent(context, CjHistoryActivity.class));
             }
         });
         findViewById(R.id.ll_pt_staffRanking).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, MemberListActivity.class));
+                context.startActivity(new Intent(context, StaffRankingActivity.class));
             }
         });
         findViewById(R.id.ll_pt_pt_ac).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, AcListActivity_pt.class));
+                context.startActivity(new Intent(context, AcListActivity_cj.class));
             }
         });
         findViewById(R.id.ll_pt_change).setOnClickListener(new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         findViewById(R.id.ll_pt_setting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, SettingActivity_pt.class));
+                context.startActivity(new Intent(context, SettingActivity_cj.class));
             }
         });
         findViewById(R.id.ll_pt_staffSend).setOnClickListener(new View.OnClickListener() {
@@ -143,15 +143,15 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         });
     }
 
-    void setReport(PtReport_pt ptReport_pt) {
-        tv_drivingTurnover.setText(ptReport_pt.getDrivingTurnover() + "");
-        tv_groupSize.setText(ptReport_pt.getGroupSize() + "");
-        tv_cliqueNumber.setText(ptReport_pt.getCliqueNumber() + "");
-        tv_spellTogether.setText(ptReport_pt.getSpellTogether() + "");
+    void setReport(Report_cj report_cj) {
+        tv_totalManCount.setText(report_cj.totalManCount + "");
+        tv_totalShareCount.setText(report_cj.totalShareCount + "");
+        tv_totalCount.setText(report_cj.totalCount + "");
+        tv_totalAwardCount.setText(report_cj.totalAwardCount + "");
     }
 
     void login(){
-        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
+        HttpMethods.getInstance().login("shanghu1", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
             @Override
             public void onStart() {
                 super.onStart();
@@ -183,7 +183,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         });
     }
     void getReport(int status){
-        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<Report_cj>>() {
 
             @Override
             public void onStart() {
@@ -202,10 +202,10 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             }
 
             @Override
-            public void onNext(Response<PtReport_pt> response) {
+            public void onNext(Response<Report_cj> response) {
                 if (response.code == 0) {
-                    setReport(response.data);
                     Log.e("aaa======onNext", response.data.toString());
+                    setReport(response.data);
                 } else {
                     Log.e("aaa======onNext", response.msg);
                 }

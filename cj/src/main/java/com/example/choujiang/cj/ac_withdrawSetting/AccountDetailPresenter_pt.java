@@ -54,7 +54,7 @@ public class AccountDetailPresenter_pt extends BasePresenter<AccountDetailActivi
 //        });
 //    }
 //    void getReport(int status){
-//        HttpMethods.getInstance().getReport(getView().token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+//        HttpMethods.getInstance().getReport(getView().token, status).subscribe(new Subscriber<Response<Report_cj>>() {
 //
 //            @Override
 //            public void onStart() {
@@ -73,7 +73,7 @@ public class AccountDetailPresenter_pt extends BasePresenter<AccountDetailActivi
 //            }
 //
 //            @Override
-//            public void onNext(Response<PtReport_pt> response) {
+//            public void onNext(Response<Report_cj> response) {
 //                if (response.code == 0) {
 //                    getView().setReport(response.data);
 //                    Log.e("aaa======onNext", response.data.toString());

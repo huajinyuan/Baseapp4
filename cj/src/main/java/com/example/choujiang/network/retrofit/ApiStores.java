@@ -1,11 +1,16 @@
 package com.example.choujiang.network.retrofit;
 
 
-import com.example.choujiang.cj.ac_staffSend.m.Activity_pt;
-import com.example.choujiang.cj.ac_staffSend.m.StaffSend_pt;
-import com.example.choujiang.cj.ac_staffSend.m.Staff_pt;
+import com.example.choujiang.cj.ac_acSetting.m.ActivityDetail_cj;
+import com.example.choujiang.cj.ac_acSetting.m.QiniuToKen;
+import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
+import com.example.choujiang.cj.ac_cjbb.m.TichengDetail;
+import com.example.choujiang.cj.ac_staffSend.m.AccountDetail_cj;
+import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
+import com.example.choujiang.cj.ac_staffSend.m.StaffSend_cj;
+import com.example.choujiang.cj.ac_staffSend.m.Staff_cj;
 import com.example.choujiang.cj.m.LoginData_pt;
-import com.example.choujiang.cj.m.PtReport_pt;
+import com.example.choujiang.cj.m.Report_cj;
 import com.example.choujiang.model.Response;
 
 import java.util.ArrayList;
@@ -30,91 +35,73 @@ public interface ApiStores {
     Observable<Response<LoginData_pt>> doLogout(@Query("authorization") String authorization);
 
     //抽奖汇总报表
-    @GET("api/pt/report/total/report")
-    Observable<Response<PtReport_pt>> getReport_pt(@Header("authorization") String authorization, @Query("status") int status);
+    @GET("api/cj/report/total")
+    Observable<Response<Report_cj>> getReport_pt(@Header("authorization") String authorization, @Query("status") int status);
 
-    //拼团员工发送
-    @GET("api/pt/ptActivityStaff/list")
-    Observable<Response<ArrayList<StaffSend_pt>>> getStaffSends_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    //活动报表
+    @GET("api/cj/report/report")
+    Observable<Response<ArrayList<Activity_cj>>> getAcBb(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
-    //员工活动列表 状态 0全部 1可用 2暂停 3作废
-    @GET("api/pt/ptActivities/list")
-    Observable<Response<ArrayList<Activity_pt>>> getStaffDetail_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") int userId);
+    //抽奖记录
+    @GET("api/cj/cjAwardDetail/list")
+    Observable<Response<ArrayList<CjHistory>>> getCjHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    //员工排行-0全部 1本日 2本月 3本年
+    @GET("api/cj/report/staffRanking")
+    Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+    @GET("api/cj/report/staffRanking")
+    Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("actId") String actId);
+
+    //抽奖员工提成明细
+    @GET("api/cj/cjStaffCommission/list")
+    Observable<Response<ArrayList<TichengDetail>>> getTichengDetail(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
     //活动列表 状态 0全部 1可用 2暂停 3作废
-    @GET("api/pt/ptActivities/list")
-    Observable<Response<ArrayList<Activity_pt>>> getAc_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+    @GET("api/cj/cjActivity/list")
+    Observable<Response<ArrayList<Activity_cj>>> getAc_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+
+    //活动详情
+    @GET("api/cj/cjActivity/info")
+    Observable<Response<ActivityDetail_cj>> getAcDetail_cj(@Header("authorization") String authorization, @Query("actId") String actId);
+
+    //中奖记录
+    @GET("api/cj/cjAwardDetail/list")
+    Observable<Response<ArrayList<CjHistory>>> getWinHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward);
 
     //员工列表
-    @GET("api/pt/ptActivityStaff/staff/list")
-    Observable<Response<ArrayList<Staff_pt>>> getStaffSelect_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    @GET("api/common/staff/list")
+    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization);
+
+    //账户明细
+    @GET("api/common/staffAccount/{staffId}")
+    Observable<Response<ArrayList<AccountDetail_cj>>> getAccountDetail(@Header("authorization") String authorization, @Path("staffId") String staffId, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    //员工账户提现
+    @POST("api/common/staffAccount/withdrawals")
+    Observable<Response> accountWithDraw(@Header("authorization") String authorization, @Query("staffId") String staffId, @Query("amount") String amount);
+
+    //员工发送列表
+    @GET("api/cj/cjActivityStaff/list")
+    Observable<Response<ArrayList<StaffSend_cj>>> getStaffSends_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    //员工活动列表
+    @GET("api/cj/cjActivityStaff/act/list")
+    Observable<Response<ArrayList<Activity_cj>>> getStaffAcDetail_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("staffId") int staffId);
 
     //提交员工发送
-    @POST("api/pt/ptActivityStaff/submit")
-    Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("activityIds") String activityIds, @Query("userId") int userId);
+    @POST("api/cj/cjActivityStaff/save")
+    Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("actIds") String actIds, @Query("staffId") String staffId);
 
-    @GET("/api/pt/ptOrderDetail/exChangeRecord")
-    Observable<Response<LoginData_pt>> exChangeRecord(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("authorization") String authorization);
+    //抽奖兑换记录
+    @GET("api/cj/cjAwardDetail/exChangeRecord")
+    Observable<Response<ArrayList<CjHistory>>> getMembergetList_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
-    @POST("/api/pt/ptOrderDetail/exchange")
-    Observable<Response<LoginData_pt>> exchange(@Query("authorization") String authorization, @Query("detailId") int detailId, @Query("redeemCode") String redeemCode);
+    //活动停用/作废
+    @POST("api/cj/cjActivity/state")
+    Observable<Response> changeAcStatus(@Header("authorization") String authorization, @Query("actId") String actId, @Query("status") int status);
 
-    @GET("/api/pt/ptOrderDetail/{detailId}")
-    Observable<Response<LoginData_pt>> ptOrderDetail(@Path("detailId") String detailId, @Query("authorization") String authorization, @Query("detailId") String id);
-
-    @GET("/api/common/store/list")
-    Observable<Response<LoginData_pt>> list(@Query("authorization") String authorization);
-
-    @POST("/api/common/store/save")
-    Observable<Response<LoginData_pt>> save(@Query("authorization") String authorization, @Query("storeName") String storeName, @Query("storeMobile") String storeMobile, @Query("storeAddress") String storeAddress);
-
-
-    @GET("/api/pt/ptGroupOrder/group")
-    Observable<Response<LoginData_pt>> group(@Query("authorization") String authorization, @Query("id") String id);
-
-    @GET("/api/pt/ptGroupOrder/list")
-    Observable<Response<LoginData_pt>> ptGroupOrderList(@Query("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
-
-    @GET("/api/pt/ptGroupOrder/refund")
-    Observable<Response<LoginData_pt>> refund(@Query("authorization") String authorization, @Query("id") String id);
-
-    @GET("/api/pt/ptActivities/info")
-    Observable<Response<LoginData_pt>> info(@Query("authorization") String authorization, @Query("actId") String actId, @Query("inviteId") String inviteId);
-
-    @GET("/api/pt/ptActivities/list")
-    Observable<Response<LoginData_pt>> ptActivitiesList(@Query("authorization") String authorization, @Query("pageNo") String pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") int userId);
-
-    @GET("/api/pt/ptActivities/report")
-    Observable<Response<LoginData_pt>> ptActivitiesReport(@Query("authorization") String authorization, @Query("pageNo") String pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") int userId);
-
-    @GET("/api/pt/ptActivities/report/staffRanking")
-    Observable<Response<LoginData_pt>> staffRanking(@Query("authorization") String authorization, @Query("pageNo") String pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("actId") int actId);
-
-    @POST("/api/pt/ptActivities/save")
-    Observable<Response<LoginData_pt>> ptActivitiesSave(@Query("authorization") String authorization, @Query("goodName") String goodName, @Query("originalPrice") double originalPrice, @Query("price") double price, @Query("count") int count, @Query("videoUrl") String videoUrl, @Query("goodImgUrl") String goodImgUrl, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("num") int num, @Query("saleNum") int saleNum, @Query("storeId") String storeId, @Query("saleRemarks") String saleRemarks);
-
-    @GET("/api/pt/ptActivities/state")
-    Observable<Response<LoginData_pt>> ptActivitiesState(@Query("authorization") String authorization, @Query("status") int status, @Query("actId") int actId);
-
-    @POST("/api/pt/ptActivities/update")
-    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization, @Query("goodName") String goodName, @Query("originalPrice") double originalPrice, @Query("price") double price, @Query("count") int count, @Query("videoUrl") String videoUrl, @Query("goodImgUrl") String goodImgUrl, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("num") int num, @Query("saleNum") int saleNum, @Query("storeId") String storeId, @Query("saleRemarks") String saleRemarks);
-
-    @GET("/api/pt/ptAppGroupOrder/detail")
-    Observable<Response<LoginData_pt>> ptAppGroupOrderDetail(@Query("authorization") String authorization, @Query("orderNumber") int orderNumber);
-
-    @GET("/api/pt/ptAppGroupOrder/list")
-    Observable<Response<LoginData_pt>> ptAppGroupOrderList(@Query("authorization") String authorization, @Query("status") int status, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
-
-    @GET("//api/pt/ptAppGroupOrder/order/list")
-    Observable<Response<LoginData_pt>> ptAppGroupOrderOrderList(@Query("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
-
-//    @GET("/api/pt/ptActivities/update")
-//    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization,@Query("status")int status,@Query("actId")int actId);
-//
-//    @GET("/api/pt/ptActivities/update")
-//    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization,@Query("status")int status,@Query("actId")int actId);
-//
-//    @GET("/api/pt/ptActivities/update")
-//    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization,@Query("status")int status,@Query("actId")int actId);
+    //获取七牛上传token
+    @GET("api/common/uploadTokens")
+    Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);
 
 }

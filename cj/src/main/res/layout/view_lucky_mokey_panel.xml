@@ -29,33 +29,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item1"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item1" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item2"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item2" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item3"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item3" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
         </LinearLayout>
 
         <View
@@ -68,11 +68,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item4"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item4" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
 
             <View
                 android:layout_width="0dp"
@@ -90,11 +90,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item6"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item6" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
         </LinearLayout>
 
         <View
@@ -107,33 +107,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item7"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item7" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item8"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item8" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <com.example.choujiang.cj.ac_ptList.lucky.PanelItemView
+            <com.example.choujiang.cj.ac_acSetting.lucky.PanelItemView
                 android:id="@+id/item9"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
-                android:background="@drawable/bg_lucky_monkey_item9" />
+                android:background="@drawable/bg_lucky_monkey_item_white" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

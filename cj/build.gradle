@@ -85,4 +85,8 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
+
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'
+    compile 'com.qiniu:qiniu-android-sdk:7.3.+'
+    compile 'com.qiniu:happy-dns:0.2.7'
 }

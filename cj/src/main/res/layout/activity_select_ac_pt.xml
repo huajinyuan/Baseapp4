@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/color_backGrey">
 
-    <include layout="@layout/layout_topbar_pt" />
+    <include layout="@layout/layout_topbar_cj" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_staffSend"
@@ -18,7 +18,7 @@
         android:id="@+id/bt_next"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@drawable/shape_radius5_blue"
+        android:background="@drawable/shape_radius5_appblue"
         android:layout_margin="11dp"
         android:text="提交"
         android:textColor="@color/color_white"

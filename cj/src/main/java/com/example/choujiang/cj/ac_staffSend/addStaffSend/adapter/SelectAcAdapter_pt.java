@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_staffSend.m.Activity_pt;
+import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.utils.UiUtil;
 
 import java.util.ArrayList;
@@ -20,11 +20,11 @@ import java.util.ArrayList;
  * Created by  on 2016/9/2.
  */
 public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.AnchorHotViewHolder> {
-    public ArrayList<Activity_pt> data;
+    public ArrayList<Activity_cj> data;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public SelectAcAdapter_pt(Context mContext, ArrayList<Activity_pt> mData) {
+    public SelectAcAdapter_pt(Context mContext, ArrayList<Activity_cj> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -33,24 +33,24 @@ public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_select_ac_pt,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_select_ac_cj,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        Activity_pt activity_pt = data.get(position);
+        Activity_cj activity_cj = data.get(position);
 
-        UiUtil.setImage(holder.iv_head, activity_pt.imgUrl);
-        holder.tv_name.setText(activity_pt.name);
-        holder.tv_left.setText("剩余" + activity_pt.surplus);
-        holder.cb_staff.setChecked(activity_pt.checked);
+        holder.tv_name.setText(activity_cj.name);
+        holder.tv_available.setText("有效期：" + activity_cj.beginTime + " - " + activity_cj.endTime);
+        UiUtil.setImage(holder.iv_ac, activity_cj.imgUrl);
+        holder.cb_staff.setChecked(activity_cj.checked);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity_pt.checked = !activity_pt.checked;
+                activity_cj.checked = !activity_cj.checked;
                 notifyDataSetChanged();
             }
         });
@@ -68,16 +68,16 @@ public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.
     }
 
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_head;
+        ImageView iv_ac;
         TextView tv_name;
-        TextView tv_left;
+        TextView tv_available;
         CheckBox cb_staff;
 
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
-            iv_head = (ImageView) itemView.findViewById(R.id.iv_head);
+            iv_ac = (ImageView) itemView.findViewById(R.id.iv_ac);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-            tv_left = (TextView) itemView.findViewById(R.id.tv_left);
+            tv_available = (TextView) itemView.findViewById(R.id.tv_available);
             cb_staff = (CheckBox) itemView.findViewById(R.id.cb_staff);
         }
     }

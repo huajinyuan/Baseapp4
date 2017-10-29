@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -14,6 +15,7 @@ import com.example.choujiang.module.dialog.ProgressDialog;
 import com.example.choujiang.module.titlebar.BaseTitleBar;
 import com.example.choujiang.module.titlebar.TitleBarBuilder;
 import com.example.choujiang.network.exception.ErrorThrowable;
+import com.example.choujiang.utils.BarUtils;
 import com.example.choujiang.utils.ToastUtil;
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.android.ActivityEvent;
@@ -54,6 +56,7 @@ public abstract class BaseActivity<P extends Presenter> extends BaseAutoLayoutAc
         mBaseTitleBar.attach(this, titleBarBuild);
         contentView = LayoutInflater.from(this).inflate(getLayoutId(), null);
         setContentView(contentView);
+        BarUtils.setColor(this, ContextCompat.getColor(this, R.color.color_appBlue), 0);
         initView();
         initData();
         setListener();

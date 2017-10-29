@@ -52,26 +52,24 @@
         <activity android:name=".rxpicture.ui.RxCameraActivity" />
         <activity android:name=".rxpicture.ui.RxCropActivity" />
 
-        <!--拼团-->
-        <activity android:name=".cj.ac_ptbb.BbActivityActivity" />
-        <activity android:name=".cj.ac_ptbb.MemberListActivity" />
-        <activity android:name=".cj.ac_memberget.MemberGetActivity" />
-        <activity android:name=".cj.ac_memberget.MemberGetListActivity" />
-        <activity android:name=".cj.ac_ptbb.PdListActivity" />
-        <activity android:name=".cj.ac_ptList.AcInfoActivity_pt" />
-        <activity android:name=".cj.ac_ptList.AcListActivity_pt" />
-        <activity android:name=".cj.ac_staffSend.AddShopActivity_pt" />
-        <activity android:name=".cj.ac_staffSend.AddStaffActivity_pt" />
-        <activity android:name=".cj.ac_staffSend.ShopActivity_pt" />
-        <activity android:name=".cj.ac_staffSend.StaffActivity_pt" />
-        <activity android:name=".cj.ac_staffSend.StaffSendActivity_pt" />
+        <!--抽奖-->
+        <activity android:name=".cj.ac_cjbb.AcBbActivity" />
+        <activity android:name=".cj.ac_cjbb.CjHistoryActivity" />
+        <activity android:name=".cj.ac_cjbb.StaffRankingActivity" />
+        <activity android:name=".cj.ac_cjbb.TichengDetailActivity" />
+        <activity android:name=".cj.ac_acSetting.AcListActivity_cj" />
+        <activity android:name=".cj.ac_acSetting.AcInfoActivity_cj" />
+        <activity android:name=".cj.ac_withdrawSetting.SettingActivity_cj" />
+        <activity android:name=".cj.ac_withdrawSetting.AccountListActivity_cj" />
         <activity android:name=".cj.ac_withdrawSetting.AccountDetailActivity_pt" />
         <activity android:name=".cj.ac_withdrawSetting.WithdrawActivity_pt" />
-        <activity android:name=".cj.ac_withdrawSetting.AccountListActivity_pt" />
-        <activity android:name=".cj.ac_withdrawSetting.SettingActivity_pt" />
+        <activity android:name=".cj.ac_staffSend.StaffSendActivity_pt" />
         <activity android:name=".cj.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
         <activity android:name=".cj.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
         <activity android:name=".cj.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
+
+        <activity android:name=".cj.ac_memberget.MemberGetActivity" />
+        <activity android:name=".cj.ac_memberget.MemberGetListActivity" />
     </application>
 
 </manifest>

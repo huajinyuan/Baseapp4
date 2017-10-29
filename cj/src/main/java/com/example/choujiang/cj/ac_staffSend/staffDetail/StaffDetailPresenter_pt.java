@@ -54,7 +54,7 @@ public class StaffDetailPresenter_pt extends BasePresenter<StaffDetailActivity_p
 //        });
 //    }
 //    void getReport_pt(int status){
-//        HttpMethods.getInstance().getReport_pt(getView().token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+//        HttpMethods.getInstance().getReport_pt(getView().token, status).subscribe(new Subscriber<Response<Report_cj>>() {
 //
 //            @Override
 //            public void onStart() {
@@ -73,7 +73,7 @@ public class StaffDetailPresenter_pt extends BasePresenter<StaffDetailActivity_p
 //            }
 //
 //            @Override
-//            public void onNext(Response<PtReport_pt> response) {
+//            public void onNext(Response<Report_cj> response) {
 //                if (response.code == 0) {
 //                    getView().setReport(response.data);
 //                    Log.e("aaa======onNext", response.data.toString());

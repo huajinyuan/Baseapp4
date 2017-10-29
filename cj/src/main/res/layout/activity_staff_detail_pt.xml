@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/color_backGrey">
 
-    <include layout="@layout/layout_topbar_pt" />
+    <include layout="@layout/layout_topbar_cj" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_staffSend"

@@ -2,14 +2,10 @@ package com.example.choujiang.network.retrofit;
 
 import android.util.Log;
 
-
-import com.example.choujiang.cj.ac_staffSend.m.StaffSend_pt;
 import com.example.choujiang.cj.m.LoginData_pt;
-import com.example.choujiang.cj.m.PtReport_pt;
+import com.example.choujiang.cj.m.Report_cj;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.network.ComposeResponseData;
-
-import java.util.ArrayList;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -99,14 +95,9 @@ public class HttpMethods {
                 .compose(new ComposeResponseData<Response<LoginData_pt>>());
     }
 
-    public Observable<Response<PtReport_pt>> getReport(String authorization, int status) {
+    public Observable<Response<Report_cj>> getReport(String authorization, int status) {
         return demoService.getReport_pt(authorization, status)
-                .compose(new ComposeResponseData<Response<PtReport_pt>>());
-    }
-
-    public Observable<Response<ArrayList<StaffSend_pt>>> getStaffSends(String authorization, int pageNo, int pageSize) {
-        return demoService.getStaffSends_pt(authorization, pageNo, pageSize)
-                .compose(new ComposeResponseData<Response<ArrayList<StaffSend_pt>>>());
+                .compose(new ComposeResponseData<Response<Report_cj>>());
     }
 
 

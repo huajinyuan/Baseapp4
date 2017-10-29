@@ -1,17 +1,23 @@
 package com.example.choujiang.cj.ac_withdrawSetting;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_staffSend.m.Staff_cj;
+import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
+import com.example.choujiang.network.retrofit.HttpMethods;
 import com.example.choujiang.utils.ACache;
-import com.example.choujiang.utils.AppContext;
+import com.example.choujiang.utils.ACacheKey;
 
 import nucleus.factory.RequiresPresenter;
+import rx.Subscriber;
 
 @RequiresPresenter(WithdrawPresenter_pt.class)
 public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
@@ -22,6 +28,12 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
 
+    TextView tv_name;
+    TextView tv_balance;
+    EditText et_money;
+
+    Staff_cj staff_cj;
+
 
     @Override
     protected int getLayoutId() {
@@ -30,7 +42,6 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -41,11 +52,20 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
+        tv_name = findView(R.id.tv_name);
+        tv_balance = findView(R.id.tv_balance);
+        et_money = findView(R.id.et_money);
     }
 
 
     @Override
     protected void initData() {
+        token = aCache.getAsString(ACacheKey.TOKEN);
+        staff_cj = (Staff_cj) getIntent().getSerializableExtra("staff");
+        if (staff_cj != null) {
+            tv_name.setText(staff_cj.name);
+//            tv_balance.setText(staff_cj.);
+        }
     }
 
 
@@ -57,78 +77,46 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
                 finish();
             }
         });
-//        findViewById(R.id.ll_pt_acList).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                context.startActivity(new Intent(context, BbActivityActivity.class));
-//            }
-//        });
+        findViewById(R.id.bt_withdraw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String money = et_money.getText().toString().trim();
+                if (!money.isEmpty()) {
+                    getData();
+                }
+            }
+        });
     }
 
+    void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.accountWithDraw(token, staff_cj.id,et_money.getText().toString().trim()), new Subscriber<Response>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
 
-//    void login(){
-//        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
-//
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                Log.e("=============", "onStart");
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                Log.e("=============", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("=======onError", e.toString() + "");
-//            }
-//
-//            @Override
-//            public void onNext(Response<LoginData_pt> logdResponse) {
-//                if (logdResponse.code==0){
-//                    aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
-//                    token = logdResponse.data.getToken();
-//                    getReport_pt();
-//                    Log.e("aaa========Token:", token);
-//
-//                }else {
-//                    Log.e("=======onNext", logdResponse.msg);
-//                }
-//            }
-//        });
-//    }
-//    void getReport_pt(int status){
-//        HttpMethods.getInstance().getReport_pt(token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
-//
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                Log.e("aaa", "onStart");
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                Log.e("aaa", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("aaa======onError", e.toString() + "");
-//            }
-//
-//            @Override
-//            public void onNext(Response<PtReport_pt> response) {
-//                if (response.code == 0) {
-//                    setReport(response.data);
-//                    Log.e("aaa======onNext", response.data.toString());
-//                } else {
-//                    Log.e("aaa======onNext", response.msg);
-//                }
-//            }
-//        });
-//    }
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    finish();
+                    Toast.makeText(context, "提现成功", Toast.LENGTH_SHORT).show();
+                    AccountDetailActivity_pt.instance.refresh();
+                } else {
+                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 
 }

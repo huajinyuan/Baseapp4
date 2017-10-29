@@ -35,7 +35,7 @@
                 android:id="@+id/tv_commission"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总提成 ￥1000"
+                android:text="总提成 ￥0"
                 android:layout_marginTop="3dp"/>
         </LinearLayout>
         <LinearLayout
@@ -50,7 +50,7 @@
                 android:id="@+id/tv_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥590.00"
+                android:text="￥0.00"
                 android:textColor="@color/color_appRed"/>
             <ImageView
                 android:layout_width="wrap_content"

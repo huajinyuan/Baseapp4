@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/color_backGrey">
 
-    <include layout="@layout/layout_topbar_pt" />
+    <include layout="@layout/layout_topbar_cj" />
 
     <RelativeLayout
         android:id="@+id/rl_persent"
@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="按拼单消费总额百分比"
+            android:text="按抽奖人数固定金额"
             android:textColor="@color/color_black"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/cb_persent"
@@ -41,14 +41,16 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="11sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:text="10"
-            android:layout_centerVertical="true"
+            android:hint="请输入"
             android:layout_toLeftOf="@id/iv_arrow1"
             android:textSize="17sp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:gravity="center_vertical|right"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -69,7 +71,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="按拼单人数固定额奖励"
+            android:text="按抽奖次数固定额奖励"
             android:textColor="@color/color_black"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/cb_num"
@@ -82,13 +84,15 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="11sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:text="5"
-            android:layout_centerVertical="true"
+            android:hint="请输入"
             android:layout_toLeftOf="@id/iv_arrow2"
             android:textSize="17sp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:gravity="center_vertical|right"/>
     </RelativeLayout>
 </LinearLayout>

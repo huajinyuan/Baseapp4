@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_staffSend.m.Staff_pt;
+import com.example.choujiang.cj.ac_staffSend.m.Staff_cj;
 
 import java.util.ArrayList;
 
@@ -17,11 +17,11 @@ import java.util.ArrayList;
  * Created by  on 2016/9/2.
  */
 public class StaffAdapter_pt extends RecyclerView.Adapter<StaffAdapter_pt.AnchorHotViewHolder> {
-    private ArrayList<Staff_pt> data;
+    private ArrayList<Staff_cj> data;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public StaffAdapter_pt(Context mContext, ArrayList<Staff_pt> mData) {
+    public StaffAdapter_pt(Context mContext, ArrayList<Staff_cj> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -37,7 +37,7 @@ public class StaffAdapter_pt extends RecyclerView.Adapter<StaffAdapter_pt.Anchor
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        Staff_pt staff = data.get(position);
+        Staff_cj staff = data.get(position);
 
         holder.tv_name.setText(staff.name);
         holder.tv_shop.setText(staff.storeName);

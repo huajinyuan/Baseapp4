@@ -45,7 +45,7 @@ public class StaffRankingActivity_pt extends BaseActivity<StaffRankingPresenter_
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动报表");
+        tv_topbar_title.setText("员工排行");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.VISIBLE);

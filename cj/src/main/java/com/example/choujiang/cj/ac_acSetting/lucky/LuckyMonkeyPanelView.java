@@ -38,6 +38,7 @@ public class LuckyMonkeyPanelView extends FrameLayout {
     private static final int DEFAULT_SPEED = 150;
     private static final int MIN_SPEED = 50;
     private int currentSpeed = DEFAULT_SPEED;
+    private ClickListener listener;
 
     public LuckyMonkeyPanelView(@NonNull Context context) {
         this(context, null);
@@ -224,5 +225,21 @@ public class LuckyMonkeyPanelView extends FrameLayout {
 
     public void setImage(int position, String url) {
         itemViewArr[position].setImage(url);
+    }
+
+    public interface ClickListener{
+        void click(int position);
+    }
+    public void setClickListener(ClickListener mListener){
+        itemView1.setOnClickListener(view -> listener.click(0));
+        itemView2.setOnClickListener(view -> listener.click(1));
+        itemView3.setOnClickListener(view -> listener.click(2));
+        itemView6.setOnClickListener(view -> listener.click(3));
+        itemView9.setOnClickListener(view -> listener.click(4));
+        itemView8.setOnClickListener(view -> listener.click(5));
+        itemView7.setOnClickListener(view -> listener.click(6));
+        itemView4.setOnClickListener(view -> listener.click(7));
+
+        listener = mListener;
     }
 }

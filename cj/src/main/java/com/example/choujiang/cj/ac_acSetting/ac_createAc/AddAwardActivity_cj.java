@@ -46,8 +46,8 @@ import rx.Subscriber;
 import static com.example.choujiang.cj.m.StringConfig.QiniuBase;
 
 
-@RequiresPresenter(AddAcPresenter_cj.class)
-public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
+@RequiresPresenter(AddAwardPresenter_cj.class)
+public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     Context context;
     ACache aCache;
     public String token;

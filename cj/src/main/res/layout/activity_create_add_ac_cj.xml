@@ -31,7 +31,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="商品名称"
+                    android:text="活动名称"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -50,7 +50,8 @@
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="11dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:text=""/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"
@@ -78,7 +79,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="商品原价"
+                    android:text="开始时间"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -87,7 +88,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <EditText
-                        android:id="@+id/et_oldPrice"
+                        android:id="@+id/et_beginTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
@@ -98,7 +99,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="11dp"
                         android:textSize="14sp"
-                        android:inputType="numberDecimal"/>
+                        android:focusable="false"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"
@@ -122,11 +123,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appRed"
                     android:text="*"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"/>`
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="拼团价格"
+                    android:text="结束时间"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -135,7 +136,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <EditText
-                        android:id="@+id/et_price"
+                        android:id="@+id/et_endTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
@@ -146,7 +147,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="11dp"
                         android:textSize="14sp"
-                        android:inputType="numberDecimal"/>
+                        android:focusable="false"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"
@@ -174,7 +175,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="拼团个数"
+                    android:text="抽奖次数"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -183,7 +184,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <EditText
-                        android:id="@+id/et_num"
+                        android:id="@+id/et_cjNum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
@@ -217,12 +218,12 @@
                     android:layout_width="11dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appRed"
-                    android:text=""
+                    android:text="*"
                     android:textSize="15sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="视频地址"
+                    android:text="分享获取抽奖"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -231,7 +232,55 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <EditText
-                        android:id="@+id/et_url"
+                        android:id="@+id/et_shareGetNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:layout_weight="1"
+                        android:hint="请填写"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="11dp"
+                        android:textSize="14sp"
+                        android:inputType="number"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:src="@mipmap/icon_arrow_grey_right_pt"/>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="11dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_appRed"
+                    android:text="*"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动说明"
+                    android:textColor="@color/color_black"
+                    android:layout_centerVertical="true"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/et_remark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
@@ -253,12 +302,20 @@
                 android:layout_height="1px"
                 android:background="@color/color_line" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_imgs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="22dp"
+                android:text="活动图片"
+                android:textColor="@color/color_black"
+                android:layout_centerVertical="true"/>
+            <ImageView
+                android:id="@+id/iv_ac"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="22dp"
+                android:src="@mipmap/icon_img_add_cj"/>
         </LinearLayout>
     </ScrollView>
 

@@ -1,6 +1,7 @@
 package com.example.choujiang.cj.ac_acSetting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.choujiang.cj.ac_acSetting.adapter.AcListAdapter_cj;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.model.Response;
@@ -107,7 +109,7 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context, CreateAcActivity_cj.class));
             }
         });
     }

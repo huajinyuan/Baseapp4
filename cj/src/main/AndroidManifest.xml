@@ -70,6 +70,8 @@
 
         <activity android:name=".cj.ac_memberget.MemberGetActivity" />
         <activity android:name=".cj.ac_memberget.MemberGetListActivity" />
+        <activity android:name=".cj.ac_acSetting.ac_createAc.CreateAcActivity_cj" />
+        <activity android:name=".cj.ac_acSetting.ac_createAc.AddAcActivity_cj" />
     </application>
 
 </manifest>

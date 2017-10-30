@@ -1,13 +1,13 @@
 package com.example.choujiang.cj.ac_acSetting.ac_createAc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_acSetting.AcListPresenter_cj;
@@ -29,6 +29,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(AcListPresenter_cj.class)
 public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
+    public static CreateAcActivity_cj instance;
     Context context;
     ACache aCache;
     public String token;
@@ -42,24 +43,24 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
     RecyclerView rv_winHistory;
     TextView tv_name;
     TextView tv_available;
-    TextView tv_stop;
-    TextView tv_abandon;
+    TextView tv_tip;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_ac_info_pt;
+        return R.layout.activity_create_ac_cj;
     }
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动详情");
-        tv_topbar_right.setVisibility(View.VISIBLE);
-        tv_topbar_right.setText("编辑");
+        tv_topbar_title.setText("新增活动");
+        tv_topbar_right.setVisibility(View.GONE);
+        tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
@@ -67,8 +68,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         rv_winHistory = findView(R.id.rv_winHistory);
         tv_name = findView(R.id.tv_name);
         tv_available = findView(R.id.tv_available);
-        tv_stop = findView(R.id.tv_stop);
-        tv_abandon = findView(R.id.tv_abandon);
+        tv_tip = findView(R.id.tv_tip);
     }
 
     @Override
@@ -77,29 +77,26 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         id = getIntent().getStringExtra("id");
         if (id != null) {
             getData();
+        } else {
+            data = new ActivityDetail_cj();
         }
     }
 
-    void setData(ActivityDetail_cj mData){
-        if (mData != null) {
-            data = mData;
+    public void setData(){
+        if (data != null) {
+
+            //活动信息
+            if(data.name!=null)
+                tv_name.setText(data.name);
+            if(data.remarks!=null)
+                tv_tip.setText(data.remarks);
+            if(data.beginTime!=null&&data.endTime!=null)
+                tv_available.setText("时间：" + data.beginTime + "-" + data.endTime);
+
+            //中奖记录
             if (data.awardDetails != null) {
                 setRv_winHistory(data.awardDetails);
             }
-            tv_name.setText(data.name);
-            tv_available.setText("时间：" + data.beginTime + "-" + data.endTime);
-
-            //检查活动状态
-            if (data.status == 2) {
-                tv_stop.setClickable(false);
-                tv_stop.setText("已停用");
-            } else if (data.status == 3) {
-                tv_stop.setClickable(false);
-                tv_abandon.setClickable(false);
-                tv_abandon.setText("已作废");
-                finish();
-            }
-
             //添加转盘商品
             if (data.awards != null) {
                 ArrayList<String> urls = new ArrayList<>();
@@ -133,20 +130,25 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 }
             }
         });
-        findViewById(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (data != null) {
-                    changeAcStatus(2);
+
                 }
             }
         });
-        findViewById(R.id.tv_abandon).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.img_tip).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (data != null) {
-                    changeAcStatus(3);
-                }
+            public void onClick(View view) {
+                startActivity(new Intent(context, AddAcActivity_cj.class));
+            }
+        });
+
+        lucky_panel.setClickListener(new LuckyMonkeyPanelView.ClickListener() {
+            @Override
+            public void click(int position) {
+                Log.e("aaa", position + "");
             }
         });
     }
@@ -165,7 +167,8 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
 
             @Override
             public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
-                setData(arrayListResponse.data);
+                data = arrayListResponse.data;
+                setData();
             }
         });
     }
@@ -185,16 +188,15 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
             @Override
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
-                    if (status == 2) {
-                        Toast.makeText(context, "已停用", Toast.LENGTH_SHORT).show();
-                        tv_stop.setClickable(false);
-                        tv_stop.setText("已停用");
-                    } else if (status == 3) {
-                        Toast.makeText(context, "已作废", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
     }
 }

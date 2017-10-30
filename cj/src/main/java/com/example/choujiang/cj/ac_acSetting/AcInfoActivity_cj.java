@@ -46,7 +46,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_ac_info_pt;
+        return R.layout.activity_ac_info_cj;
     }
 
     @Override

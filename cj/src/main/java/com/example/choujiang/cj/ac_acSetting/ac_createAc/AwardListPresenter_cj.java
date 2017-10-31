@@ -10,7 +10,7 @@ import com.example.choujiang.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class CreateAcPresenter_cj extends BasePresenter<CreateAcActivity_cj> {
+public class AwardListPresenter_cj extends BasePresenter<AwardListActivity_cj> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;

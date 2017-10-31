@@ -8,13 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_acSetting.AcInfoActivity_cj;
 import com.example.choujiang.cj.ac_acSetting.AcListPresenter_cj;
 import com.example.choujiang.cj.ac_acSetting.adapter.WinHistoryAdapter_cj;
 import com.example.choujiang.cj.ac_acSetting.lucky.LuckyMonkeyPanelView;
 import com.example.choujiang.cj.ac_acSetting.m.ActivityDetail_cj;
 import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
+import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -39,7 +42,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
     LuckyMonkeyPanelView lucky_panel;
 
     String  id;
-    ActivityDetail_cj data;
+    ActivityDetail_cj data = new ActivityDetail_cj();
     RecyclerView rv_winHistory;
     TextView tv_name;
     TextView tv_available;
@@ -75,41 +78,54 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         id = getIntent().getStringExtra("id");
+        setData();
         if (id != null) {
             getData();
-        } else {
-            data = new ActivityDetail_cj();
         }
     }
 
     public void setData(){
-        if (data != null) {
+        //活动信息
+        if (data.name != null)
+            tv_name.setText(data.name);
+        if (data.remarks != null)
+            tv_tip.setText(data.remarks);
+        if (data.beginTime != null && data.endTime != null)
+            tv_available.setText("时间：" + data.beginTime + "-" + data.endTime);
 
-            //活动信息
-            if(data.name!=null)
-                tv_name.setText(data.name);
-            if(data.remarks!=null)
-                tv_tip.setText(data.remarks);
-            if(data.beginTime!=null&&data.endTime!=null)
-                tv_available.setText("时间：" + data.beginTime + "-" + data.endTime);
-
-            //中奖记录
-            if (data.awardDetails != null) {
-                setRv_winHistory(data.awardDetails);
+        //中奖记录
+        if (data.awardDetails != null) {
+            setRv_winHistory(data.awardDetails);
+            if (data.awardDetails.size() > 1) {
+                findViewById(R.id.view_win).setVisibility(View.GONE);
             }
-            //添加转盘商品
-            if (data.awards != null) {
-                ArrayList<String> urls = new ArrayList<>();
-                for(int i=0;i<data.awards.size();i++) {
-                    urls.add(data.awards.get(i).imgUrl);
-                }
-                lucky_panel.setImage(urls);
+        } else {
+            data.awardDetails = new ArrayList<>();
+        }
+        //添加转盘商品
+        if (data.awards != null) {
+            ArrayList<String> urls = new ArrayList<>();
+            for (int i = 0; i < data.awards.size(); i++) {
+                urls.add(data.awards.get(i).imgUrl);
             }
+            lucky_panel.setImage(urls);
+        } else {
+            data.awards = new ArrayList<>();
         }
     }
 
     void setRv_winHistory(ArrayList<CjHistory> cjHistories){
         WinHistoryAdapter_cj adapter_cj = new WinHistoryAdapter_cj(context, cjHistories);
+        adapter_cj.setClickListener(new WinHistoryAdapter_cj.ClickListener() {
+            @Override
+            public void click() {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动！", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", data.id));
+                }
+            }
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rv_winHistory.setLayoutManager(layoutManager);
         rv_winHistory.setAdapter(adapter_cj);
@@ -133,9 +149,10 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data != null) {
-
+                if (AcInfoActivity_cj.instance != null) {
+                    AcInfoActivity_cj.instance.getData();
                 }
+                finish();
             }
         });
         findViewById(R.id.img_tip).setOnClickListener(new View.OnClickListener() {
@@ -144,11 +161,30 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 startActivity(new Intent(context, AddAcActivity_cj.class));
             }
         });
+        findViewById(R.id.view_win).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动！", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", data.id));
+                }
+            }
+        });
 
         lucky_panel.setClickListener(new LuckyMonkeyPanelView.ClickListener() {
             @Override
             public void click(int position) {
-                Log.e("aaa", position + "");
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动！", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(context, AddAwardActivity_cj.class);
+                    intent.putExtra("position", position);
+                    if (position < data.awards.size()) {
+                        intent.putExtra("award", data.awards.get(position));
+                    }
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -167,14 +203,37 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
 
             @Override
             public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
-                data = arrayListResponse.data;
-                setData();
+                if (arrayListResponse.data != null) {
+                    data = arrayListResponse.data;
+                    setData();
+                }
             }
         });
     }
 
-    void changeAcStatus(int status){
-        HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, data.id, status), new Subscriber<Response>() {
+    void addAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, data.name, data.imgUrl, data.beginTime, data.endTime, data.count + "", data.shareCount + "", data.exchangeCount + "", data.remarks), new Subscriber<Response<Activity_cj>>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<Activity_cj> arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    data.id = arrayListResponse.data.id;
+                    Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    void editAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, data.name, data.imgUrl, data.beginTime, data.endTime, data.count + "", data.shareCount + "", data.exchangeCount + "", data.remarks, data.id), new Subscriber<Response>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -188,7 +247,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
             @Override
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
-
+                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -72,6 +72,10 @@
         <activity android:name=".cj.ac_memberget.MemberGetListActivity" />
         <activity android:name=".cj.ac_acSetting.ac_createAc.CreateAcActivity_cj" />
         <activity android:name=".cj.ac_acSetting.ac_createAc.AddAcActivity_cj" />
+        <activity android:name=".cj.ac_acSetting.ac_createAc.AddAwardActivity_cj" />
+        <activity android:name=".cj.ac_acSetting.ac_createAc.AddWinListActivity_pt" />
+        <activity android:name=".cj.ac_acSetting.ac_createAc.AddWinActivity_pt" />
+        <activity android:name=".cj.ac_acSetting.ac_createAc.AwardListActivity_cj" />
     </application>
 
 </manifest>

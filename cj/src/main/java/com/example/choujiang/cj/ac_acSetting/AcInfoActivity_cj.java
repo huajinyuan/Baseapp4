@@ -1,6 +1,7 @@
 package com.example.choujiang.cj.ac_acSetting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.choujiang.cj.ac_acSetting.adapter.WinHistoryAdapter_cj;
 import com.example.choujiang.cj.ac_acSetting.lucky.LuckyMonkeyPanelView;
 import com.example.choujiang.cj.ac_acSetting.m.ActivityDetail_cj;
@@ -28,6 +30,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(AcListPresenter_cj.class)
 public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
+    public static AcInfoActivity_cj instance;
     Context context;
     ACache aCache;
     public String token;
@@ -40,6 +43,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
     ActivityDetail_cj data;
     RecyclerView rv_winHistory;
     TextView tv_name;
+    TextView tv_tip;
     TextView tv_available;
     TextView tv_stop;
     TextView tv_abandon;
@@ -51,6 +55,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -65,6 +70,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
         lucky_panel = findView(R.id.lucky_panel);
         rv_winHistory = findView(R.id.rv_winHistory);
         tv_name = findView(R.id.tv_name);
+        tv_tip = findView(R.id.tv_tip);
         tv_available = findView(R.id.tv_available);
         tv_stop = findView(R.id.tv_stop);
         tv_abandon = findView(R.id.tv_abandon);
@@ -86,6 +92,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
                 setRv_winHistory(data.awardDetails);
             }
             tv_name.setText(data.name);
+            tv_tip.setText(data.remarks);
             tv_available.setText("时间：" + data.beginTime + "-" + data.endTime);
 
             //检查活动状态
@@ -132,6 +139,12 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
                 }
             }
         });
+        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, CreateAcActivity_cj.class).putExtra("id", id));
+            }
+        });
         findViewById(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +163,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
         });
     }
 
-    void getData(){
+    public void getData(){
         HttpMethods.start(HttpMethods.getInstance().demoService.getAcDetail_cj(token, id), new Subscriber<Response<ActivityDetail_cj>>() {
             @Override
             public void onCompleted() {
@@ -195,5 +208,11 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
     }
 }

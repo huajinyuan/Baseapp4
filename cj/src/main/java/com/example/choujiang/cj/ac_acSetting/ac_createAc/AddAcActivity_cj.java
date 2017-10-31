@@ -163,6 +163,11 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                     CreateAcActivity_cj.instance.data.remarks = remark;
                     CreateAcActivity_cj.instance.data.imgUrl = imgUrl;
                     CreateAcActivity_cj.instance.setData();
+                    if (CreateAcActivity_cj.instance.data.id == null) {
+                        CreateAcActivity_cj.instance.addAc();
+                    } else {
+                        CreateAcActivity_cj.instance.editAc();
+                    }
                     finish();
                 }
             }

@@ -1,27 +1,30 @@
-package com.example.choujiang.cj.ac_acSetting.adapter;
+package com.example.choujiang.cj.ac_acSetting.ac_createAc.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
+import com.example.choujiang.cj.ac_acSetting.ac_createAc.AddWinActivity_pt;
+import com.example.choujiang.cj.ac_acSetting.ac_createAc.AwardListActivity_cj;
+import com.example.choujiang.cj.ac_acSetting.m.Award;
+import com.example.choujiang.utils.UiUtil;
 
 import java.util.ArrayList;
 
 /**
  * Created by  on 2016/9/2.
  */
-public class WinHistoryAdapter_cj extends RecyclerView.Adapter<WinHistoryAdapter_cj.AnchorHotViewHolder> {
-    private ArrayList<CjHistory> data;
+public class AwardListAdapter_cj extends RecyclerView.Adapter<AwardListAdapter_cj.AnchorHotViewHolder> {
+    private ArrayList<Award> data;
     private Context context;
     LayoutInflater layoutInflater;
-    ClickListener listener;
 
-    public WinHistoryAdapter_cj(Context mContext, ArrayList<CjHistory> mData) {
+    public AwardListAdapter_cj(Context mContext, ArrayList<Award> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -30,21 +33,26 @@ public class WinHistoryAdapter_cj extends RecyclerView.Adapter<WinHistoryAdapter
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_win_history,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_award_list_cj,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        CjHistory activity_pt = data.get(position);
+        Award award = data.get(position);
 
-        holder.tv_name.setText(activity_pt.mobile);
-        holder.tv_jiangpin.setText(activity_pt.awardName);
+        holder.tv_name.setText(award.name);
+        holder.tv_price.setText("￥：" + award.price);
+        UiUtil.setImage(holder.iv_ac, award.imgUrl);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                listener.click();
+            public void onClick(View v) {
+                AddWinActivity_pt.instance.award = award;
+                AddWinActivity_pt.instance.et_award.setText("￥：" + award.price + "元" + award.name);
+                AwardListActivity_cj.instance.finish();
+
             }
         });
     }
@@ -61,20 +69,15 @@ public class WinHistoryAdapter_cj extends RecyclerView.Adapter<WinHistoryAdapter
     }
 
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
+        ImageView iv_ac;
         TextView tv_name;
-        TextView tv_jiangpin;
+        TextView tv_price;
 
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
+            iv_ac = (ImageView) itemView.findViewById(R.id.iv_ac);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-            tv_jiangpin = (TextView) itemView.findViewById(R.id.tv_jiangpin);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_price);
         }
-    }
-
-    public interface ClickListener{
-        void click();
-    }
-    public void setClickListener(ClickListener mListener){
-        listener = mListener;
     }
 }

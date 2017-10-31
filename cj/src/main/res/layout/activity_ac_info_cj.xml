@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
-                    android:text="十周年*幸运大转盘抽Iphone 8"
+                    android:text=""
                     android:textColor="@color/colorAccent" />
 
                 <TextView
@@ -47,7 +47,7 @@
                     android:layout_marginLeft="@dimen/dp_60"
                     android:layout_marginRight="@dimen/dp_60"
                     android:layout_marginTop="64dp"
-                    android:text="说明：先抽先得，数量有限！每人可以无条件获取1次抽奖资格，每分享给1个朋友可再获得1次抽奖机会"
+                    android:text=""
                     android:textColor="@color/text_color"
                     android:textSize="11sp" />
 

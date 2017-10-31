@@ -1,7 +1,6 @@
-package com.example.choujiang.cj.ac_acSetting;
+package com.example.choujiang.cj.ac_acSetting.ac_createAc;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_acSetting.ac_createAc.CreateAcActivity_cj;
-import com.example.choujiang.cj.ac_acSetting.adapter.AcListAdapter_cj;
-import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
+import com.example.choujiang.cj.ac_acSetting.ac_createAc.adapter.AwardListAdapter_cj;
+import com.example.choujiang.cj.ac_acSetting.m.Award;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -25,8 +23,9 @@ import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
 
-@RequiresPresenter(AcListPresenter_cj.class)
-public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
+@RequiresPresenter(AwardListPresenter_cj.class)
+public class AwardListActivity_cj extends BaseActivity<AwardListPresenter_cj> {
+    public static AwardListActivity_cj instance;
     Context context;
     ACache aCache;
     public String token;
@@ -35,11 +34,10 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
     ImageView iv_topbar_right;
 
     RecyclerView rv_staffSend;
-    AcListAdapter_cj adapter;
+    AwardListAdapter_cj adapter;
     LinearLayoutManager layoutManager;
-    ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
-    boolean canGet = true;
-    int page = 1;
+    ArrayList<Award> pinDan_pts = new ArrayList<>();
+    String id;
 
     @Override
     protected int getLayoutId() {
@@ -48,14 +46,15 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动列表");
-        tv_topbar_right.setVisibility(View.VISIBLE);
-        tv_topbar_right.setText("筛选");
+        tv_topbar_title.setText("奖品列表");
+        tv_topbar_right.setVisibility(View.GONE);
+        tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
@@ -65,24 +64,14 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
+        id = getIntent().getStringExtra("id");
         getData();
-
-        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                        if(canGet)
-                            getData();
-            }
-        });
     }
 
-    void setRv(ArrayList<Activity_cj> activity_cjs) {
+    void setRv(ArrayList<Award> activity_cjs) {
         if (adapter == null) {
             pinDan_pts.addAll(activity_cjs);
-            adapter = new AcListAdapter_cj(context, pinDan_pts);
+            adapter = new AwardListAdapter_cj(context, pinDan_pts);
             layoutManager = new LinearLayoutManager(context);
             rv_staffSend.setLayoutManager(layoutManager);
             rv_staffSend.setAdapter(adapter);
@@ -100,22 +89,10 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
                 finish();
             }
         });
-        findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, CreateAcActivity_cj.class));
-            }
-        });
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 10, 0), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAwardList(token, id), new Subscriber<Response<ArrayList<Award>>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -127,12 +104,15 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
             }
 
             @Override
-            public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
+            public void onNext(Response<ArrayList<Award>> arrayListResponse) {
                 setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
             }
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
+    }
 }

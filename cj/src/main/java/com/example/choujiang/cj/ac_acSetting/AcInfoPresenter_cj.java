@@ -57,7 +57,7 @@ public class AcInfoPresenter_cj extends BasePresenter<AcInfoActivity_cj> {
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_pt_ac:
-                intent = new Intent(mContext, AcListActivity_cj.class);
+                intent = new Intent(mContext, AwardListActivity_cj.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberget:

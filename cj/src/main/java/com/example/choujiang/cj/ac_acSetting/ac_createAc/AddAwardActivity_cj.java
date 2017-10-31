@@ -14,14 +14,13 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_acSetting.m.Award;
 import com.example.choujiang.cj.ac_acSetting.m.MyBitmapUtil;
 import com.example.choujiang.cj.ac_acSetting.m.QiniuToKen;
 import com.example.choujiang.model.Response;
@@ -38,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.Calendar;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -56,20 +54,21 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     ImageView iv_topbar_right;
 
     String imgUrl;
-    String strDate;
+    String name, price, num, awardOdds;
 
     EditText et_name;
-    EditText et_beginTime;
-    EditText et_endTime;
-    EditText et_cjNum;
-    EditText et_shareGetNum;
-    EditText et_remark;
+    EditText et_price;
+    EditText et_num;
+    EditText et_odds;
     ImageView iv_ac;
     String sdcardPath;
 
+    Award award;
+    int position;
+
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_create_add_ac_cj;
+        return R.layout.activity_create_add_award_cj;
     }
 
     @Override
@@ -79,18 +78,16 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("活动设置");
+        tv_topbar_title.setText("奖品设置");
         tv_topbar_right.setVisibility(View.VISIBLE);
         tv_topbar_right.setText("保存");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
         et_name = (EditText) findViewById(R.id.et_name);
-        et_beginTime = (EditText) findViewById(R.id.et_beginTime);
-        et_endTime = (EditText) findViewById(R.id.et_endTime);
-        et_cjNum = (EditText) findViewById(R.id.et_cjNum);
-        et_shareGetNum = (EditText) findViewById(R.id.et_shareGetNum);
-        et_remark = (EditText) findViewById(R.id.et_remark);
+        et_price = (EditText) findViewById(R.id.et_price);
+        et_num = (EditText) findViewById(R.id.et_num);
+        et_odds = (EditText) findViewById(R.id.et_odds);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
 
         getPermissions(this);
@@ -101,33 +98,31 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
+        award = (Award) getIntent().getSerializableExtra("award");
+        position = getIntent().getIntExtra("position", 0);
         setData();
     }
 
     void setData(){
-        if (CreateAcActivity_cj.instance.data != null) {
-            if (CreateAcActivity_cj.instance.data.name != null) {
-                et_name.setText(CreateAcActivity_cj.instance.data.name);
+        if (award != null) {
+            if (award.name != null) {
+                et_name.setText(award.name);
             }
-            if (CreateAcActivity_cj.instance.data.beginTime != null) {
-                et_beginTime.setText(CreateAcActivity_cj.instance.data.beginTime);
+            if (award.price != 0) {
+                et_price.setText(award.price + "");
             }
-            if (CreateAcActivity_cj.instance.data.endTime != null) {
-                et_endTime.setText(CreateAcActivity_cj.instance.data.endTime);
+            if (award.num != 0) {
+                et_num.setText(award.num + "");
             }
-            if (CreateAcActivity_cj.instance.data.count != 0) {
-                et_cjNum.setText(CreateAcActivity_cj.instance.data.count + "");
+            if (award.awardOdds != 0) {
+                et_odds.setText(award.awardOdds + "");
             }
-            if (CreateAcActivity_cj.instance.data.shareCount != 0) {
-                et_shareGetNum.setText(CreateAcActivity_cj.instance.data.shareCount + "");
-            }
-            if (CreateAcActivity_cj.instance.data.remarks != null) {
-                et_remark.setText(CreateAcActivity_cj.instance.data.remarks);
-            }
-            if (CreateAcActivity_cj.instance.data.imgUrl != null) {
-                imgUrl = CreateAcActivity_cj.instance.data.imgUrl;
+            if (award.imgUrl != null) {
+                imgUrl = award.imgUrl;
                 UiUtil.setImage(iv_ac, imgUrl);
             }
+        } else {
+            award = new Award();
         }
     }
 
@@ -142,28 +137,36 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name, beginTime, endTime, cjNum, shareGetNum, remark;
                 name = et_name.getText().toString().trim();
-                beginTime = et_beginTime.getText().toString().trim();
-                endTime = et_endTime.getText().toString().trim();
-                cjNum = et_cjNum.getText().toString().trim();
-                shareGetNum = et_shareGetNum.getText().toString().trim();
-                remark = et_remark.getText().toString().trim();
+                price = et_price.getText().toString().trim();
+                num = et_num.getText().toString().trim();
+                awardOdds = et_odds.getText().toString().trim();
 
-                if (name.isEmpty() || beginTime.isEmpty() || endTime.isEmpty() || cjNum.isEmpty() || shareGetNum.isEmpty() || remark.isEmpty()) {
+                if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty()) {
                     Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else if (imgUrl == null) {
                     Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
                 } else {
-                    CreateAcActivity_cj.instance.data.name = name;
-                    CreateAcActivity_cj.instance.data.beginTime = beginTime;
-                    CreateAcActivity_cj.instance.data.endTime = endTime;
-                    CreateAcActivity_cj.instance.data.count = Integer.parseInt(cjNum);
-                    CreateAcActivity_cj.instance.data.shareCount = Integer.parseInt(shareGetNum);
-                    CreateAcActivity_cj.instance.data.remarks = remark;
-                    CreateAcActivity_cj.instance.data.imgUrl = imgUrl;
+                    price = price.equals(".") ? ".0" : price;
+                    awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
+                    award.name = name;
+                    award.price = Double.parseDouble(price);
+                    award.num = Integer.parseInt(num);
+                    award.awardOdds = Double.parseDouble(awardOdds);
+                    award.imgUrl = imgUrl;
+
+                    if (position >= CreateAcActivity_cj.instance.data.awards.size()) {
+                        CreateAcActivity_cj.instance.data.awards.add(award);
+                        addAward();
+                    } else {
+                        CreateAcActivity_cj.instance.data.awards.get(position).name = award.name;
+                        CreateAcActivity_cj.instance.data.awards.get(position).price = award.price;
+                        CreateAcActivity_cj.instance.data.awards.get(position).num = award.num;
+                        CreateAcActivity_cj.instance.data.awards.get(position).awardOdds = award.awardOdds;
+                        CreateAcActivity_cj.instance.data.awards.get(position).imgUrl = award.imgUrl;
+                        editAward();
+                    }
                     CreateAcActivity_cj.instance.setData();
-                    finish();
                 }
             }
         });
@@ -171,18 +174,6 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             @Override
             public void onClick(View v) {
                 showPhotodialog();
-            }
-        });
-        findViewById(R.id.et_beginTime).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogDatePicker(et_beginTime);
-            }
-        });
-        findViewById(R.id.et_endTime).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogDatePicker(et_endTime);
             }
         });
     }
@@ -314,43 +305,49 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         }
     };
 
-    public void showDialogDatePicker(EditText et) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTransBackGround);
-        final AlertDialog dialog_date = builder.create();
-        dialog_date.show();
-        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_datepicker, null);
-        dialog_date.setContentView(view_dialog);
-        DatePicker picker = (DatePicker) view_dialog.findViewById(R.id.date_picker);
-        Button bt_yes = (Button) view_dialog.findViewById(R.id.bt_yes);
-        Button bt_no = (Button) view_dialog.findViewById(R.id.bt_no);
-
-        //---------setCalender
-        Calendar calendar = Calendar.getInstance();
-        int int_Year = calendar.get(Calendar.YEAR);
-        int int_Month = calendar.get(Calendar.MONTH);
-        int int_Day = calendar.get(Calendar.DAY_OF_MONTH);
-        strDate = int_Year + "-" + String.format("%02d", (int_Month + 1)) + "-" + String.format("%02d", int_Day);
-
-        picker.init(int_Year, int_Month, int_Day, new DatePicker.OnDateChangedListener() {
+    void addAward(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, CreateAcActivity_cj.instance.data.id, name, price, num, awardOdds, imgUrl), new Subscriber<Response<Award>>() {
             @Override
-            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-                Log.e("aaa", "" + i2);
-                strDate = i + "-" + String.format("%02d", (i1 + 1)) + "-" + String.format("%02d", i2);
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<Award> arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    CreateAcActivity_cj.instance.data.awards.get(CreateAcActivity_cj.instance.data.awards.size() - 1).id = arrayListResponse.data.id;
+                    Toast.makeText(context, "添加奖品成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 
-        bt_yes.setOnClickListener(new View.OnClickListener() {
+    }
+    void editAward(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, CreateAcActivity_cj.instance.data.id, name, price, num, awardOdds, imgUrl, award.id), new Subscriber<Response>() {
             @Override
-            public void onClick(View v) {
-                et.setText(strDate);
-                dialog_date.dismiss();
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
             }
-        });
-        bt_no.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                dialog_date.dismiss();
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
     }
+
 }

@@ -2,6 +2,7 @@ package com.example.choujiang.network.retrofit;
 
 
 import com.example.choujiang.cj.ac_acSetting.m.ActivityDetail_cj;
+import com.example.choujiang.cj.ac_acSetting.m.Award;
 import com.example.choujiang.cj.ac_acSetting.m.QiniuToKen;
 import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
 import com.example.choujiang.cj.ac_cjbb.m.TichengDetail;
@@ -103,5 +104,29 @@ public interface ApiStores {
     //获取七牛上传token
     @GET("api/common/uploadTokens")
     Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);
+
+    //活动奖品列表
+    @GET("api/cj/cjActivityAward/list")
+    Observable<Response<ArrayList<Award>>> getAwardList(@Header("authorization") String authorization, @Query("actId") String actId);
+
+    //新增中奖记录
+    @POST("api/cj/cjAwardDetail/saveRecord")
+    Observable<Response> saveWinHistory(@Header("authorization") String authorization, @Query("actId") String actId, @Query("mobile") String mobile, @Query("awardId") String awardId);
+
+    //创建活动
+    @POST("api/cj/cjActivity/save")
+    Observable<Response<Activity_cj>> saveAc(@Header("authorization") String authorization, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("count") String count, @Query("shareCount") String shareCount, @Query("exchangeCount") String exchangeCount, @Query("remarks") String remarks);
+
+    //修改活动
+    @POST("api/cj/cjActivity/save")
+    Observable<Response> saveAc(@Header("authorization") String authorization, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("count") String count, @Query("shareCount") String shareCount, @Query("exchangeCount") String exchangeCount, @Query("remarks") String remarks, @Query("actId") String actId);
+
+    //创建奖品
+    @POST("api/cj/cjActivityAward/save")
+    Observable<Response<Award>> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("awardImgUrl") String awardImgUrl);
+
+    //修改奖品
+    @POST("api/cj/cjActivityAward/save")
+    Observable<Response> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("awardImgUrl") String awardImgUrl, @Query("awardId") String awardId);
 
 }

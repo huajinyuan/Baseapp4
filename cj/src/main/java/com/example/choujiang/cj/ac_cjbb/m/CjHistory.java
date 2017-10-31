@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class CjHistory implements Serializable {
+    public boolean uploaded = false;
     public String id;
     public String isNewRecord;
     public String createDate;

@@ -87,7 +87,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         }
     }
 
-    void getReport(){
+    void getReport() {
         getReport(0);
     }
 
@@ -111,6 +111,13 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
                 context.startActivity(new Intent(context, PdListActivity.class));
             }
         });
+        findViewById(R.id.ll_pt_ptreback).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                context.startActivity(new Intent(context, StaffSendActivity_pt.class));
+            }
+        });
+
         findViewById(R.id.ll_pt_staffRanking).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +148,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
                 context.startActivity(new Intent(context, StaffSendActivity_pt.class));
             }
         });
+
     }
 
     void setReport(PtReport_pt ptReport_pt) {
@@ -150,8 +158,8 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         tv_spellTogether.setText(ptReport_pt.getSpellTogether() + "");
     }
 
-    void login(){
-        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
+    void login() {
+        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -170,19 +178,20 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
             @Override
             public void onNext(Response<LoginData_pt> logdResponse) {
-                if (logdResponse.code==0){
+                if (logdResponse.code == 0) {
                     aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
                     token = logdResponse.data.getToken();
                     getReport();
                     Log.e("aaa========Token:", token);
 
-                }else {
+                } else {
                     Log.e("=======onNext", logdResponse.msg);
                 }
             }
         });
     }
-    void getReport(int status){
+
+    void getReport(int status) {
         HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
 
             @Override

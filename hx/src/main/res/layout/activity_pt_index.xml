@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/color_appBlue">
+    android:background="@color/color_appBlue"
+    android:orientation="vertical">
 
     <include layout="@layout/layout_topbar_pt" />
 
@@ -11,17 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="15dp">
+                android:paddingRight="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,14 +47,14 @@
                     android:text="0"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/sp_20"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="3dp"
-                    android:text="带动营业额"
+                    android:text="参与人数"
                     android:textColor="@color/color_white"
                     android:textSize="16sp" />
 
@@ -61,9 +63,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
                 android:background="@color/color_blue"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,14 +86,14 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/color_white"
-                            android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_3"
-                            android:text="拼团总人数"
+                            android:text="代抽人数"
                             android:textColor="@color/color_white" />
 
                     </LinearLayout>
@@ -118,14 +120,14 @@
                             android:text="0"
                             android:textColor="@color/color_white"
                             android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_3"
-                            android:text="已成功拼团"
-                            android:textColor="@color/color_white"/>
+                            android:text="意向客户"
+                            android:textColor="@color/color_white" />
 
                     </LinearLayout>
 
@@ -151,13 +153,13 @@
                             android:text="0"
                             android:textColor="@color/color_white"
                             android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_3"
-                            android:text="拼团进行中"
+                            android:text="转化客户"
                             android:textColor="@color/color_white" />
                     </LinearLayout>
                 </LinearLayout>
@@ -171,11 +173,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="25dp"
                         android:text="报表"
                         android:textColor="@color/color_text"
-                        android:textSize="@dimen/sp_14"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="25dp"/>
+                        android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="match_parent"
@@ -194,72 +196,116 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="33dp"
                                 android:layout_height="33dp"
-                                android:src="@mipmap/icon_activity_list"/>
+                                android:src="@mipmap/icon_activity_list" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:text="活动报表"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_pt_staffRanking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="33dp"
                                 android:layout_height="33dp"
-                                android:src="@mipmap/icon_member_list"/>
+                                android:src="@mipmap/icon_member_list" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:text="员工排行"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_pt_ptHistory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="33dp"
                                 android:layout_height="33dp"
-                                android:src="@mipmap/icon_pt_l"/>
+                                android:src="@mipmap/icon_pt_l" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="拼团记录"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:text="意向客户"
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
+                        <!--<LinearLayout-->
+                        <!--android:id="@+id/ll_pt_ptreback"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_horizontal"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<ImageView-->
+                        <!--android:layout_width="33dp"-->
+                        <!--android:layout_height="33dp"-->
+                        <!--android:src="@mipmap/icon_pt_l" />-->
+
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="8dp"-->
+                        <!--android:text="回访记录"-->
+                        <!--android:textColor="@color/color_text_grey_main"-->
+                        <!--android:textSize="13sp" />-->
+                        <!--</LinearLayout>-->
                         <LinearLayout
+                            android:id="@+id/ll_pt_ptreback"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:src="@mipmap/icon_pt_l" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="回访记录"
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="35dp"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginTop="35dp"
                         android:text="设置"
                         android:textColor="@color/color_text"
                         android:textSize="@dimen/sp_14" />
@@ -282,76 +328,87 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@mipmap/icon_pt_activity"/>
+                                android:src="@mipmap/icon_pt_activity" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="拼团活动"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:text="活动设置"
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_pt_setting"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@mipmap/icon_setting_tc"/>
+                                android:src="@mipmap/icon_setting_tc" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:text="提成设置"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_pt_staffSend"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@mipmap/icon_member_send_pt"/>
+                                android:src="@mipmap/icon_member_send_pt" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:text="员工发送"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_pt_change"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@mipmap/icon_user_get"/>
+                                android:src="@mipmap/icon_user_get" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:text="客户兑换"
-                                android:textSize="13sp"
-                                android:textColor="@color/color_text_grey_main"/>
+                                android:textColor="@color/color_text_grey_main"
+                                android:textSize="13sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

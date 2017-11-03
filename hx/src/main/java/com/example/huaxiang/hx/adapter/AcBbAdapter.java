@@ -1,12 +1,14 @@
 package com.example.huaxiang.hx.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_ptbb.BbInfoActivity;
 
 
 /**
@@ -42,6 +44,13 @@ public class AcBbAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         View v = inflater.inflate(R.layout.layout_acbb_item, null);
+        v.setOnClickListener(view1 -> go2Info());
         return v;
+    }
+
+    public void go2Info() {
+
+        Intent intent = new Intent(context, BbInfoActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.choujiang.cj.ac_cjbb;
+package com.example.huaxiang.hx.ac_bb;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_cjbb.adapter.StaffRankingAdapter;
-import com.example.choujiang.cj.ac_staffSend.m.Staff_cj;
-import com.example.choujiang.model.Response;
-import com.example.choujiang.module.base.BaseActivity;
-import com.example.choujiang.network.retrofit.HttpMethods;
-import com.example.choujiang.utils.ACache;
-import com.example.choujiang.utils.ACacheKey;
+import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_bb.adapter.StaffRankingAdapter;
+import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
+import com.example.huaxiang.model.Response;
+import com.example.huaxiang.module.base.BaseActivity;
+import com.example.huaxiang.network.retrofit.HttpMethods;
+import com.example.huaxiang.utils.ACache;
+import com.example.huaxiang.utils.ACacheKey;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,7 @@ public class StaffRankingActivity extends BaseActivity<StaffRankingPresenter> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_staff_ranking_cj;
+        return R.layout.activity_staff_ranking_hx;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class StaffRankingActivity extends BaseActivity<StaffRankingPresenter> {
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.VISIBLE);
-        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
+        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
         iv_topbar_right_detail.setVisibility(View.VISIBLE);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);

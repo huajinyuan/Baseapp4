@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_bb.AcBbActivity;
+import com.example.huaxiang.hx.ac_bb.IntentionCustomerActivity;
+import com.example.huaxiang.hx.ac_bb.RebackListActivity;
+import com.example.huaxiang.hx.ac_bb.StaffRankingActivity;
 import com.example.huaxiang.hx.ac_memberget.MemberGetActivity;
 import com.example.huaxiang.hx.ac_ptList.AcListActivity_pt;
-import com.example.huaxiang.hx.ac_ptbb.MemberListActivity;
-import com.example.huaxiang.hx.ac_ptbb.PdListActivity;
 import com.example.huaxiang.hx.ac_staffSend.StaffSendActivity_pt;
 import com.example.huaxiang.hx.ac_withdrawSetting.SettingActivity_pt;
 import com.example.huaxiang.hx.m.LoginData_pt;
@@ -96,23 +97,23 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
                 context.startActivity(new Intent(context, AcBbActivity.class));
             }
         });
-        findViewById(R.id.ll_pt_ptHistory).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_intention).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, PdListActivity.class));
+                context.startActivity(new Intent(context, IntentionCustomerActivity.class));
             }
         });
         findViewById(R.id.ll_pt_ptreback).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                context.startActivity(new Intent(context, StaffSendActivity_pt.class));
+                context.startActivity(new Intent(context, RebackListActivity.class));
             }
         });
 
         findViewById(R.id.ll_pt_staffRanking).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, MemberListActivity.class));
+                context.startActivity(new Intent(context, StaffRankingActivity.class));
             }
         });
         findViewById(R.id.ll_pt_pt_ac).setOnClickListener(new View.OnClickListener() {

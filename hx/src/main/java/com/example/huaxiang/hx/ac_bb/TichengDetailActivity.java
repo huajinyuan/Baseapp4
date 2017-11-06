@@ -1,7 +1,6 @@
 package com.example.huaxiang.hx.ac_bb;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,23 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_bb.m.CjDetail;
-import com.example.huaxiang.hx.ac_staffSend.addStaffSend.adapter.SelectStaffAdapter_pt;
-import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
+import com.example.huaxiang.hx.ac_bb.adapter.TichengDetailAdapter;
+import com.example.huaxiang.hx.ac_bb.m.TichengDetail;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
-import com.example.huaxiang.utils.AppContext;
 
 import java.util.ArrayList;
 
-import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-@RequiresPresenter(CjDetailPresenter_hx.class)
-public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
+
+public class TichengDetailActivity extends BaseActivity<TichengDetailPresenter> {
     Context context;
     ACache aCache;
     public String token;
@@ -35,27 +31,25 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
     ImageView iv_topbar_right;
 
     RecyclerView rv_staffSend;
-    SelectStaffAdapter_pt adapter;
+    TichengDetailAdapter adapter;
     LinearLayoutManager layoutManager;
-    ArrayList<Staff_cj> pinDan_pts = new ArrayList<>();
-
-    String number;
-    CjDetail cjDetail;
+    ArrayList<TichengDetail> pinDan_pts = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_cj_detail;
+        return R.layout.activity_ac_bb_hx;
     }
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("抽奖记录");
+        tv_topbar_title.setText("提成明细");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
@@ -68,28 +62,31 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        number = getIntent().getStringExtra("number");
-        if (number != null) {
-            getData();
-        }
+        getData();
+
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
-    void setRv(ArrayList<Staff_cj> pinDans) {
-        pinDan_pts = pinDans;
-        adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
-        layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
-    }
-    void setData(){
-        ((TextView) findView(R.id.tv_name)).setText(cjDetail.memberName);
-        ((TextView) findView(R.id.tv_carNumber)).setText(cjDetail.licensePlate);
-        ((TextView) findView(R.id.tv_phone)).setText(cjDetail.phone);
-        ((TextView) findView(R.id.tv_cjNumber)).setText(cjDetail.number);
-        ((TextView) findView(R.id.tv_acName)).setText(cjDetail.actName);
-        ((TextView) findView(R.id.tv_payMoney)).setText(cjDetail.money + "");
-        ((TextView) findView(R.id.tv_cjTime)).setText(cjDetail.createDate);
-        ((TextView) findView(R.id.tv_awardName)).setText(cjDetail.awardName);
+    void setRv(ArrayList<TichengDetail> pinDans) {
+        if (adapter == null) {
+            pinDan_pts.addAll(pinDans);
+            adapter = new TichengDetailAdapter(context, pinDan_pts);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            pinDan_pts.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -100,21 +97,20 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
                 finish();
             }
         });
-        findViewById(R.id.ll_topic).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cjDetail != null) {
-                    startActivity(new Intent(context, CjDetailTopicActivity_pt.class).putExtra("actId", cjDetail.id));
-                }
+
             }
         });
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getCjDetail(token, number), new Subscriber<Response<CjDetail>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getTichengDetail(token, page, 10), new Subscriber<Response<ArrayList<TichengDetail>>>() {
             @Override
             public void onStart() {
                 super.onStart();
+                canGet = false;
             }
 
             @Override
@@ -128,11 +124,10 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
             }
 
             @Override
-            public void onNext(Response<CjDetail> arrayListResponse) {
-                if (arrayListResponse != null) {
-                    cjDetail = arrayListResponse.data;
-                    setData();
-                }
+            public void onNext(Response<ArrayList<TichengDetail>> arrayListResponse) {
+                setRv(arrayListResponse.data);
+                canGet = true;
+                page++;
             }
         });
 

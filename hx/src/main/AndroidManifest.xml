@@ -46,7 +46,6 @@
 
         <!-- 拼团 -->
         <activity android:name=".hx.ac_ptbb.BbActivityActivity" />
-        <activity android:name=".hx.ac_ptbb.MemberListActivity" />
         <activity android:name=".hx.ac_ptbb.PdListActivity" />
         <activity android:name=".hx.ac_ptList.AcInfoActivity_pt" />
         <activity android:name=".hx.ac_ptList.AcListActivity_pt" />
@@ -77,6 +76,9 @@
         <activity android:name=".hx.ac_bb.IntentionCustomerActivity" />
         <activity android:name=".hx.ac_bb.CjDetailActivity_hx" />
         <activity android:name=".hx.ac_bb.CjDetailTopicActivity_pt" />
+        <activity android:name=".hx.ac_bb.StaffRankingActivity" />
+        <activity android:name=".hx.ac_bb.TichengDetailActivity" />
+        <activity android:name=".hx.ac_bb.RebackListActivity" />
 
 
     </application>

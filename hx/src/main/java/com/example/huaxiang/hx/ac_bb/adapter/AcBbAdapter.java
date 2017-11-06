@@ -10,8 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_bb.CjDetailActivity_hx;
 import com.example.huaxiang.hx.ac_bb.IntentionCustomerActivity;
+import com.example.huaxiang.hx.ac_bb.RebackListActivity;
+import com.example.huaxiang.hx.ac_bb.StaffRankingActivity;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 
 import java.util.ArrayList;
@@ -48,12 +49,12 @@ public class AcBbAdapter extends RecyclerView.Adapter<AcBbAdapter.AnchorHotViewH
         holder.tv_intentionCount.setText(activity_cj.intentionCount + "");
         holder.tv_conversionCount.setText(activity_cj.conversionCount + "");
 
-//        holder.tv_staffRanking.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                context.startActivity(new Intent(context, StaffRankingActivity.class).putExtra("actId", activity_cj.actId));
-//            }
-//        });
+        holder.tv_staffRanking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, StaffRankingActivity.class).putExtra("actId", activity_cj.actId + ""));
+            }
+        });
         holder.ll_totalNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +76,7 @@ public class AcBbAdapter extends RecyclerView.Adapter<AcBbAdapter.AnchorHotViewH
         holder.ll_conversionCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, CjDetailActivity_hx.class).putExtra("actId",activity_cj.actId));
+                context.startActivity(new Intent(context, RebackListActivity.class).putExtra("type", "2"));
             }
         });
     }

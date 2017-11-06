@@ -37,7 +37,7 @@ public class CjDetailTopicActivity_pt extends BaseActivity<CjDetailTopicPresente
     LinearLayoutManager layoutManager;
     ArrayList<HxTopic> pinDan_pts = new ArrayList<>();
 
-    int actId;
+    String actId;
 
     @Override
     protected int getLayoutId() {
@@ -65,7 +65,7 @@ public class CjDetailTopicActivity_pt extends BaseActivity<CjDetailTopicPresente
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        actId = getIntent().getIntExtra("actId", 0);
+        actId = getIntent().getStringExtra("actId");
         getData();
     }
 
@@ -94,7 +94,7 @@ public class CjDetailTopicActivity_pt extends BaseActivity<CjDetailTopicPresente
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getCjDetailTopic(token, actId + ""), new Subscriber<Response<ArrayList<HxTopic>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getCjDetailTopic(token, actId), new Subscriber<Response<ArrayList<HxTopic>>>() {
             @Override
             public void onStart() {
                 super.onStart();

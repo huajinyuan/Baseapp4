@@ -39,5 +39,16 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="16dp"
+        android:src="@mipmap/icon_top_right_hx"
         android:visibility="gone" />
+    <ImageView
+        android:id="@+id/iv_topbar_right_detail"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="16dp"
+        android:layout_marginRight="35dp"
+        android:src="@mipmap/icon_ticheng_detail"
+        android:visibility="gone"/>
 </RelativeLayout>

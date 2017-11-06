@@ -1,16 +1,15 @@
-package com.example.huaxiang.hx.ac_ptbb;
+package com.example.huaxiang.hx.ac_bb;
 
 import android.os.Bundle;
 
 import com.example.huaxiang.di.BaseAppManager;
 import com.example.huaxiang.module.base.BasePresenter;
 
-
 /**
  * Created by caiyk on 2017/9/28.
  */
 
-public class MemberListPresenter extends BasePresenter<MemberListActivity> {
+public class RebackDetailPresenter extends BasePresenter<RebackDetailActivity> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;
@@ -45,19 +44,19 @@ public class MemberListPresenter extends BasePresenter<MemberListActivity> {
                 getView().finish();
                 break;
             case R.id.tv_action_aclist:
-                intent = new Intent(mContext, BbActivityActivity.class);
+                intent = new Intent(mContext, AcBbActivity_pt.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_ptlist:
-                intent = new Intent(mContext, PdListActivity.class);
+                intent = new Intent(mContext, PtListActivity_pt.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberlist:
-                intent = new Intent(mContext, MemberListActivity.class);
+                intent = new Intent(mContext, StaffRankingActivity.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_pt_ac:
-                intent = new Intent(mContext, AcListActivity_pt.class);
+                intent = new Intent(mContext, AwardListActivity_cj.class);
                 mContext.startActivity(intent);
                 break;
             case R.id.tv_action_memberget:

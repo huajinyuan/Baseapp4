@@ -1,8 +1,11 @@
 package com.example.huaxiang.network.retrofit;
 
 
+import com.example.huaxiang.hx.ac_bb.m.CjDetail;
 import com.example.huaxiang.hx.ac_bb.m.HxTopic;
 import com.example.huaxiang.hx.ac_bb.m.IntentionCustomer;
+import com.example.huaxiang.hx.ac_bb.m.Reback_hx;
+import com.example.huaxiang.hx.ac_bb.m.TichengDetail;
 import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.hx.ac_staffSend.m.StaffSend_hx;
@@ -79,9 +82,30 @@ public interface ApiStores {
     @GET("api/hx/hxOrder/list")
     Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") int isAward);
 
+    //抽奖详情
+    @GET("api/hx/hxOrder/{number}")
+    Observable<Response<CjDetail>> getCjDetail(@Header("authorization") String authorization, @Path("number") String number);
+
     //问卷记录
     @GET("api/hx/hxTopic/{orderId}")
     Observable<Response<ArrayList<HxTopic>>> getCjDetailTopic(@Header("authorization") String authorization, @Path("orderId") String orderId);
+
+    //员工排行-0全部 1本日 2本月 3本年
+    @GET("api/hx/report/staffRanking")
+    Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+    @GET("api/hx/report/staffRanking")
+    Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("actId") String actId);
+
+    //抽奖员工提成明细
+    @GET("api/hx/hxStaffCommission/list")
+    Observable<Response<ArrayList<TichengDetail>>> getTichengDetail(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    //回访记录
+    @GET("api/hx/hxMemberVisit/list")
+    Observable<Response<ArrayList<Reback_hx>>> getRebackList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("type") String type);
+
+
+
 
 
 
@@ -90,15 +114,7 @@ public interface ApiStores {
 //    @GET("api/cj/cjAwardDetail/list")
 //    Observable<Response<ArrayList<CjHistory>>> getCjHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 //
-//    //员工排行-0全部 1本日 2本月 3本年
-//    @GET("api/cj/report/staffRanking")
-//    Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
-//    @GET("api/cj/report/staffRanking")
-//    Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("actId") String actId);
 //
-//    //抽奖员工提成明细
-//    @GET("api/cj/cjStaffCommission/list")
-//    Observable<Response<ArrayList<TichengDetail>>> getTichengDetail(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 //
 //
 //    //活动详情

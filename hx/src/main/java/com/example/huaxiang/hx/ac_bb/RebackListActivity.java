@@ -10,86 +10,90 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_bb.m.CjDetail;
-import com.example.huaxiang.hx.ac_staffSend.addStaffSend.adapter.SelectStaffAdapter_pt;
-import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
+import com.example.huaxiang.hx.ac_bb.adapter.RebackListAdapter;
+import com.example.huaxiang.hx.ac_bb.m.Reback_hx;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
-import com.example.huaxiang.utils.AppContext;
 
 import java.util.ArrayList;
 
-import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-@RequiresPresenter(CjDetailPresenter_hx.class)
-public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
+
+public class RebackListActivity extends BaseActivity<RebackListPresenter> {
     Context context;
     ACache aCache;
     public String token;
     TextView tv_topbar_title;
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
+    ImageView iv_topbar_right_detail;
 
+    String type = "0";
     RecyclerView rv_staffSend;
-    SelectStaffAdapter_pt adapter;
+    RebackListAdapter adapter;
     LinearLayoutManager layoutManager;
-    ArrayList<Staff_cj> pinDan_pts = new ArrayList<>();
-
-    String number;
-    CjDetail cjDetail;
+    ArrayList<Reback_hx> pinDan_pts = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_cj_detail;
+        return R.layout.activity_ac_bb_hx;
     }
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("抽奖记录");
+        iv_topbar_right_detail = (ImageView) findViewById(R.id.iv_topbar_right_detail);
+        tv_topbar_title.setText("回访客户");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
-        iv_topbar_right.setVisibility(View.GONE);
+        iv_topbar_right.setVisibility(View.VISIBLE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
-
     }
 
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        number = getIntent().getStringExtra("number");
-        if (number != null) {
-            getData();
+        type = getIntent().getStringExtra("type");
+        if (type == null) {
+            type = "0";
         }
+        getData();
+
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
-    void setRv(ArrayList<Staff_cj> pinDans) {
-        pinDan_pts = pinDans;
-        adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
-        layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
-    }
-    void setData(){
-        ((TextView) findView(R.id.tv_name)).setText(cjDetail.memberName);
-        ((TextView) findView(R.id.tv_carNumber)).setText(cjDetail.licensePlate);
-        ((TextView) findView(R.id.tv_phone)).setText(cjDetail.phone);
-        ((TextView) findView(R.id.tv_cjNumber)).setText(cjDetail.number);
-        ((TextView) findView(R.id.tv_acName)).setText(cjDetail.actName);
-        ((TextView) findView(R.id.tv_payMoney)).setText(cjDetail.money + "");
-        ((TextView) findView(R.id.tv_cjTime)).setText(cjDetail.createDate);
-        ((TextView) findView(R.id.tv_awardName)).setText(cjDetail.awardName);
+    void setRv(ArrayList<Reback_hx> pinDans) {
+        if (adapter == null) {
+            pinDan_pts.addAll(pinDans);
+            adapter = new RebackListAdapter(context, pinDan_pts);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            pinDan_pts.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -100,21 +104,20 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
                 finish();
             }
         });
-        findViewById(R.id.ll_topic).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_topbar_right_detail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cjDetail != null) {
-                    startActivity(new Intent(context, CjDetailTopicActivity_pt.class).putExtra("actId", cjDetail.id));
-                }
+                startActivity(new Intent(context, TichengDetailActivity.class));
             }
         });
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getCjDetail(token, number), new Subscriber<Response<CjDetail>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getRebackList(token, page, 10, type), new Subscriber<Response<ArrayList<Reback_hx>>>() {
             @Override
             public void onStart() {
                 super.onStart();
+                canGet = false;
             }
 
             @Override
@@ -128,14 +131,14 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
             }
 
             @Override
-            public void onNext(Response<CjDetail> arrayListResponse) {
-                if (arrayListResponse != null) {
-                    cjDetail = arrayListResponse.data;
-                    setData();
+            public void onNext(Response<ArrayList<Reback_hx>> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
                 }
             }
         });
-
     }
 
 }

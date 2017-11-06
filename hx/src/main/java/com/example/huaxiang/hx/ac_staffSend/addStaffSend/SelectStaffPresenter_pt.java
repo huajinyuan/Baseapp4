@@ -2,10 +2,8 @@ package com.example.huaxiang.hx.ac_staffSend.addStaffSend;
 
 import android.os.Bundle;
 import android.util.Log;
-
 import com.example.huaxiang.di.BaseAppManager;
 import com.example.huaxiang.module.base.BasePresenter;
-
 
 /**
  * Created by caiyk on 2017/9/28.
@@ -54,7 +52,7 @@ public class SelectStaffPresenter_pt extends BasePresenter<SelectStaffActivity_p
 //        });
 //    }
 //    void getReport(int status){
-//        HttpMethods.getInstance().getReport(getView().token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+//        HttpMethods.getInstance().getReport(getView().token, status).subscribe(new Subscriber<Response<Report_cj>>() {
 //
 //            @Override
 //            public void onStart() {
@@ -73,7 +71,7 @@ public class SelectStaffPresenter_pt extends BasePresenter<SelectStaffActivity_p
 //            }
 //
 //            @Override
-//            public void onNext(Response<PtReport_pt> response) {
+//            public void onNext(Response<Report_cj> response) {
 //                if (response.code == 0) {
 //                    getView().setReport(response.data);
 //                    Log.e("aaa======onNext", response.data.toString());

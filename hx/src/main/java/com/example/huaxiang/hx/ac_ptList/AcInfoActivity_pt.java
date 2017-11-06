@@ -37,7 +37,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         tv_topbar_right.setVisibility(View.VISIBLE);
         tv_topbar_right.setText("编辑");
         iv_topbar_right.setVisibility(View.GONE);
-        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
+        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
     }
 
     @Override

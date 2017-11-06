@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_staffSend.addStaffSend.adapter.SelectStaffAdapter_pt;
-import com.example.huaxiang.hx.ac_staffSend.m.Staff_pt;
+import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
@@ -36,10 +36,14 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
 
     RecyclerView rv_staffSend;
     SelectStaffAdapter_pt adapter;
+    LinearLayoutManager layoutManager;
+    ArrayList<Staff_cj> pinDan_pts = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_select_staff_pt;
+        return R.layout.activity_select_staff_hx;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.VISIBLE);
-        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
+        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
 
@@ -67,14 +71,13 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
         getData();
     }
 
-    void setRv(ArrayList<Staff_pt> staffs) {
-
-        adapter = new SelectStaffAdapter_pt(context, staffs);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+    void setRv(ArrayList<Staff_cj> pinDans) {
+        pinDan_pts = pinDans;
+        adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
+        layoutManager = new LinearLayoutManager(context);
         rv_staffSend.setLayoutManager(layoutManager);
         rv_staffSend.setAdapter(adapter);
     }
-
 
     @Override
     protected void setListener() {
@@ -101,7 +104,12 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffSelect_pt(token, 1, 100), new Subscriber<Response<ArrayList<Staff_pt>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token), new Subscriber<Response<ArrayList<Staff_cj>>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -113,10 +121,13 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
             }
 
             @Override
-            public void onNext(Response<ArrayList<Staff_pt>> arrayListResponse) {
-                setRv(arrayListResponse.data);
+            public void onNext(Response<ArrayList<Staff_cj>> arrayListResponse) {
+                if (arrayListResponse != null) {
+                    setRv(arrayListResponse.data);
+                }
             }
         });
+
     }
 
     @Override

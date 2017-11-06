@@ -54,7 +54,7 @@ public class SettingPresenter_pt extends BasePresenter<SettingActivity_pt> {
 //        });
 //    }
 //    void getReport(int status){
-//        HttpMethods.getInstance().getReport(getView().token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+//        HttpMethods.getInstance().getReport(getView().token, status).subscribe(new Subscriber<Response<Report_hx>>() {
 //
 //            @Override
 //            public void onStart() {
@@ -73,7 +73,7 @@ public class SettingPresenter_pt extends BasePresenter<SettingActivity_pt> {
 //            }
 //
 //            @Override
-//            public void onNext(Response<PtReport_pt> response) {
+//            public void onNext(Response<Report_hx> response) {
 //                if (response.code == 0) {
 //                    getView().setReport(response.data);
 //                    Log.e("aaa======onNext", response.data.toString());

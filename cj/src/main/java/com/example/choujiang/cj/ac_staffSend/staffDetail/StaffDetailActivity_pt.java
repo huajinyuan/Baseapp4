@@ -123,7 +123,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, page, 100, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, page, 10, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
             @Override
             public void onStart() {
                 super.onStart();

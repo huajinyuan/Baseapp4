@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_staffSend.m.Activity_pt;
+import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.utils.UiUtil;
 
 import java.util.ArrayList;
@@ -18,11 +18,11 @@ import java.util.ArrayList;
  * Created by  on 2016/9/2.
  */
 public class StaffDetailAdapter_pt extends RecyclerView.Adapter<StaffDetailAdapter_pt.AnchorHotViewHolder> {
-    private ArrayList<Activity_pt> data;
+    private ArrayList<Activity_cj> data;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public StaffDetailAdapter_pt(Context mContext, ArrayList<Activity_pt> mData) {
+    public StaffDetailAdapter_pt(Context mContext, ArrayList<Activity_cj> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -31,21 +31,19 @@ public class StaffDetailAdapter_pt extends RecyclerView.Adapter<StaffDetailAdapt
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_staff_detail_pt,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_list_hx,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        Activity_pt activity_pt = data.get(position);
+        Activity_cj activity_cj = data.get(position);
 
-        holder.tv_name.setText(activity_pt.name);
-        holder.tv_money.setText("￥" + activity_pt.ptGood.price);
-        holder.tv_peopleNum.setText(activity_pt.num + "");
-        holder.tv_acNum.setText(activity_pt.saleNum);
-
-        UiUtil.setImage(holder.iv_ac, activity_pt.imgUrl);
+        holder.tv_name.setText(activity_cj.money + " 块钱搏 " + activity_cj.name);
+        holder.tv_price.setText("抽奖支付：" + activity_cj.money + "元");
+        holder.tv_replace.setText("代抽次数：" + activity_cj.replaceTime);
+        UiUtil.setImage(holder.iv_ac, activity_cj.imgUrl);
     }
 
 
@@ -61,20 +59,16 @@ public class StaffDetailAdapter_pt extends RecyclerView.Adapter<StaffDetailAdapt
 
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_ac;
-        TextView tv_ac_status;
         TextView tv_name;
-        TextView tv_money;
-        TextView tv_peopleNum;
-        TextView tv_acNum;
+        TextView tv_price;
+        TextView tv_replace;
 
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
             iv_ac = (ImageView) itemView.findViewById(R.id.iv_ac);
-            tv_ac_status = (TextView) itemView.findViewById(R.id.tv_ac_status);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-            tv_money = (TextView) itemView.findViewById(R.id.tv_money);
-            tv_peopleNum = (TextView) itemView.findViewById(R.id.tv_peopleNum);
-            tv_acNum = (TextView) itemView.findViewById(R.id.tv_acNum);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_price);
+            tv_replace = (TextView) itemView.findViewById(R.id.tv_replace);
         }
     }
 }

@@ -45,7 +45,7 @@ public class MainPresenter_hx extends BasePresenter<MainActivity_hx> {
 //                    getView().aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
 //                    getView().token = logdResponse.data.getToken();
 //                    Log.e("aaa========Token:", getView().token);
-//                    getReport_pt(0);
+//                    getReport_hx(0);
 //
 //                }else {
 //                    Log.e("=======onNext", logdResponse.msg);
@@ -53,8 +53,8 @@ public class MainPresenter_hx extends BasePresenter<MainActivity_hx> {
 //            }
 //        });
 //    }
-//    void getReport_pt(int status){
-//        HttpMethods.getInstance().getReport_pt(getView().token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
+//    void getReport_hx(int status){
+//        HttpMethods.getInstance().getReport_hx(getView().token, status).subscribe(new Subscriber<Response<Report_hx>>() {
 //
 //            @Override
 //            public void onStart() {
@@ -73,7 +73,7 @@ public class MainPresenter_hx extends BasePresenter<MainActivity_hx> {
 //            }
 //
 //            @Override
-//            public void onNext(Response<PtReport_pt> response) {
+//            public void onNext(Response<Report_hx> response) {
 //                if (response.code == 0) {
 //                    getView().setReport(response.data);
 //                    Log.e("aaa======onNext", response.data.toString());

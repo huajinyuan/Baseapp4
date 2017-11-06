@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_account_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_backGrey">
+
+    <include layout="@layout/layout_topbar_cj" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_staffSend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/bt_next"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@drawable/shape_radius5_blue"
+        android:layout_margin="11dp"
+        android:text="下一步"
+        android:textColor="@color/color_white"
+        android:textSize="15sp"/>
+    
+</LinearLayout>

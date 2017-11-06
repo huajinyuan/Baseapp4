@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_ptList.AcInfoActivity_pt;
-import com.example.huaxiang.hx.ac_staffSend.m.Activity_pt;
+import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.utils.UiUtil;
 
 import java.util.ArrayList;
@@ -20,11 +20,11 @@ import java.util.ArrayList;
  * Created by  on 2016/9/2.
  */
 public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.AnchorHotViewHolder> {
-    private ArrayList<Activity_pt> data;
+    private ArrayList<Activity_cj> data;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public AcListAdapter_pt(Context mContext, ArrayList<Activity_pt> mData) {
+    public AcListAdapter_pt(Context mContext, ArrayList<Activity_cj> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -33,26 +33,26 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_staff_detail_pt,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_staff_detail_hx,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        Activity_pt activity_pt = data.get(position);
+        Activity_cj activity_cj = data.get(position);
 
-        holder.tv_name.setText(activity_pt.name);
-        holder.tv_money.setText("￥" + activity_pt.ptGood.price);
-        holder.tv_peopleNum.setText(activity_pt.num + "");
-        holder.tv_acNum.setText(activity_pt.saleNum);
+        holder.tv_name.setText(activity_cj.name);
+//        holder.tv_money.setText("￥" + activity_cj.ptGood.price);
+        holder.tv_peopleNum.setText(activity_cj.num + "");
+        holder.tv_acNum.setText(activity_cj.saleNum);
 
-        UiUtil.setImage(holder.iv_ac, activity_pt.imgUrl);
+        UiUtil.setImage(holder.iv_ac, activity_cj.imgUrl);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, AcInfoActivity_pt.class).putExtra("id", activity_pt.id));
+                context.startActivity(new Intent(context, AcInfoActivity_pt.class).putExtra("id", activity_cj.id));
             }
         });
     }

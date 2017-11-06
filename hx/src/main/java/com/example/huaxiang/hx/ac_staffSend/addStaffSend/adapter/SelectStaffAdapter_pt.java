@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_staffSend.m.Staff_pt;
+import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
 
 import java.util.ArrayList;
 
@@ -18,13 +18,13 @@ import java.util.ArrayList;
  * Created by  on 2016/9/2.
  */
 public class SelectStaffAdapter_pt extends RecyclerView.Adapter<SelectStaffAdapter_pt.AnchorHotViewHolder> {
-    private ArrayList<Staff_pt> data;
+    private ArrayList<Staff_cj> data;
     private Context context;
     LayoutInflater layoutInflater;
     int checkedPosition = 0;
-    public int userId;
+    public String userId;
 
-    public SelectStaffAdapter_pt(Context mContext, ArrayList<Staff_pt> mData) {
+    public SelectStaffAdapter_pt(Context mContext, ArrayList<Staff_cj> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -33,14 +33,14 @@ public class SelectStaffAdapter_pt extends RecyclerView.Adapter<SelectStaffAdapt
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_select_staff_pt,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_select_staff_hx,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        Staff_pt staff = data.get(position);
+        Staff_cj staff = data.get(position);
 
         holder.tv_name.setText(staff.name);
         holder.tv_shop.setText(staff.storeName);

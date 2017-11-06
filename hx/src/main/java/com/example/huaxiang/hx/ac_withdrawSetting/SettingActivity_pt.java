@@ -29,7 +29,7 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_setting_pt;
+        return R.layout.activity_setting_hx;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
         tv_topbar_right.setVisibility(View.VISIBLE);
         tv_topbar_right.setText("提现");
         iv_topbar_right.setVisibility(View.GONE);
-        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
+        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         cb_persent = (CheckBox) findViewById(R.id.cb_persent);
         cb_num = (CheckBox) findViewById(R.id.cb_num);
@@ -81,7 +81,7 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, AccountListActivity_pt.class));
+                startActivity(new Intent(context, AccountListActivity_cj.class));
             }
         });
     }
@@ -90,71 +90,6 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
         cb_persent.setChecked(false);
         cb_num.setChecked(false);
     }
-
-
-//    void login(){
-//        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
-//
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                Log.e("=============", "onStart");
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                Log.e("=============", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("=======onError", e.toString() + "");
-//            }
-//
-//            @Override
-//            public void onNext(Response<LoginData_pt> logdResponse) {
-//                if (logdResponse.code==0){
-//                    aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
-//                    token = logdResponse.data.getToken();
-//                    getReport();
-//                    Log.e("aaa========Token:", token);
-//
-//                }else {
-//                    Log.e("=======onNext", logdResponse.msg);
-//                }
-//            }
-//        });
-//    }
-//    void getReport(int status){
-//        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
-//
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                Log.e("aaa", "onStart");
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                Log.e("aaa", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("aaa======onError", e.toString() + "");
-//            }
-//
-//            @Override
-//            public void onNext(Response<PtReport_pt> response) {
-//                if (response.code == 0) {
-//                    setReport(response.data);
-//                    Log.e("aaa======onNext", response.data.toString());
-//                } else {
-//                    Log.e("aaa======onNext", response.msg);
-//                }
-//            }
-//        });
-//    }
 
 
 }

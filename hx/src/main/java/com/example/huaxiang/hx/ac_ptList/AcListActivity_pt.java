@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_ptList.adapter.AcListAdapter_pt;
-import com.example.huaxiang.hx.ac_staffSend.m.Activity_pt;
+import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
@@ -50,7 +50,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.VISIBLE);
-        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
+        iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
     }
@@ -61,8 +61,8 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         getData();
     }
 
-    void setRv(ArrayList<Activity_pt> activity_pts) {
-        AcListAdapter_pt adapter = new AcListAdapter_pt(context, activity_pts);
+    void setRv(ArrayList<Activity_cj> activity_cjs) {
+        AcListAdapter_pt adapter = new AcListAdapter_pt(context, activity_cjs);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rv_staffSend.setLayoutManager(layoutManager);
         rv_staffSend.setAdapter(adapter);
@@ -91,7 +91,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_pt(token, 1, 100, 0), new Subscriber<Response<ArrayList<Activity_pt>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, 1, 100, 0), new Subscriber<Response<ArrayList<Activity_cj>>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -103,7 +103,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
             }
 
             @Override
-            public void onNext(Response<ArrayList<Activity_pt>> arrayListResponse) {
+            public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
                 setRv(arrayListResponse.data);
             }
         });

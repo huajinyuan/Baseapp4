@@ -47,23 +47,9 @@
         <!-- 拼团 -->
         <activity android:name=".hx.ac_ptbb.BbActivityActivity" />
         <activity android:name=".hx.ac_ptbb.MemberListActivity" />
-        <activity android:name=".hx.ac_memberget.MemberGetActivity" />
-        <activity android:name=".hx.ac_memberget.MemberGetListActivity" />
         <activity android:name=".hx.ac_ptbb.PdListActivity" />
         <activity android:name=".hx.ac_ptList.AcInfoActivity_pt" />
         <activity android:name=".hx.ac_ptList.AcListActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.AddShopActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.AddStaffActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.ShopActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.StaffActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.StaffSendActivity_pt" />
-        <activity android:name=".hx.ac_withdrawSetting.AccountDetailActivity_pt" />
-        <activity android:name=".hx.ac_withdrawSetting.WithdrawActivity_pt" />
-        <activity android:name=".hx.ac_withdrawSetting.AccountListActivity_pt" />
-        <activity android:name=".hx.ac_withdrawSetting.SettingActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
-        <activity android:name=".hx.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
         <activity android:name=".hx.ac_ptbb.BbInfoActivity" />
         <activity android:name=".hx.ac_ptbb.DrawingActivity" />
         <activity android:name=".hx.ac_ptbb.DrawSettingActivity" />
@@ -74,6 +60,25 @@
         <activity android:name=".hx.ac_ptbb.RecordAddActivity" />
         <activity android:name=".hx.ac_ptbb.HxRecordListActivity" />
         <activity android:name=".hx.ac_ptbb.AskSetActivity"></activity>
+
+
+        <!--画像-->
+        <activity android:name=".hx.ac_memberget.MemberGetActivity" />
+        <activity android:name=".hx.ac_memberget.MemberGetListActivity" />
+        <activity android:name=".hx.ac_staffSend.StaffSendActivity_pt" />
+        <activity android:name=".hx.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
+        <activity android:name=".hx.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
+        <activity android:name=".hx.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
+        <activity android:name=".hx.ac_withdrawSetting.SettingActivity_pt" />
+        <activity android:name=".hx.ac_withdrawSetting.AccountListActivity_cj" />
+        <activity android:name=".hx.ac_withdrawSetting.AccountDetailActivity_pt" />
+        <activity android:name=".hx.ac_withdrawSetting.WithdrawActivity_pt" />
+        <activity android:name=".hx.ac_bb.AcBbActivity" />
+        <activity android:name=".hx.ac_bb.IntentionCustomerActivity" />
+        <activity android:name=".hx.ac_bb.CjDetailActivity_hx" />
+        <activity android:name=".hx.ac_bb.CjDetailTopicActivity_pt" />
+
+
     </application>
 
 </manifest>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_shezhi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_backGrey">
+
+    <include layout="@layout/layout_topbar_cj" />
+
+    <RelativeLayout
+        android:id="@+id/rl_persent"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_margin="11dp"
+        android:background="@drawable/shape_radius5_white">
+        <CheckBox
+            android:id="@+id/cb_persent"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:button="@null"
+            android:clickable="false"
+            android:background="@drawable/selector_cb"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"
+            android:checked="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="按总参与人数固定金额"
+            android:textColor="@color/color_black"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/cb_persent"
+            android:layout_marginLeft="5dp"/>
+        <ImageView
+            android:id="@+id/iv_arrow1"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:src="@mipmap/icon_arrow_grey_right_pt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="11sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_arrow1"
+            android:textSize="17sp"
+            android:layout_marginRight="5dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_num"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_margin="11dp"
+        android:background="@drawable/shape_radius5_white">
+        <CheckBox
+            android:id="@+id/cb_num"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:button="@null"
+            android:clickable="false"
+            android:background="@drawable/selector_cb"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="按抽奖数固定额奖励"
+            android:textColor="@color/color_black"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/cb_num"
+            android:layout_marginLeft="5dp"/>
+        <ImageView
+            android:id="@+id/iv_arrow2"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:src="@mipmap/icon_arrow_grey_right_pt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="11sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_arrow2"
+            android:textSize="17sp"
+            android:layout_marginRight="5dp"/>
+    </RelativeLayout>
+</LinearLayout>

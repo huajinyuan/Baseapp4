@@ -1,6 +1,7 @@
-package com.example.huaxiang.hx.ac_ptList;
+package com.example.huaxiang.hx.ac_acSetting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_ptList.adapter.AcListAdapter_pt;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
+import com.example.huaxiang.hx.ac_acSetting.adapter.AcListAdapter_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
@@ -33,10 +35,15 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     ImageView iv_topbar_right;
 
     RecyclerView rv_staffSend;
+    AcListAdapter_pt adapter;
+    LinearLayoutManager layoutManager;
+    ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_ac_list_pt;
+        return R.layout.activity_ac_list_main;
     }
 
     @Override
@@ -59,13 +66,30 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         getData();
+
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
-    void setRv(ArrayList<Activity_cj> activity_cjs) {
-        AcListAdapter_pt adapter = new AcListAdapter_pt(context, activity_cjs);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
+    void setRv(ArrayList<Activity_cj> pinDans) {
+        if (adapter == null) {
+            pinDan_pts.addAll(pinDans);
+            adapter = new AcListAdapter_pt(context, pinDan_pts);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            pinDan_pts.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -85,13 +109,19 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context, CreateAcActivity_cj.class));
             }
         });
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, 1, 100, 0), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 5, 0), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                canGet = false;
+            }
+
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -105,6 +135,8 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
             @Override
             public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
                 setRv(arrayListResponse.data);
+                canGet = true;
+                page++;
             }
         });
     }

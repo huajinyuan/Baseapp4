@@ -13,7 +13,7 @@ import com.example.huaxiang.hx.ac_bb.IntentionCustomerActivity;
 import com.example.huaxiang.hx.ac_bb.RebackListActivity;
 import com.example.huaxiang.hx.ac_bb.StaffRankingActivity;
 import com.example.huaxiang.hx.ac_memberget.MemberGetActivity;
-import com.example.huaxiang.hx.ac_ptList.AcListActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.AcListActivity_pt;
 import com.example.huaxiang.hx.ac_staffSend.StaffSendActivity_pt;
 import com.example.huaxiang.hx.ac_withdrawSetting.SettingActivity_pt;
 import com.example.huaxiang.hx.m.LoginData_pt;

@@ -46,8 +46,7 @@
 
         <!-- 拼团 -->
         <activity android:name=".hx.ac_ptbb.BbActivityActivity" />
-        <activity android:name=".hx.ac_ptList.AcInfoActivity_pt" />
-        <activity android:name=".hx.ac_ptList.AcListActivity_pt" />
+
         <activity android:name=".hx.ac_ptbb.BbInfoActivity" />
         <activity android:name=".hx.ac_ptbb.DrawingActivity" />
         <activity android:name=".hx.ac_ptbb.DrawSettingActivity" />
@@ -80,6 +79,10 @@
         <activity android:name=".hx.ac_bb.RebackListActivity" />
         <activity android:name=".hx.ac_bb.RebackDetailActivity"
             android:windowSoftInputMode="stateUnchanged"/>
+        <activity android:name=".hx.ac_acSetting.AcListActivity_pt" />
+        <activity android:name=".hx.ac_acSetting.AcInfoActivity_pt" />
+        <activity android:name=".hx.ac_acSetting.ac_createAc.CreateAcActivity_cj" />
+        <activity android:name=".hx.ac_acSetting.ac_createAc.AddAcActivity_cj" />
 
 
     </application>

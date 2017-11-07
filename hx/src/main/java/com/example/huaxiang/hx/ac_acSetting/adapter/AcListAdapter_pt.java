@@ -1,4 +1,4 @@
-package com.example.huaxiang.hx.ac_ptList.adapter;
+package com.example.huaxiang.hx.ac_acSetting.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_ptList.AcInfoActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.utils.UiUtil;
 
@@ -33,7 +33,7 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_staff_detail_hx,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_list,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
@@ -42,10 +42,8 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         Activity_cj activity_cj = data.get(position);
 
+        holder.tv_price.setText(activity_cj.money + "元博");
         holder.tv_name.setText(activity_cj.name);
-//        holder.tv_money.setText("￥" + activity_cj.ptGood.price);
-        holder.tv_peopleNum.setText(activity_cj.num + "");
-        holder.tv_acNum.setText(activity_cj.saleNum);
 
         UiUtil.setImage(holder.iv_ac, activity_cj.imgUrl);
 
@@ -70,20 +68,14 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
 
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_ac;
-        TextView tv_ac_status;
+        TextView tv_price;
         TextView tv_name;
-        TextView tv_money;
-        TextView tv_peopleNum;
-        TextView tv_acNum;
 
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
             iv_ac = (ImageView) itemView.findViewById(R.id.iv_ac);
-            tv_ac_status = (TextView) itemView.findViewById(R.id.tv_ac_status);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_price);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-            tv_money = (TextView) itemView.findViewById(R.id.tv_money);
-            tv_peopleNum = (TextView) itemView.findViewById(R.id.tv_peopleNum);
-            tv_acNum = (TextView) itemView.findViewById(R.id.tv_acNum);
         }
     }
 }

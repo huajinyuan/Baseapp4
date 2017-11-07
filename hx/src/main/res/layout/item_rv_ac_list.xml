@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="11dp"
+    android:paddingRight="11dp"
+    android:paddingTop="11dp"
+    android:background="@color/color_backGrey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp"
+        android:background="@drawable/shape_radius5_white"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5元博"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_5"
+                android:text="￥4980元铠甲度晶"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_ac"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"/>
+    </LinearLayout>
+
+</LinearLayout>

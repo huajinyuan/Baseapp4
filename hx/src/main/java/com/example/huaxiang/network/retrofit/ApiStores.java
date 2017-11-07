@@ -1,6 +1,8 @@
 package com.example.huaxiang.network.retrofit;
 
 
+import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
+import com.example.huaxiang.hx.ac_acSetting.m.QiniuToKen;
 import com.example.huaxiang.hx.ac_bb.m.CjDetail;
 import com.example.huaxiang.hx.ac_bb.m.HxTopic;
 import com.example.huaxiang.hx.ac_bb.m.IntentionCustomer;
@@ -112,6 +114,27 @@ public interface ApiStores {
     @GET("api/hx/hxMemberVisit/{visitId}")
     Observable<Response<Reback_hx>> getRebackDetail(@Header("authorization") String authorization, @Path("visitId") String visitId);
 
+    //活动详情
+    @GET("api/hx/hxActivity/info")
+    Observable<Response<ActivityDetail_cj>> getAcDetail_cj(@Header("authorization") String authorization, @Query("actId") String actId);
+
+    //活动停用/作废  2停用 3作废
+    @POST("api/hx/hxActivity/state")
+    Observable<Response> changeAcStatus(@Header("authorization") String authorization, @Query("actId") String actId, @Query("status") int status);
+
+    //获取七牛上传token
+    @GET("api/common/uploadTokens")
+    Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);
+
+    //创建活动
+    @POST("api/hx/hxActivity/save")
+    Observable<Response<ActivityDetail_cj>> saveAc(@Header("authorization") String authorization, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("activityVideoUrl") String activityVideoUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("money") String money, @Query("num") String num, @Query("saleNum") String saleNum, @Query("replaceTime") String replaceTime, @Query("carCheck") int carCheck);
+
+    //修改活动
+    @POST("api/hx/hxActivity/save")
+    Observable<Response> saveAc(@Header("authorization") String authorization, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("activityVideoUrl") String activityVideoUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("money") String money, @Query("num") String num, @Query("saleNum") String saleNum, @Query("replaceTime") String replaceTime, @Query("carCheck") int carCheck, @Query("actId") String actId);
+
+
 
 
 
@@ -126,9 +149,6 @@ public interface ApiStores {
 //
 //
 //
-//    //活动详情
-//    @GET("api/cj/cjActivity/info")
-//    Observable<Response<ActivityDetail_cj>> getAcDetail_cj(@Header("authorization") String authorization, @Query("actId") String actId);
 //
 //    //中奖记录
 //    @GET("api/cj/cjAwardDetail/list")
@@ -140,13 +160,7 @@ public interface ApiStores {
 //
 //
 
-//    //活动停用/作废
-//    @POST("api/cj/cjActivity/state")
-//    Observable<Response> changeAcStatus(@Header("authorization") String authorization, @Query("actId") String actId, @Query("status") int status);
 //
-//    //获取七牛上传token
-//    @GET("api/common/uploadTokens")
-//    Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);
 //
 //    //活动奖品列表
 //    @GET("api/cj/cjActivityAward/list")
@@ -156,13 +170,6 @@ public interface ApiStores {
 //    @POST("api/cj/cjAwardDetail/saveRecord")
 //    Observable<Response> saveWinHistory(@Header("authorization") String authorization, @Query("actId") String actId, @Query("mobile") String mobile, @Query("awardId") String awardId);
 //
-//    //创建活动
-//    @POST("api/cj/cjActivity/save")
-//    Observable<Response<Activity_cj>> saveAc(@Header("authorization") String authorization, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("count") String count, @Query("shareCount") String shareCount, @Query("exchangeCount") String exchangeCount, @Query("remarks") String remarks);
-//
-//    //修改活动
-//    @POST("api/cj/cjActivity/save")
-//    Observable<Response> saveAc(@Header("authorization") String authorization, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime, @Query("endTime") String endTime, @Query("count") String count, @Query("shareCount") String shareCount, @Query("exchangeCount") String exchangeCount, @Query("remarks") String remarks, @Query("actId") String actId);
 //
 //    //创建奖品
 //    @POST("api/cj/cjActivityAward/save")

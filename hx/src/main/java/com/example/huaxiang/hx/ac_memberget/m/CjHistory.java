@@ -18,6 +18,7 @@ public class CjHistory implements Serializable {
     public String orderId;
 
     public String memberId;
+    public String replaceMemberId;
     public String isAward;
     public String awardId;
     public String redeemCode;

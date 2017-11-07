@@ -1,20 +1,17 @@
-package com.example.huaxiang.hx.ac_staffSend.m;
+package com.example.huaxiang.hx.ac_acSetting.m;
+
+import com.example.huaxiang.hx.ac_bb.m.HxTopic;
+import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
- * Created by zuoyun on 2017/10/22.
+ * Created by zuoyun on 2017/10/29.
  */
 
-public class Activity_cj implements Serializable {
+public class ActivityDetail_cj implements Serializable{
     public boolean checked = false;
-    public int conversionCount;
-    public int replaceNum;
-    public int intentionCount;
-    public int totalNum;
-    public int actId;
-    public String lotteryNumber;
-
 
     public String id;
     public String isNewRecord;
@@ -27,12 +24,15 @@ public class Activity_cj implements Serializable {
     public String beginTime;
     public String endTime;
     public String videoUrl;
-    public String remarks;
     public int num;
     public int saleNum;
-    public int surplus;
-    public double money;
-    public int status;//1可用 2暂停 3作废 ,
     public int carCheck;
     public int replaceTime;
+    public int status;//1可用 2暂停 3作废 ,
+    public double money;
+
+    public ArrayList<Award> awards;
+    public ArrayList<CjHistory> details;
+    public ArrayList<HxTopic> topics;
+
 }

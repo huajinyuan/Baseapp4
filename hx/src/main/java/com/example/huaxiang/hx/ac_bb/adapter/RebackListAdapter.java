@@ -1,6 +1,7 @@
 package com.example.huaxiang.hx.ac_bb.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_bb.RebackDetailActivity;
 import com.example.huaxiang.hx.ac_bb.m.Reback_hx;
 
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public class RebackListAdapter extends RecyclerView.Adapter<RebackListAdapter.An
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                context.startActivity(new Intent(context, RebackDetailActivity.class).putExtra("visitId", reback_hx.id));
             }
         });
         holder.iv_phone.setOnClickListener(new View.OnClickListener() {

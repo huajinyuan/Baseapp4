@@ -8,102 +8,143 @@
 
     <include layout="@layout/layout_topbar_cj" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="11dp"
-        android:paddingLeft="11dp"
-        android:paddingRight="11dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:background="@drawable/shape_radius5_white">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                android:id="@+id/tv_carNumber"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="车牌："
-                android:layout_weight="1"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/tv_date"
+                android:orientation="vertical"
+                android:layout_margin="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:background="@drawable/shape_radius5_white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tv_carNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="车牌："
+                        android:layout_weight="1"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="2017/07/07"
+                        android:gravity="right"
+                        android:textColor="@color/color_text_grey"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="手机："
+                        android:textColor="@color/black"/>
+                    <ImageView
+                        android:id="@+id/iv_phone"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:padding="1dp"
+                        android:src="@mipmap/icon_phone_blue"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_awardName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="产品："
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_staff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="员工："
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="2017/07/07"
-                android:gravity="right"
-                android:textColor="@color/color_text_grey"
-                android:textSize="12sp"/>
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:padding="11dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_radius5_white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="回访记录"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_line"
+                    android:layout_marginTop="11dp"/>
+                <EditText
+                    android:id="@+id/et_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入"
+                    android:minHeight="100dp"
+                    android:gravity="top"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="11dp"
+                    android:text=""
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_radius5_white"
+                android:layout_margin="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_staffSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="手机："
-                android:textColor="@color/black"/>
-            <ImageView
-                android:id="@+id/iv_phone"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:padding="1dp"
-                android:src="@mipmap/icon_phone_blue"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_awardName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:text="产品："
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:id="@+id/tv_staff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:text="员工："
-            android:textColor="@color/black"/>
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/bt_submit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="11dp"
-        android:padding="11dp"
-        android:orientation="vertical"
-        android:background="@drawable/shape_radius5_white">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/shape_radius5_white"
-        android:layout_margin="11dp"
-        android:paddingLeft="11dp"
-        android:paddingRight="11dp">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_staffSend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="40dp"
+        android:layout_margin="22dp"
+        android:background="@drawable/shape_radius3_appblue"
+        android:text="提交"
+        android:textColor="@color/white"/>
 
 </LinearLayout>
 

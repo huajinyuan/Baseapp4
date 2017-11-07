@@ -30,7 +30,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.An
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_reback_list_hx,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_record_list_hx,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }

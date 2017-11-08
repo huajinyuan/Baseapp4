@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.AcListPresenter_pt;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.AddAwardListActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.adapter.AcDetailTopicAdapter;
 import com.example.huaxiang.hx.ac_acSetting.adapter.WinHistoryAdapter_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
@@ -131,6 +132,16 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+        findView(R.id.iv_ac).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddAwardListActivity_pt.class).putExtra("id", id));
+                }
             }
         });
         findView(R.id.rl_add_ac).setOnClickListener(new View.OnClickListener() {

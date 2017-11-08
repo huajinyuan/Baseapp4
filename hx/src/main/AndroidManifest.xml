@@ -85,6 +85,9 @@
         <activity android:name=".hx.ac_acSetting.ac_createAc.AddAcActivity_cj" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addAward.AddAwardListActivity_pt" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addAward.AddAwardActivity_cj" />
+        <activity android:name=".hx.ac_acSetting.ac_createAc.addWin.AddWinListActivity_pt" />
+        <activity android:name=".hx.ac_acSetting.ac_createAc.addWin.AddWinActivity_pt" />
+        <activity android:name=".hx.ac_acSetting.ac_createAc.addWin.AwardListActivity_cj" />
 
 
     </application>

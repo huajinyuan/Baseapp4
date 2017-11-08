@@ -141,12 +141,19 @@ public interface ApiStores {
 
     //创建奖品
     @POST("api/hx/hxActivityAward/save")
-    Observable<Response<Award>> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("awardImgUrl") String awardImgUrl);
+    Observable<Response<Award>> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("replaceAwardOdds") String replaceAwardOdds, @Query("awardImgUrl") String awardImgUrl);
 
     //修改奖品
     @POST("api/hx/hxActivityAward/save")
-    Observable<Response> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("awardImgUrl") String awardImgUrl, @Query("awardId") String awardId);
+    Observable<Response> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("replaceAwardOdds") String replaceAwardOdds, @Query("awardImgUrl") String awardImgUrl, @Query("awardId") String awardId);
 
+    //删除活动奖品
+    @DELETE("api/hx/hxActivityAward")
+    Observable<Response> deleteAward(@Header("authorization") String authorization, @Query("awardId") String awardId);
+
+    //中奖记录
+    @GET("api/hx/hxAwardDetail/list")
+    Observable<Response<ArrayList<CjHistory>>> getWinHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("actId") String actId);
 
 
 
@@ -163,9 +170,6 @@ public interface ApiStores {
 //
 //
 //
-//    //中奖记录
-//    @GET("api/cj/cjAwardDetail/list")
-//    Observable<Response<ArrayList<CjHistory>>> getWinHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward);
 //
 //
 //

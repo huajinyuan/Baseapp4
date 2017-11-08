@@ -1,4 +1,4 @@
-package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward;
+package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.adapter.AddAwardListAdapter_pt;
-import com.example.huaxiang.hx.ac_acSetting.m.Award;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.adapter.AddWinListAdapter_pt;
+import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
@@ -24,11 +23,9 @@ import java.util.ArrayList;
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-import static com.example.huaxiang.R.attr.position;
-
-@RequiresPresenter(AddAwardListPresenter_pt.class)
-public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_pt> {
-    public static AddAwardListActivity_pt instance;
+@RequiresPresenter(AddWinListPresenter_pt.class)
+public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> {
+    public static AddWinListActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -37,14 +34,14 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
     ImageView iv_topbar_right;
 
     RecyclerView rv_staffSend;
-    AddAwardListAdapter_pt adapter;
+    AddWinListAdapter_pt adapter;
     LinearLayoutManager layoutManager;
-    ArrayList<Award> awards = new ArrayList<>();
+    ArrayList<CjHistory> cjHistories = new ArrayList<>();
     String id;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_add_award_list_hx;
+        return R.layout.activity_add_win_list_hx;
     }
 
     @Override
@@ -55,7 +52,7 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("中奖设置");
+        tv_topbar_title.setText("中奖记录");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
@@ -73,7 +70,7 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
     }
 
     void setRv() {
-        adapter = new AddAwardListAdapter_pt(context, awards);
+        adapter = new AddWinListAdapter_pt(context, cjHistories);
         layoutManager = new LinearLayoutManager(context);
         rv_staffSend.setLayoutManager(layoutManager);
         rv_staffSend.setAdapter(adapter);
@@ -87,21 +84,17 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
                 finish();
             }
         });
+
         findViewById(R.id.bt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, AddAwardActivity_cj.class).putExtra("id", id));
+                startActivity(new Intent(context, AddWinActivity_pt.class).putExtra("id", id));
             }
         });
     }
 
-    void getData() {
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAwardList(token, id, 1), new Subscriber<Response<ArrayList<Award>>>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
+    void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getWinHistory(token, 1, 100, id), new Subscriber<Response<ArrayList<CjHistory>>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -109,46 +102,15 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
 
             @Override
             public void onError(Throwable e) {
-                Log.e("aaa_savecjHistory", "onError position" + position + e.getMessage());
+                Log.e("aaa", "onError" + e.getMessage());
             }
 
             @Override
-            public void onNext(Response<ArrayList<Award>> arrayListResponse) {
-                if (arrayListResponse.code == 0) {
-                    awards = arrayListResponse.data;
-                    setRv();
-                }
+            public void onNext(Response<ArrayList<CjHistory>> arrayListResponse) {
+                cjHistories = arrayListResponse.data;
+                setRv();
             }
         });
-
-    }
-
-    public void deleteAward(String awardId) {
-        HttpMethods.start(HttpMethods.getInstance().demoService.deleteAward(token, awardId), new Subscriber<Response>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa_savecjHistory", "onError position" + position + e.getMessage());
-            }
-
-            @Override
-            public void onNext(Response arrayListResponse) {
-                if (arrayListResponse.code == 0) {
-                    Toast.makeText(context, "删除奖品成功", Toast.LENGTH_SHORT).show();
-                    getData();
-                }
-            }
-        });
-
     }
 
     @Override

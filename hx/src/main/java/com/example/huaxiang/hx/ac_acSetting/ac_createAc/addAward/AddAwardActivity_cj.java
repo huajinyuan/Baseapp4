@@ -54,18 +54,18 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     ImageView iv_topbar_right;
 
     String imgUrl;
-    String name, price, num, awardOdds;
+    String name, price, num, awardOdds, replaceOdds;
 
     EditText et_name;
     EditText et_price;
     EditText et_num;
     EditText et_odds;
+    EditText et_replaceOdds;
     ImageView iv_ac;
     String sdcardPath;
 
     Award award;
     String id;
-    String awardId;
 
     @Override
     protected int getLayoutId() {
@@ -89,6 +89,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         et_price = (EditText) findViewById(R.id.et_price);
         et_num = (EditText) findViewById(R.id.et_num);
         et_odds = (EditText) findViewById(R.id.et_odds);
+        et_replaceOdds = (EditText) findViewById(R.id.et_replaceOdds);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
 
         getPermissions(this);
@@ -101,30 +102,30 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         token = aCache.getAsString(ACacheKey.TOKEN);
         award = (Award) getIntent().getSerializableExtra("award");
         id = getIntent().getStringExtra("id");
-        awardId = getIntent().getStringExtra("awardId");
-        setData();
+        if (award != null) {
+            setData();
+        }
     }
 
     void setData(){
-        if (award != null) {
-            if (award.name != null) {
-                et_name.setText(award.name);
-            }
-            if (award.price != 0) {
-                et_price.setText(award.price + "");
-            }
-            if (award.num != 0) {
-                et_num.setText(award.num + "");
-            }
-            if (award.awardOdds != 0) {
-                et_odds.setText(award.awardOdds + "");
-            }
-            if (award.imgUrl != null) {
-                imgUrl = award.imgUrl;
-                UiUtil.setImage(iv_ac, imgUrl);
-            }
-        } else {
-            award = new Award();
+        if (award.name != null) {
+            et_name.setText(award.name);
+        }
+        if (award.price != 0) {
+            et_price.setText(award.price + "");
+        }
+        if (award.num != 0) {
+            et_num.setText(award.num + "");
+        }
+        if (award.awardOdds != 0) {
+            et_odds.setText(award.awardOdds + "");
+        }
+        if (award.replaceAwardOdds != 0) {
+            et_replaceOdds.setText(award.replaceAwardOdds + "");
+        }
+        if (award.imgUrl != null) {
+            imgUrl = award.imgUrl;
+            UiUtil.setImage(iv_ac, imgUrl);
         }
     }
 
@@ -143,19 +144,21 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 price = et_price.getText().toString().trim();
                 num = et_num.getText().toString().trim();
                 awardOdds = et_odds.getText().toString().trim();
+                replaceOdds = et_replaceOdds.getText().toString().trim();
 
-                if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty()) {
+                if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty() || replaceOdds.isEmpty()) {
                     Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else if (imgUrl == null) {
                     Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
                 } else {
                     price = price.equals(".") ? ".0" : price;
                     awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
+                    replaceOdds = replaceOdds.equals(".") ? ".0" : awardOdds;
 
-                    if (awardId == null) {
-
+                    if (award == null) {
+                        addAward();
                     } else {
-
+                        editAward();
                     }
                 }
             }
@@ -296,7 +299,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     };
 
     void addAward(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, awardOdds, imgUrl), new Subscriber<Response<Award>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, awardOdds, replaceOdds, imgUrl), new Subscriber<Response<Award>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -311,6 +314,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             public void onNext(Response<Award> arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "添加奖品成功", Toast.LENGTH_SHORT).show();
+                    AddAwardListActivity_pt.instance.getData();
                     finish();
                 }
             }
@@ -318,7 +322,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
 
     }
     void editAward(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, awardOdds, imgUrl, award.id), new Subscriber<Response>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, awardOdds, replaceOdds, imgUrl, award.id), new Subscriber<Response>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -333,6 +337,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
+                    AddAwardListActivity_pt.instance.getData();
                     finish();
                 }
             }

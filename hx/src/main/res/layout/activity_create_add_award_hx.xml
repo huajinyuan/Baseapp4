@@ -175,7 +175,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="中奖概率"
+                    android:text="抽奖中奖率"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -185,6 +185,59 @@
                     android:gravity="center_vertical">
                     <EditText
                         android:id="@+id/et_odds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:layout_weight="1"
+                        android:hint="请填写"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="11dp"
+                        android:textSize="14sp"
+                        android:inputType="numberDecimal"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textSize="14sp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:src="@mipmap/icon_arrow_grey_right_pt"/>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="11dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_appRed"
+                    android:text="*"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="代抽中奖率"
+                    android:textColor="@color/color_black"
+                    android:layout_centerVertical="true"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <EditText
+                        android:id="@+id/et_replaceOdds"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"

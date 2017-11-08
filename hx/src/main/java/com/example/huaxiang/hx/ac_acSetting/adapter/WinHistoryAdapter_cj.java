@@ -40,10 +40,15 @@ public class WinHistoryAdapter_cj extends RecyclerView.Adapter<WinHistoryAdapter
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         CjHistory activity_pt = data.get(position);
 
-        if (activity_pt.member != null) {
-            holder.tv_name.setText(activity_pt.member.mobile);
-        }
+        holder.tv_name.setText(activity_pt.mobile);
         holder.tv_jiangpin.setText(activity_pt.awardName);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.click();
+            }
+        });
     }
 
 

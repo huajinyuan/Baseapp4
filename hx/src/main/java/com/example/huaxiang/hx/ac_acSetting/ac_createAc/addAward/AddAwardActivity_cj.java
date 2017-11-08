@@ -140,27 +140,13 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = et_name.getText().toString().trim();
-                price = et_price.getText().toString().trim();
-                num = et_num.getText().toString().trim();
-                awardOdds = et_odds.getText().toString().trim();
-                replaceOdds = et_replaceOdds.getText().toString().trim();
-
-                if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty() || replaceOdds.isEmpty()) {
-                    Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
-                } else if (imgUrl == null) {
-                    Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
-                } else {
-                    price = price.equals(".") ? ".0" : price;
-                    awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
-                    replaceOdds = replaceOdds.equals(".") ? ".0" : awardOdds;
-
-                    if (award == null) {
-                        addAward();
-                    } else {
-                        editAward();
-                    }
-                }
+                save();
+            }
+        });
+        findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save();
             }
         });
         findViewById(R.id.iv_ac).setOnClickListener(new View.OnClickListener() {
@@ -169,6 +155,30 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 showPhotodialog();
             }
         });
+    }
+
+    void save(){
+        name = et_name.getText().toString().trim();
+        price = et_price.getText().toString().trim();
+        num = et_num.getText().toString().trim();
+        awardOdds = et_odds.getText().toString().trim();
+        replaceOdds = et_replaceOdds.getText().toString().trim();
+
+        if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty() || replaceOdds.isEmpty()) {
+            Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
+        } else if (imgUrl == null) {
+            Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
+        } else {
+            price = price.equals(".") ? ".0" : price;
+            awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
+            replaceOdds = replaceOdds.equals(".") ? ".0" : awardOdds;
+
+            if (award == null) {
+                addAward();
+            } else {
+                editAward();
+            }
+        }
     }
 
     void getPermissions(Activity mActivity){

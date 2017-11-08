@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="11dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_appRed"
+            android:text=""
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="问题"
+            android:textColor="@color/color_black"
+            android:gravity="center"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/icon_arrow_grey_right_pt"
+            android:layout_marginLeft="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <EditText
+                android:id="@+id/et_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:layout_weight="1"
+                android:hint="请填写"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="3dp"
+                android:textSize="14sp"
+                android:text=""/>
+            <ImageView
+                android:id="@+id/iv_add_reduce"
+                android:layout_width="22dp"
+                android:layout_height="50dp"
+                android:padding="3dp"
+                android:src="@mipmap/icon_circle_add"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_line" />
+
+</LinearLayout>

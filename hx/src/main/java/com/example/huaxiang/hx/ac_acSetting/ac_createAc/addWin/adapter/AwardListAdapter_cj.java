@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.AddWinActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.AwardListActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.Award;
 import com.example.huaxiang.utils.UiUtil;
 
@@ -47,9 +49,9 @@ public class AwardListAdapter_cj extends RecyclerView.Adapter<AwardListAdapter_c
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                AddWinActivity_pt.instance.award = award;
-//                AddWinActivity_pt.instance.et_award.setText("￥：" + award.price + "元" + award.name);
-//                AwardListActivity_cj.instance.finish();
+                AddWinActivity_pt.instance.award = award;
+                AddWinActivity_pt.instance.et_award.setText("￥：" + award.price + "元" + award.name);
+                AwardListActivity_cj.instance.finish();
 
             }
         });

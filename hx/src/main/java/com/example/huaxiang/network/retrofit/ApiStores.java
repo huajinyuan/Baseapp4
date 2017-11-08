@@ -155,38 +155,13 @@ public interface ApiStores {
     @GET("api/hx/hxAwardDetail/list")
     Observable<Response<ArrayList<CjHistory>>> getWinHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("actId") String actId);
 
+    //新增中奖记录
+    @POST("api/hx/hxAwardDetail/saveRecord")
+    Observable<Response> addWinHistory(@Header("authorization") String authorization, @Query("actId") String actId, @Query("mobile") String mobile, @Query("awardId") String awardId);
+
+    //问卷调查列表
+    @GET("api/hx/hxTopic/list")
+    Observable<Response<ArrayList<HxTopic>>> getTopicList(@Header("authorization") String authorization, @Query("actId") String actId);
 
 
-
-
-
-
-
-//    //抽奖记录
-//    @GET("api/cj/cjAwardDetail/list")
-//    Observable<Response<ArrayList<CjHistory>>> getCjHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-//
-//
-//    //活动奖品列表
-//    @GET("api/cj/cjActivityAward/list")
-//    Observable<Response<ArrayList<Award>>> getAwardList(@Header("authorization") String authorization, @Query("actId") String actId);
-//
-//    //新增中奖记录
-//    @POST("api/cj/cjAwardDetail/saveRecord")
-//    Observable<Response> saveWinHistory(@Header("authorization") String authorization, @Query("actId") String actId, @Query("mobile") String mobile, @Query("awardId") String awardId);
-//
-//
-//
 }

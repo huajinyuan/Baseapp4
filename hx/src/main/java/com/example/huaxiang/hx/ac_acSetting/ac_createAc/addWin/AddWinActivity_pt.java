@@ -2,6 +2,7 @@ package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,12 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.Award;
+import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
+import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 
 import nucleus.factory.RequiresPresenter;
+import rx.Subscriber;
 
 @RequiresPresenter(AddWinPresenter_pt.class)
 public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
@@ -84,17 +89,35 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
                 } else if (award == null) {
                     Toast.makeText(context, "请选择奖品", Toast.LENGTH_SHORT).show();
                 } else {
-//                    CjHistory cjHistory = new CjHistory();
-//                    cjHistory.mobile = mobile;
-//                    cjHistory.awardId = award.id;
-//                    cjHistory.awardPrice = award.price;
-//                    cjHistory.awardName = award.name;
-//                    AddWinListActivity_pt.instance.cjHistories.add(cjHistory);
-//                    AddWinListActivity_pt.instance.setRv();
-//                    finish();
+                    addAward(mobile);
                 }
             }
         });
+    }
+
+    void addAward(String mobile){
+        HttpMethods.start(HttpMethods.getInstance().demoService.addWinHistory(token, id, mobile, award.id), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "添加记录成功", Toast.LENGTH_SHORT).show();
+                    AddWinListActivity_pt.instance.getData();
+                    CreateAcActivity_cj.instance.getData();
+                    finish();
+                }
+            }
+        });
+
     }
 
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
@@ -97,8 +98,8 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         switch_carCheck = (Switch) findView(R.id.switch_carCheck);
 
         getPermissions(this);
-        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
-//        sdcardPath = Environment.getExternalStorageDirectory().getPath();
+//        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
+        sdcardPath = Environment.getExternalStorageDirectory().getPath();
     }
 
     @Override
@@ -201,13 +202,16 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             try {
                 //检测是否有写的权限
                 int permissionCAMERA = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
-                if (permissionCAMERA != PackageManager.PERMISSION_GRANTED) {
+                int permissionSD = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permissionCAMERA != PackageManager.PERMISSION_GRANTED || permissionSD != PackageManager.PERMISSION_GRANTED) {
                     Log.e("permission", "permission 1");
                     // 没有写的权限，去申请写的权限，会弹出对话框
                     ActivityCompat.requestPermissions(mActivity, PERMISSIONS_STORAGE, 1);
+                } else {
+                    Log.e("permission", "permission 2");
                 }
             } catch (Exception e) {
-                Log.e("permission", "permission 2" + e.toString());
+                Log.e("permission", "permission 3" + e.toString());
                 e.printStackTrace();
             }
         }
@@ -242,28 +246,28 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     String mPhotoPath;
     File mPhotoFile;
     void takePicture() {
-        mPhotoPath = sdcardPath + "/icon.png";
-        mPhotoFile = new File(mPhotoPath);
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        if (Build.VERSION.SDK_INT >= 23) {
-            try {
+        try {
+            mPhotoPath = sdcardPath + "/icon.jpg";
+            mPhotoFile = new File(mPhotoPath);
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if (Build.VERSION.SDK_INT >= 23) {
                 Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", mPhotoFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            } catch (Exception e) {
-
+            } else {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
             }
-        } else {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+            startActivityForResult(intent, 1);
+        } catch (Exception e) {
+            Log.e("aaa takePicture", e.toString());
         }
-        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            mPhotoPath = sdcardPath + "/icon.png";
+            mPhotoPath = sdcardPath + "/icon.jpg";
             String pathurl = null;
             if (requestCode == 1) {
                 pathurl = mPhotoPath;
@@ -271,7 +275,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 Uri uri = data.getData();
                 pathurl = MyBitmapUtil.getFilePath(context, uri);
             }
-            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), mPhotoPath));
+            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), sdcardPath+"/temp.jpg"));
         }
     }
 

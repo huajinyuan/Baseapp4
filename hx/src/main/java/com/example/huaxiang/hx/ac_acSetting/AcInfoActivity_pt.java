@@ -31,6 +31,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(AcListPresenter_pt.class)
 public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
+    public static AcInfoActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -58,6 +59,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -136,7 +138,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         findView(R.id.tv_abandon).setOnClickListener(view -> changeAcStatus(3));
     }
 
-    void getData(){
+    public void getData(){
         HttpMethods.start(HttpMethods.getInstance().demoService.getAcDetail_cj(token, id), new Subscriber<Response<ActivityDetail_cj>>() {
             @Override
             public void onCompleted() {
@@ -184,5 +186,11 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
     }
 }

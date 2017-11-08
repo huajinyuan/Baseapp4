@@ -114,7 +114,7 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
 
             @Override
             public void onNext(Response<ArrayList<Award>> arrayListResponse) {
-                if (arrayListResponse.code == 0) {
+                if (arrayListResponse.data != null) {
                     awards = arrayListResponse.data;
                     setRv();
                 }

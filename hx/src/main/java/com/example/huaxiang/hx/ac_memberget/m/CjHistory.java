@@ -31,6 +31,8 @@ public class CjHistory implements Serializable {
     public String ableTime;
     public String awardNum;
 
+    public String mobile;
+
 
 
     public User user;

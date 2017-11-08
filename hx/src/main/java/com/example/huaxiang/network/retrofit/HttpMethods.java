@@ -3,7 +3,6 @@ package com.example.huaxiang.network.retrofit;
 import android.util.Log;
 
 import com.example.huaxiang.hx.m.LoginData_pt;
-import com.example.huaxiang.hx.m.Report_hx;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.network.ComposeResponseData;
 
@@ -94,11 +93,5 @@ public class HttpMethods {
         return demoService.doLogin_pt(username, password)
                 .compose(new ComposeResponseData<Response<LoginData_pt>>());
     }
-
-    public Observable<Response<Report_hx>> getReport(String authorization, int status) {
-        return demoService.getReport_hx(authorization, status)
-                .compose(new ComposeResponseData<Response<Report_hx>>());
-    }
-
 
 }

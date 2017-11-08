@@ -183,8 +183,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         });
     }
     void getReport(int status){
-        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<Report_cj>>() {
-
+        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_pt(token, status), new Subscriber<Response<Report_cj>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -199,6 +198,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
+                login();
             }
 
             @Override

@@ -8,12 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.AcListActivity_pt;
 import com.example.huaxiang.hx.ac_bb.AcBbActivity;
 import com.example.huaxiang.hx.ac_bb.IntentionCustomerActivity;
 import com.example.huaxiang.hx.ac_bb.RebackListActivity;
 import com.example.huaxiang.hx.ac_bb.StaffRankingActivity;
 import com.example.huaxiang.hx.ac_memberget.MemberGetActivity;
-import com.example.huaxiang.hx.ac_acSetting.AcListActivity_pt;
 import com.example.huaxiang.hx.ac_staffSend.StaffSendActivity_pt;
 import com.example.huaxiang.hx.ac_withdrawSetting.SettingActivity_pt;
 import com.example.huaxiang.hx.m.LoginData_pt;
@@ -184,8 +184,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     }
 
     void getReport(int status) {
-        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<Report_hx>>() {
-
+        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_hx(token, status), new Subscriber<Response<Report_hx>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -200,6 +199,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
+                login();
             }
 
             @Override

@@ -41,7 +41,7 @@ public class AddWinListAdapter_pt extends RecyclerView.Adapter<AddWinListAdapter
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         CjHistory cjHistory = data.get(position);
 
-        holder.tv_mobile.setText("手机号：" + cjHistory.member.mobile);
+        holder.tv_mobile.setText("手机号：" + cjHistory.mobile);
         holder.tv_awardName.setText("奖品：￥" + cjHistory.price + "元" + cjHistory.awardName);
 
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {

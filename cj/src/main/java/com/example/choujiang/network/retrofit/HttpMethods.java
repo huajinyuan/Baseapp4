@@ -3,7 +3,6 @@ package com.example.choujiang.network.retrofit;
 import android.util.Log;
 
 import com.example.choujiang.cj.m.LoginData_pt;
-import com.example.choujiang.cj.m.Report_cj;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.network.ComposeResponseData;
 
@@ -93,11 +92,6 @@ public class HttpMethods {
     public Observable<Response<LoginData_pt>> login2(String username, String password) {
         return demoService.doLogin_pt(username, password)
                 .compose(new ComposeResponseData<Response<LoginData_pt>>());
-    }
-
-    public Observable<Response<Report_cj>> getReport(String authorization, int status) {
-        return demoService.getReport_pt(authorization, status)
-                .compose(new ComposeResponseData<Response<Report_cj>>());
     }
 
 

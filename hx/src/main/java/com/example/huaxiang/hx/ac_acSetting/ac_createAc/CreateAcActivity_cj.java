@@ -11,8 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.AcListPresenter_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.AddAwardListActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.AddTopicListActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.AddWinListActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.adapter.AcDetailTopicAdapter;
 import com.example.huaxiang.hx.ac_acSetting.adapter.WinHistoryAdapter_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
@@ -106,6 +109,9 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         //添加问卷
         if (data.topics != null) {
             setRv_topic(data.topics);
+            if (data.topics.size() > 0) {
+                findView(R.id.view_topic).setVisibility(View.GONE);
+            }
         } else {
             data.topics = new ArrayList<>();
         }
@@ -116,6 +122,17 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rv_winHistory.setLayoutManager(layoutManager);
         rv_winHistory.setAdapter(adapter_cj);
+
+        adapter_cj.setClickListener(new WinHistoryAdapter_cj.ClickListener() {
+            @Override
+            public void click() {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", id));
+                }
+            }
+        });
     }
 
     void setRv_topic(ArrayList<HxTopic> hxTopics){
@@ -123,6 +140,17 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rv_topic.setLayoutManager(layoutManager);
         rv_topic.setAdapter(adapter);
+
+        adapter.setClickListener(new AcDetailTopicAdapter.ClickListener() {
+            @Override
+            public void click() {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddTopicListActivity_pt.class).putExtra("id", id));
+                }
+            }
+        });
     }
 
     @Override
@@ -144,15 +172,46 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 }
             }
         });
+        findView(R.id.rl_add_win).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", id));
+                }
+            }
+        });
+        findView(R.id.view_topic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddTopicListActivity_pt.class).putExtra("id", id));
+                }
+            }
+        });
+
         findView(R.id.rl_add_ac).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(context, AddAcActivity_cj.class));
             }
         });
+
+        findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AcInfoActivity_pt.instance != null) {
+                    AcInfoActivity_pt.instance.getData();
+                }
+                finish();
+            }
+        });
     }
 
-    void getData(){
+    public void getData(){
         HttpMethods.start(HttpMethods.getInstance().demoService.getAcDetail_cj(token, id), new Subscriber<Response<ActivityDetail_cj>>() {
             @Override
             public void onCompleted() {

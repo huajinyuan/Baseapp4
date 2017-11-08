@@ -78,6 +78,7 @@
                 android:padding="11dp">
 
                 <RelativeLayout
+                    android:id="@+id/rl_add_win"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -127,8 +128,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="80dp">
-
                 </android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:id="@+id/view_topic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             </LinearLayout>
 
             <LinearLayout

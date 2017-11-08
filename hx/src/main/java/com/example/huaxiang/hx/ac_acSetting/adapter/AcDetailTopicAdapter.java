@@ -51,7 +51,8 @@ public class AcDetailTopicAdapter extends RecyclerView.Adapter<AcDetailTopicAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.click();
+                if(listener!=null)
+                    listener.click();
             }
         });
 

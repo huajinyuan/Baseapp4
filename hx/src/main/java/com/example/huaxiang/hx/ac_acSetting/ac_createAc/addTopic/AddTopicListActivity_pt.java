@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.AddAwardActivity_cj;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.adapter.AddTopicListAdapter;
 import com.example.huaxiang.hx.ac_bb.m.HxTopic;
 import com.example.huaxiang.model.Response;
@@ -56,7 +56,7 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("中奖设置");
+        tv_topbar_title.setText("设置问卷");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
@@ -124,8 +124,8 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
 
     }
 
-    public void deleteAward(String awardId) {
-        HttpMethods.start(HttpMethods.getInstance().demoService.deleteAward(token, awardId), new Subscriber<Response>() {
+    public void deleteTopic(String topicId) {
+        HttpMethods.start(HttpMethods.getInstance().demoService.deleteTopic(token, topicId), new Subscriber<Response>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -144,8 +144,9 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
             @Override
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
-                    Toast.makeText(context, "删除奖品成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "删除问卷成功", Toast.LENGTH_SHORT).show();
                     getData();
+                    CreateAcActivity_cj.instance.getData();
                 }
             }
         });

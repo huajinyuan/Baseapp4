@@ -110,7 +110,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         if (data.topics != null) {
             setRv_topic(data.topics);
             if (data.topics.size() > 0) {
-                findView(R.id.view_topic).setVisibility(View.GONE);
+                findView(R.id.tv_tip_addTopic).setVisibility(View.GONE);
             }
         } else {
             data.topics = new ArrayList<>();
@@ -182,7 +182,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 }
             }
         });
-        findView(R.id.view_topic).setOnClickListener(new View.OnClickListener() {
+        findView(R.id.tv_tip_addTopic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (data.id == null) {

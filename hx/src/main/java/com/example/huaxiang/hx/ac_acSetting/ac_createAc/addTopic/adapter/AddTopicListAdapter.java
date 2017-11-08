@@ -1,14 +1,18 @@
 package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.AddTopicActivity_cj;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.AddTopicListActivity_pt;
 import com.example.huaxiang.hx.ac_bb.m.HxTopic;
 
 import java.util.ArrayList;
@@ -49,7 +53,14 @@ public class AddTopicListAdapter extends RecyclerView.Adapter<AddTopicListAdapte
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AddTopicListActivity_pt.instance.deleteTopic(hxTopic.id);
+            }
+        });
 
+        holder.ll_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, AddTopicActivity_cj.class).putExtra("hxTopic", hxTopic));
             }
         });
 
@@ -69,6 +80,8 @@ public class AddTopicListAdapter extends RecyclerView.Adapter<AddTopicListAdapte
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
         TextView tv_question;
         RecyclerView rv_answer;
+
+        LinearLayout ll_view;
         TextView tv_delete;
 
         public AnchorHotViewHolder(final View itemView) {
@@ -76,6 +89,7 @@ public class AddTopicListAdapter extends RecyclerView.Adapter<AddTopicListAdapte
             tv_question = (TextView) itemView.findViewById(R.id.tv_question);
             rv_answer = (RecyclerView) itemView.findViewById(R.id.rv_answer);
             tv_delete = (TextView) itemView.findViewById(R.id.tv_delete);
+            ll_view = (LinearLayout) itemView.findViewById(R.id.ll_view);
         }
     }
 

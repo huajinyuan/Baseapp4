@@ -116,12 +116,11 @@
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_8"
                 android:background="@drawable/shape_radius_blue_line_w"
-                android:orientation="vertical"
                 android:padding="11dp">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_topic"
@@ -130,11 +129,15 @@
                     android:minHeight="80dp">
                 </android.support.v7.widget.RecyclerView>
 
-                <View
-                    android:id="@+id/view_topic"
+                <TextView
+                    android:id="@+id/tv_tip_addTopic"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:textColor="@color/color_appBlue"
+                    android:text="添加问卷"
+                    android:textSize="12sp"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

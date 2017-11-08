@@ -47,7 +47,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="3dp"
                 android:textSize="14sp"
-                android:text=""/>
+                android:text=""
+                android:focusable="false"/>
             <ImageView
                 android:id="@+id/iv_add_reduce"
                 android:layout_width="22dp"

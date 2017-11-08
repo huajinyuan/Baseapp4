@@ -163,5 +163,17 @@ public interface ApiStores {
     @GET("api/hx/hxTopic/list")
     Observable<Response<ArrayList<HxTopic>>> getTopicList(@Header("authorization") String authorization, @Query("actId") String actId);
 
+    //创建问卷调查
+    @POST("api/hx/hxTopic/save")
+    Observable<Response> addTopic(@Header("authorization") String authorization, @Query("question") String question, @Query("type") int type, @Query("option") String option, @Query("answer") String answer, @Query("actId") String actId);
+
+    //修改问卷调查
+    @POST("api/hx/hxTopic/save")
+    Observable<Response> editTopic(@Header("authorization") String authorization, @Query("question") String question, @Query("type") int type, @Query("option") String option, @Query("answer") String answer, @Query("actId") String actId, @Query("topicId") String topicId);
+
+    //删除问卷调查
+    @DELETE("api/hx/hxTopic")
+    Observable<Response> deleteTopic(@Header("authorization") String authorization, @Query("topicId") String topicId);
+
 
 }

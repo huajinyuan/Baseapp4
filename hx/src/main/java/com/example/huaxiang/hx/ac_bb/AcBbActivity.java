@@ -126,9 +126,11 @@ public class AcBbActivity extends BaseActivity<AcBbPresenter> {
 
             @Override
             public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 

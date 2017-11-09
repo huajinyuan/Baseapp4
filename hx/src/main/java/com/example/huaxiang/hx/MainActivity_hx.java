@@ -151,7 +151,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     }
 
     void login() {
-        HttpMethods.getInstance().login("shanghu1", "123456").subscribe(new Subscriber<Response<LoginData_pt>>() {
+        HttpMethods.getInstance().login("xzuo", "123456").subscribe(new Subscriber<Response<LoginData_pt>>() {
             @Override
             public void onStart() {
                 super.onStart();

@@ -54,20 +54,6 @@
         <activity android:name=".rxpicture.ui.RxCameraActivity" />
         <activity android:name=".rxpicture.ui.RxCropActivity" />
 
-        <!-- 拼团 -->
-        <activity android:name=".hx.ac_ptbb.BbActivityActivity" />
-
-        <activity android:name=".hx.ac_ptbb.BbInfoActivity" />
-        <activity android:name=".hx.ac_ptbb.DrawingActivity" />
-        <activity android:name=".hx.ac_ptbb.DrawSettingActivity" />
-        <activity android:name=".hx.ac_ptbb.AcSettingActivity" />
-        <activity android:name=".hx.ac_ptbb.PrizesSettingActivity" />
-        <activity android:name=".hx.ac_ptbb.AcAddActivity" />
-        <activity android:name=".hx.ac_ptbb.AskAddActivity" />
-        <activity android:name=".hx.ac_ptbb.RecordAddActivity" />
-        <activity android:name=".hx.ac_ptbb.HxRecordListActivity" />
-        <activity android:name=".hx.ac_ptbb.AskSetActivity"></activity>
-
 
         <!--画像-->
         <activity android:name=".hx.ac_memberget.MemberGetActivity" />
@@ -100,6 +86,7 @@
         <activity android:name=".hx.ac_acSetting.ac_createAc.addWin.AwardListActivity_cj" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addTopic.AddTopicListActivity_pt" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addTopic.AddTopicActivity_cj" />
+        <activity android:name=".hx.ac_memberget.QrCodeActivity" />
 
 
     </application>

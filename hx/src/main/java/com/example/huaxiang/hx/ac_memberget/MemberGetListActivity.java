@@ -118,9 +118,11 @@ public class MemberGetListActivity extends BaseActivity<MemberGetListPresenter> 
 
             @Override
             public void onNext(Response<ArrayList<CjHistory>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 

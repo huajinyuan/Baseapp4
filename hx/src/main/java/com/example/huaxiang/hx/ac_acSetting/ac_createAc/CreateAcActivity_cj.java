@@ -168,7 +168,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 if (data.id == null) {
                     Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
                 } else {
-                    startActivity(new Intent(context, AddAwardListActivity_pt.class).putExtra("id", id));
+                    startActivity(new Intent(context, AddAwardListActivity_pt.class).putExtra("id", data.id));
                 }
             }
         });
@@ -178,7 +178,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 if (data.id == null) {
                     Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
                 } else {
-                    startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", id));
+                    startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", data.id));
                 }
             }
         });
@@ -188,7 +188,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 if (data.id == null) {
                     Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
                 } else {
-                    startActivity(new Intent(context, AddTopicListActivity_pt.class).putExtra("id", id));
+                    startActivity(new Intent(context, AddTopicListActivity_pt.class).putExtra("id", data.id));
                 }
             }
         });
@@ -225,8 +225,8 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
 
             @Override
             public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
-                data = arrayListResponse.data;
-                if (data != null) {
+                if (arrayListResponse.data != null) {
+                    data = arrayListResponse.data;
                     setData();
                 }
             }
@@ -247,8 +247,9 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
 
             @Override
             public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
-                if (arrayListResponse.code == 0) {
+                if (arrayListResponse.data != null) {
                     data.id = arrayListResponse.data.id;
+                    id = arrayListResponse.data.id;
                     Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
                 }
             }

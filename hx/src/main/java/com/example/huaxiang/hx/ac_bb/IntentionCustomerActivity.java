@@ -125,9 +125,11 @@ public class IntentionCustomerActivity extends BaseActivity<IntentionCustomerPre
 
             @Override
             public void onNext(Response<ArrayList<IntentionCustomer>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.huaxiang.hx.ac_staffSend;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
     ArrayList<StaffSend_hx> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
+    SwipeRefreshLayout swip_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -59,6 +61,15 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
+
+        swip_refresh = findView(R.id.swip_refresh);
+        swip_refresh.setColorSchemeResources(R.color.colorAppRed, R.color.colorMyGreen, R.color.colorMyBlue);
+        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
     }
 
@@ -82,6 +93,7 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
 
     void setRv(ArrayList<StaffSend_hx> pinDans) {
         if (adapter == null) {
+            pinDan_pts.clear();
             pinDan_pts.addAll(pinDans);
             adapter = new StaffSendAdapter_pt(context, pinDan_pts);
             layoutManager = new LinearLayoutManager(context);
@@ -121,11 +133,13 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
             public void onStart() {
                 super.onStart();
                 canGet = false;
+
             }
 
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
@@ -135,7 +149,7 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
 
             @Override
             public void onNext(Response<ArrayList<StaffSend_hx>> arrayListResponse) {
-                if (arrayListResponse != null) {
+                if (arrayListResponse.data != null) {
                     setRv(arrayListResponse.data);
                     canGet = true;
                     page++;
@@ -143,6 +157,12 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
             }
         });
 
+    }
+
+    void refresh(){
+        adapter = null;
+        page = 1;
+        getData();
     }
 
 

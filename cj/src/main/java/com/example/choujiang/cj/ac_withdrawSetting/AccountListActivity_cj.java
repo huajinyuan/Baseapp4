@@ -66,16 +66,16 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
         token = aCache.getAsString(ACacheKey.TOKEN);
         getData();
 
-//        rv_accountList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
-//                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
-//                        if(canGet)
-//                            getData();
-//            }
-//        });
+        rv_accountList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
     void setRv(ArrayList<Staff_cj> pinDans) {
@@ -108,7 +108,7 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token), new Subscriber<Response<ArrayList<Staff_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token, page, 10), new Subscriber<Response<ArrayList<Staff_cj>>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -127,9 +127,11 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
 
             @Override
             public void onNext(Response<ArrayList<Staff_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 

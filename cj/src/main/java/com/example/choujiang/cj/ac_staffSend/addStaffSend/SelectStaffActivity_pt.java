@@ -69,14 +69,30 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         getData();
+
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
     void setRv(ArrayList<Staff_cj> pinDans) {
-        pinDan_pts = pinDans;
-        adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
-        layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
+        if (adapter == null) {
+            pinDan_pts.addAll(pinDans);
+            adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            pinDan_pts.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -104,10 +120,11 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token), new Subscriber<Response<ArrayList<Staff_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token, page, 10), new Subscriber<Response<ArrayList<Staff_cj>>>() {
             @Override
             public void onStart() {
                 super.onStart();
+                canGet = false;
             }
 
             @Override
@@ -122,7 +139,11 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
 
             @Override
             public void onNext(Response<ArrayList<Staff_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 

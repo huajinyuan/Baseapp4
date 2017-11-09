@@ -41,8 +41,7 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         StaffSend_hx staffSend_hx = data.get(position);
-
-        holder.tv_name.setText(staffSend_hx.user.name);
+        holder.tv_name.setText(staffSend_hx.userName);
         holder.tv_shop.setText(staffSend_hx.storeName);
         holder.tv_activityNum.setText(staffSend_hx.actCount);
 

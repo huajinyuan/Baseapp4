@@ -64,7 +64,7 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
         staff_cj = (Staff_cj) getIntent().getSerializableExtra("staff");
         if (staff_cj != null) {
             tv_name.setText(staff_cj.name);
-//            tv_balance.setText(staff_cj.);
+            tv_balance.setText("￥" + staff_cj.balance);
         }
     }
 

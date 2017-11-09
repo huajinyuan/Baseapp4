@@ -14,6 +14,7 @@ import com.example.huaxiang.utils.ACacheKey;
 
 
 public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
+    public static MemberGetActivity instance;
     Context context;
     ACache aCache;
     public String token;
@@ -25,6 +26,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
     TextView tv_status;
     TextView tv_personName;
     TextView tv_goodsName;
+    TextView tv_goodsPrice;
     TextView tv_goodsNum;
 
     @Override
@@ -34,6 +36,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -49,6 +52,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
         tv_status = findView(R.id.tv_status);
         tv_personName = findView(R.id.tv_personName);
         tv_goodsName = findView(R.id.tv_goodsName);
+        tv_goodsPrice = findView(R.id.tv_goodsPrice);
         tv_goodsNum = findView(R.id.tv_goodsNum);
     }
 
@@ -71,7 +75,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
         findViewById(R.id.iv_camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context, QrCodeActivity.class));
             }
         });
         findViewById(R.id.bt_submit).setOnClickListener(new View.OnClickListener() {
@@ -80,5 +84,12 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
 
             }
         });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
     }
 }

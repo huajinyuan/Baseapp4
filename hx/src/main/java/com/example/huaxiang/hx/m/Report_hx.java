@@ -10,8 +10,8 @@ import java.io.Serializable;
  */
 
 public class Report_hx extends BaseInfo implements Serializable {
-    public int totalManCount;
-    public int totalReplaceCount;
-    public int conversionCount;
-    public int intentionCount;
+    public String totalManCount;
+    public String totalReplaceCount;
+    public String conversionCount;
+    public String intentionCount;
 }

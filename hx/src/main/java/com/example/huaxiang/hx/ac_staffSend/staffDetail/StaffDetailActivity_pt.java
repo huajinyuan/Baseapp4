@@ -1,6 +1,7 @@
 package com.example.huaxiang.hx.ac_staffSend.staffDetail;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,6 +43,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
+    SwipeRefreshLayout swip_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -64,6 +66,15 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
         iv_qr_bottom = (ImageView) findViewById(R.id.iv_qr_bottom);
+
+        swip_refresh = findView(R.id.swip_refresh);
+        swip_refresh.setColorSchemeResources(R.color.colorAppRed, R.color.colorMyGreen, R.color.colorMyBlue);
+        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
     }
 
@@ -88,6 +99,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
     void setRv(ArrayList<Activity_cj> pinDans) {
         if (adapter == null) {
+            pinDan_pts.clear();
             pinDan_pts.addAll(pinDans);
             adapter = new StaffDetailAdapter_pt(context, pinDan_pts);
             layoutManager = new LinearLayoutManager(context);
@@ -128,11 +140,13 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
             public void onStart() {
                 super.onStart();
                 canGet = false;
+                swip_refresh.setRefreshing(true);
             }
 
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
@@ -148,6 +162,12 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
             }
         });
 
+    }
+
+    void refresh(){
+        adapter = null;
+        page = 1;
+        getData();
     }
 
 

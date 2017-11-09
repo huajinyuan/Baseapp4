@@ -57,7 +57,7 @@ public interface ApiStores {
 
     //员工列表
     @GET("api/common/staff/list")
-    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization);
+    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
     //活动列表 状态 0全部 1可用 2暂停 3作废
     @GET("api/hx/hxActivity/list")

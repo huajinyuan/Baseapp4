@@ -2,6 +2,7 @@ package com.example.huaxiang.hx.ac_withdrawSetting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
     ArrayList<Staff_cj> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
+    SwipeRefreshLayout swip_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -59,20 +61,46 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
 
         rv_accountList = (RecyclerView) findViewById(R.id.rv_accountList);
 
+        swip_refresh = findView(R.id.swip_refresh);
+        swip_refresh.setColorSchemeResources(R.color.colorAppRed, R.color.colorMyGreen, R.color.colorMyBlue);
+        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
     }
 
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         getData();
+
+        rv_accountList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
     void setRv(ArrayList<Staff_cj> pinDans) {
-        pinDan_pts = pinDans;
-        adapter = new AccountListAdapter_cj(context, pinDan_pts);
-        layoutManager = new LinearLayoutManager(context);
-        rv_accountList.setLayoutManager(layoutManager);
-        rv_accountList.setAdapter(adapter);
+        if (adapter == null) {
+            pinDan_pts.clear();
+            pinDan_pts.addAll(pinDans);
+            adapter = new AccountListAdapter_cj(context, pinDan_pts);
+            layoutManager = new LinearLayoutManager(context);
+            rv_accountList.setLayoutManager(layoutManager);
+            rv_accountList.setAdapter(adapter);
+        } else {
+            pinDan_pts.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -92,15 +120,18 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token), new Subscriber<Response<ArrayList<Staff_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaff_cj(token, page, 10), new Subscriber<Response<ArrayList<Staff_cj>>>() {
             @Override
             public void onStart() {
                 super.onStart();
+                canGet = false;
+                swip_refresh.setRefreshing(true);
             }
 
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
@@ -110,12 +141,20 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
 
             @Override
             public void onNext(Response<ArrayList<Staff_cj>> arrayListResponse) {
-                if (arrayListResponse != null) {
+                if (arrayListResponse.data != null) {
                     setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
                 }
             }
         });
 
+    }
+
+    void refresh(){
+        adapter = null;
+        page = 1;
+        getData();
     }
 
 }

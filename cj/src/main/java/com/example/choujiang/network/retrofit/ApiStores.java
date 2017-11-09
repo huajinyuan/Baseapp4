@@ -71,7 +71,7 @@ public interface ApiStores {
 
     //员工列表
     @GET("api/common/staff/list")
-    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization);
+    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
     //账户明细
     @GET("api/common/staffAccount/{staffId}")

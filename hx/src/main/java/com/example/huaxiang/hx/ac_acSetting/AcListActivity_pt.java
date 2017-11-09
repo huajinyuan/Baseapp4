@@ -1,12 +1,17 @@
 package com.example.huaxiang.hx.ac_acSetting;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +24,7 @@ import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
+import com.example.huaxiang.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
@@ -115,7 +121,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogSelect();
             }
         });
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
@@ -159,6 +165,28 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         adapter = null;
         page = 1;
         getData();
+    }
+
+    void showDialogSelect() {
+        final AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogSelect);
+        dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select_3, null);
+        dialog.setContentView(view_dialog);
+
+        //->
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = 0;
+        params.width = ScreenUtils.getScreenWidth();
+        window.setAttributes(params);
+        //->
+
+
     }
 
 }

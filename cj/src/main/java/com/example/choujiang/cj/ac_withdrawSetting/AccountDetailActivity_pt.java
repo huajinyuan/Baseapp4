@@ -148,9 +148,11 @@ public class AccountDetailActivity_pt extends BaseActivity<AccountDetailPresente
 
             @Override
             public void onNext(Response<ArrayList<AccountDetail_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 

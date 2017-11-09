@@ -24,4 +24,9 @@
     <style name="DialogTransBackGround" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@color/color_transparent</item>
     </style>
+
+    <style name="DialogSelect" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@color/color_transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/color_backGrey">
 
-    <include layout="@layout/layout_topbar_cj" />
+    <include layout="@layout/layout_topbar_hx" />
 
     <RelativeLayout
         android:id="@+id/rl_persent"

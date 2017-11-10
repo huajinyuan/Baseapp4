@@ -8,7 +8,7 @@
         android:layout_height="fill_parent">
         <include
             android:id="@+id/header"
-            layout="@layout/layout_topbar_cj" />
+            layout="@layout/layout_topbar_hx" />
 
         <SurfaceView
             android:id="@+id/preview_view"

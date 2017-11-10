@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.huaxiang.hx.zxing.decode;
+package com.zt.baseapp.pt.zxing.decode;
 
 import android.app.Activity;
 import android.content.Intent;

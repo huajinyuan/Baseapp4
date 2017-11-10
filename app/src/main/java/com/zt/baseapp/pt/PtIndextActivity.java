@@ -151,7 +151,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
     }
 
     void login(){
-        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
+        HttpMethods.getInstance().login("shanghu1", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
 
             @Override
             public void onStart() {
@@ -199,6 +199,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
+                login();
             }
 
             @Override

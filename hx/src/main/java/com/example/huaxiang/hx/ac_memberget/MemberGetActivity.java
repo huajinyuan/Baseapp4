@@ -77,7 +77,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
         tv_personName.setText("");
         tv_goodsName.setText(cjHistory.awardName);
         tv_goodsPrice.setText(cjHistory.price + "");
-        tv_goodsNum.setText(cjHistory.awardNum);
+        tv_goodsNum.setText(cjHistory.awardNum + "");
     }
 
     @Override

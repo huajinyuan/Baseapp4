@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_topbar_cj" />
+    <include layout="@layout/layout_topbar_hx" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_staffSend"
         android:layout_width="match_parent"

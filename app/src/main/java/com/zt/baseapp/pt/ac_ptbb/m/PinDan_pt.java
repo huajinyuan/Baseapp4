@@ -16,6 +16,7 @@ public class PinDan_pt implements Serializable {
     public String actId;
     public double price;
     public String memberId;
+    public String payOrderNumber;
     public String status;//1待成团 2已成团 3失败 ,
     public String goodNum;
     public String redeemCode;

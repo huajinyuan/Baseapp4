@@ -82,68 +82,17 @@ public interface ApiStores {
     @GET("api/common/uploadTokens")
     Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);
 
-    @GET("/api/pt/ptOrderDetail/exChangeRecord")
-    Observable<Response<LoginData_pt>> exChangeRecord(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("authorization")String authorization);
+    //拼单兑换记录
+    @GET("api/pt/ptOrderDetail/exChangeRecord")
+    Observable<Response<ArrayList<PinDan_pt>>> getExchangeList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
-    @POST("/api/pt/ptOrderDetail/exchange")
-    Observable<Response<LoginData_pt>> exchange(@Query("authorization") String authorization, @Query("detailId") int detailId, @Query("redeemCode")String redeemCode);
+    //拼单明细
+    @GET("api/pt/ptOrderDetail/{detailId}")
+    Observable<Response<PinDan_pt>> getPinDanDetail(@Header("authorization") String authorization, @Path("detailId") String detailId);
 
-    @GET("/api/pt/ptOrderDetail/{detailId}")
-    Observable<Response<LoginData_pt>> ptOrderDetail(@Path("detailId") String detailId, @Query("authorization") String authorization, @Query("detailId")String id);
+    //拼单兑换
+    @POST("api/pt/ptOrderDetail/exchange")
+    Observable<Response> PinDanExchange(@Header("authorization") String authorization, @Query("detailId") String detailId, @Query("redeemCode") String redeemCode);
 
-    @GET("/api/common/store/list")
-    Observable<Response<LoginData_pt>> list(@Query("authorization") String authorization);
-
-    @POST("/api/common/store/save")
-    Observable<Response<LoginData_pt>> save(@Query("authorization") String authorization, @Query("storeName")String storeName, @Query("storeMobile")String storeMobile, @Query("storeAddress")String storeAddress);
-
-
-    @GET("/api/pt/ptGroupOrder/group")
-    Observable<Response<LoginData_pt>> group(@Query("authorization") String authorization, @Query("id")String id);
-
-    @GET("/api/pt/ptGroupOrder/list")
-    Observable<Response<LoginData_pt>> ptGroupOrderList(@Query("authorization") String authorization, @Query("pageNo")int pageNo, @Query("pageSize")int pageSize, @Query("status")int status);
-
-    @GET("/api/pt/ptGroupOrder/refund")
-    Observable<Response<LoginData_pt>> refund(@Query("authorization") String authorization, @Query("id")String id);
-
-    @GET("/api/pt/ptActivities/info")
-    Observable<Response<LoginData_pt>> info(@Query("authorization") String authorization, @Query("actId")String actId, @Query("inviteId")String inviteId);
-
-    @GET("/api/pt/ptActivities/list")
-    Observable<Response<LoginData_pt>> ptActivitiesList(@Query("authorization") String authorization, @Query("pageNo")String pageNo, @Query("pageSize")int pageSize, @Query("status")int status, @Query("userId")int userId);
-
-    @GET("/api/pt/ptActivities/report")
-    Observable<Response<LoginData_pt>> ptActivitiesReport(@Query("authorization") String authorization, @Query("pageNo")String pageNo, @Query("pageSize")int pageSize, @Query("status")int status, @Query("userId")int userId);
-
-    @GET("/api/pt/ptActivities/report/staffRanking")
-    Observable<Response<LoginData_pt>> staffRanking(@Query("authorization") String authorization, @Query("pageNo")String pageNo, @Query("pageSize")int pageSize, @Query("status")int status, @Query("actId")int actId);
-
-    @POST("/api/pt/ptActivities/save")
-    Observable<Response<LoginData_pt>> ptActivitiesSave(@Query("authorization") String authorization, @Query("goodName")String goodName, @Query("originalPrice")double originalPrice, @Query("price")double price, @Query("count")int  count, @Query("videoUrl")String videoUrl, @Query("goodImgUrl")String goodImgUrl, @Query("activityName")String activityName, @Query("activityImgUrl")String activityImgUrl, @Query("beginTime")String beginTime, @Query("endTime")String endTime, @Query("num")int num, @Query("saleNum")int  saleNum, @Query("storeId")String storeId, @Query("saleRemarks")String saleRemarks);
-
-    @GET("/api/pt/ptActivities/state")
-    Observable<Response<LoginData_pt>> ptActivitiesState(@Query("authorization") String authorization, @Query("status")int status, @Query("actId")int actId);
-
-    @POST("/api/pt/ptActivities/update")
-    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization, @Query("goodName")String goodName, @Query("originalPrice")double originalPrice, @Query("price")double price, @Query("count")int  count, @Query("videoUrl")String videoUrl, @Query("goodImgUrl")String goodImgUrl, @Query("activityName")String activityName, @Query("activityImgUrl")String activityImgUrl, @Query("beginTime")String beginTime, @Query("endTime")String endTime, @Query("num")int num, @Query("saleNum")int  saleNum, @Query("storeId")String storeId, @Query("saleRemarks")String saleRemarks);
-
-    @GET("/api/pt/ptAppGroupOrder/detail")
-    Observable<Response<LoginData_pt>> ptAppGroupOrderDetail(@Query("authorization") String authorization, @Query("orderNumber")int orderNumber);
-
-    @GET("/api/pt/ptAppGroupOrder/list")
-    Observable<Response<LoginData_pt>> ptAppGroupOrderList(@Query("authorization") String authorization, @Query("status")int status, @Query("pageNo")int pageNo, @Query("pageSize")int pageSize);
-
-    @GET("//api/pt/ptAppGroupOrder/order/list")
-    Observable<Response<LoginData_pt>> ptAppGroupOrderOrderList(@Query("authorization") String authorization, @Query("pageNo")int pageNo, @Query("pageSize")int pageSize);
-
-//    @GET("/api/pt/ptActivities/update")
-//    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization,@Query("status")int status,@Query("actId")int actId);
-//
-//    @GET("/api/pt/ptActivities/update")
-//    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization,@Query("status")int status,@Query("actId")int actId);
-//
-//    @GET("/api/pt/ptActivities/update")
-//    Observable<Response<LoginData_pt>> ptActivitiesUpdate(@Query("authorization") String authorization,@Query("status")int status,@Query("actId")int actId);
 
 }

@@ -29,7 +29,7 @@ public class CjHistory implements Serializable {
     public String imgUrl;
     public String awardName;
     public String ableTime;
-    public String awardNum;
+    public int awardNum;
 
     public String mobile;
 

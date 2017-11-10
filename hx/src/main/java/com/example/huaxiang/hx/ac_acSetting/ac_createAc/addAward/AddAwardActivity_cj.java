@@ -41,7 +41,7 @@ import java.io.File;
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-import static com.example.huaxiang.hx.m.StringConfig.QiniuBase;
+import static com.example.huaxiang.hx.utils.StringConfig.QiniuBase;
 
 
 @RequiresPresenter(AddAwardPresenter_cj.class)

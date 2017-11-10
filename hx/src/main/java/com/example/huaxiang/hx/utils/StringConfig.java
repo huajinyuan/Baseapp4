@@ -1,4 +1,4 @@
-package com.example.huaxiang.hx.m;
+package com.example.huaxiang.hx.utils;
 
 /**
  * Created by zuoyun on 2017/10/27.

@@ -39,7 +39,7 @@ public interface ApiStores {
     @DELETE("api/common/tokens")
     Observable<Response<LoginData_pt>> doLogout(@Query("authorization") String authorization);
 
-    //画像汇总报表
+    //画像汇总报表  0全部 1本日 2本月 3本年
     @GET("api/hx/report/total")
     Observable<Response<Report_hx>> getReport_hx(@Header("authorization") String authorization, @Query("status") int status);
 
@@ -75,7 +75,7 @@ public interface ApiStores {
     @POST("api/common/staffAccount/withdrawals")
     Observable<Response> accountWithDraw(@Header("authorization") String authorization, @Query("staffId") String staffId, @Query("amount") String amount);
 
-    //活动报表
+    //活动报表  0全部 1本日 2本月 3本年
     @GET("api/hx/report")
     Observable<Response<ArrayList<Activity_cj>>> getAcBb(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
@@ -175,5 +175,12 @@ public interface ApiStores {
     @DELETE("api/hx/hxTopic")
     Observable<Response> deleteTopic(@Header("authorization") String authorization, @Query("topicId") String topicId);
 
+    //抽奖明细--后台(扫描二维码获取detailId)
+    @GET("api/hx/hxAwardDetail/{detailId}")
+    Observable<Response<CjHistory>> getCjQrDetail(@Header("authorization") String authorization, @Path("detailId") String detailId);
+
+    //奖品兑换
+    @POST("api/hx/hxAwardDetail/exchange")
+    Observable<Response> AwardExchange(@Header("authorization") String authorization, @Query("detailId") String detailId, @Query("redeemCode") String redeemCode);
 
 }

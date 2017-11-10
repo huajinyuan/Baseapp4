@@ -9,7 +9,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.zxing.F;
@@ -142,10 +141,9 @@ public class QrCodeActivity extends AppCompatActivity implements SurfaceHolder.C
      */
     public void handleDecode(Result obj, Bitmap barcode) {
         F.e("二维码：" + obj.getText());
-        if (obj.getText().startsWith("CSGADDFRIEND")) {
-        } else {
-            Toast.makeText(context, "内容无效", Toast.LENGTH_SHORT).show();
-        }
+        MemberGetActivity.instance.detailId = obj.getText();
+        MemberGetActivity.instance.getData();
+        finish();
     }
 
 }

@@ -36,7 +36,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/dp_8"
                 android:layout_toLeftOf="@id/iv_camera"
-                android:text="8791273489"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14"
                 android:background="@null"
@@ -64,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="可兑换"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
@@ -89,7 +87,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="小A"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
@@ -114,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="铠甲镀金"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
@@ -139,7 +135,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="10"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
@@ -165,7 +160,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="99"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>

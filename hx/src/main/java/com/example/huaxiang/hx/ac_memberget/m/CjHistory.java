@@ -22,7 +22,7 @@ public class CjHistory implements Serializable {
     public String isAward;
     public String awardId;
     public String redeemCode;
-    public String codeStatus;
+    public String codeStatus; //0 未兑换 1已兑换
     public String redeemCodeUrl;
     public int type;
     public double price;

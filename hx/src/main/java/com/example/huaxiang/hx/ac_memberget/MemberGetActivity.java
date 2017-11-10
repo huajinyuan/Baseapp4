@@ -2,15 +2,22 @@ package com.example.huaxiang.hx.ac_memberget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
+import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
+import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
+
+import rx.Subscriber;
 
 
 public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
@@ -28,6 +35,9 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
     TextView tv_goodsName;
     TextView tv_goodsPrice;
     TextView tv_goodsNum;
+
+    public String detailId;
+    CjHistory cjHistory;
 
     @Override
     protected int getLayoutId() {
@@ -59,7 +69,15 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
+    }
 
+    void setData(){
+        et_code.setText(detailId);
+        tv_status.setText(cjHistory.codeStatus.equals("0") ? "未兑换" : "已兑换");
+        tv_personName.setText("");
+        tv_goodsName.setText(cjHistory.awardName);
+        tv_goodsPrice.setText(cjHistory.price + "");
+        tv_goodsNum.setText(cjHistory.awardNum);
     }
 
     @Override
@@ -81,7 +99,66 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
         findViewById(R.id.bt_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (cjHistory != null) {
+                    exchange();
+                }
+            }
+        });
+    }
 
+    public void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getCjQrDetail(token, detailId), new Subscriber<Response<CjHistory>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<CjHistory> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    cjHistory = arrayListResponse.data;
+                    setData();
+
+                }
+            }
+        });
+    }
+
+    void exchange(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.AwardExchange(token, detailId, cjHistory.redeemCode), new Subscriber<Response>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "兑换成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

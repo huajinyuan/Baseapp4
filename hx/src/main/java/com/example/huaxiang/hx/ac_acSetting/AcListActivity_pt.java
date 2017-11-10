@@ -19,12 +19,13 @@ import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.adapter.AcListAdapter_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
+import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
+import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
-import com.example.huaxiang.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     boolean canGet = true;
     int page = 1;
     SwipeRefreshLayout swip_refresh;
+    int requestStatus;
 
     @Override
     protected int getLayoutId() {
@@ -133,7 +135,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 5, 0), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 5, requestStatus), new Subscriber<Response<ArrayList<Activity_cj>>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -154,9 +156,11 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
 
             @Override
             public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
     }
@@ -174,19 +178,40 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         dialog.setCancelable(true);
         dialog.show();
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select_3, null);
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select, null);
         dialog.setContentView(view_dialog);
 
         //->
         Window window = dialog.getWindow();
         window.setGravity(Gravity.TOP);
         WindowManager.LayoutParams params = window.getAttributes();
-        params.y = 0;
-        params.width = ScreenUtils.getScreenWidth();
+        params.y = DisplayMetricsUtil.dip2px(context, 50);
+        params.width = DisplayMetricsUtil.getScreenWidth(context);
         window.setAttributes(params);
         //->
 
+        RecyclerView rv_dialog = (RecyclerView) view_dialog.findViewById(R.id.rv_dialog_select);
+        LinearLayoutManager selectLayoutManager = new LinearLayoutManager(context);
+        rv_dialog.setLayoutManager(selectLayoutManager);
+        ArrayList<String> selectData = new ArrayList<>();
+        selectData.add("全部");
+        selectData.add("可用");
+        selectData.add("暂停");
+        selectData.add("作废");
+        RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
+        rv_dialog.setAdapter(selectAdapter);
 
+        selectAdapter.setSelectPosition(requestStatus);
+        selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
+            @Override
+            public void select(int position) {
+                if (requestStatus != position) {
+                    requestStatus = position;
+                    refresh();
+                }
+                dialog.dismiss();
+            }
+        });
     }
 
 }

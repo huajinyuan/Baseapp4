@@ -1,9 +1,16 @@
 package com.example.huaxiang.hx;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,12 +25,16 @@ import com.example.huaxiang.hx.ac_staffSend.StaffSendActivity_pt;
 import com.example.huaxiang.hx.ac_withdrawSetting.SettingActivity_pt;
 import com.example.huaxiang.hx.m.LoginData_pt;
 import com.example.huaxiang.hx.m.Report_hx;
+import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
+import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 import com.example.huaxiang.utils.AppContext;
+
+import java.util.ArrayList;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -41,6 +52,8 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     TextView tv_totalReplaceCount;
     TextView tv_intentionCount;
     TextView tv_conversionCount;
+
+    int requestStatus;
 
     @Override
     protected int getLayoutId() {
@@ -79,16 +92,18 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         }
     }
 
-    void getReport() {
-        getReport(0);
-    }
-
     @Override
     protected void setListener() {
         findViewById(R.id.iv_topbar_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
+            }
+        });
+        findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogSelect();
             }
         });
         findViewById(R.id.ll_hx_ac_bb).setOnClickListener(new View.OnClickListener() {
@@ -183,8 +198,8 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         });
     }
 
-    void getReport(int status) {
-        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_hx(token, status), new Subscriber<Response<Report_hx>>() {
+    void getReport() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_hx(token, requestStatus), new Subscriber<Response<Report_hx>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -204,12 +219,55 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
             @Override
             public void onNext(Response<Report_hx> response) {
-                if (response.code == 0) {
+                if (response.data !=null) {
                     setReport(response.data);
                     Log.e("aaa======onNext", response.data.toString());
                 } else {
                     Log.e("aaa======onNext", response.msg);
                 }
+            }
+        });
+    }
+
+    void showDialogSelect() {
+        final AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogSelect);
+        dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select, null);
+        dialog.setContentView(view_dialog);
+
+        //->
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = DisplayMetricsUtil.dip2px(context, 50);
+        params.width = DisplayMetricsUtil.getScreenWidth(context);
+        window.setAttributes(params);
+        //->
+
+        RecyclerView rv_dialog = (RecyclerView) view_dialog.findViewById(R.id.rv_dialog_select);
+        LinearLayoutManager selectLayoutManager = new LinearLayoutManager(context);
+        rv_dialog.setLayoutManager(selectLayoutManager);
+        ArrayList<String> selectData = new ArrayList<>();
+        selectData.add("全部");
+        selectData.add("本日");
+        selectData.add("本月");
+        selectData.add("本年");
+        RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
+        rv_dialog.setAdapter(selectAdapter);
+
+        selectAdapter.setSelectPosition(requestStatus);
+        selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
+            @Override
+            public void select(int position) {
+                if (requestStatus != position) {
+                    requestStatus = position;
+                    getReport();
+                }
+                dialog.dismiss();
             }
         });
     }

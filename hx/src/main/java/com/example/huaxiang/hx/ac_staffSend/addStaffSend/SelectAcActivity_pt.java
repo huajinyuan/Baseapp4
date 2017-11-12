@@ -179,7 +179,9 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
                 if (arrayListResponse.code == 0) {
                     ToastUtil.showToast("提交成功");
                     finish();
-                    SelectStaffActivity_pt.instance.finish();
+                    if (SelectStaffActivity_pt.instance != null) {
+                        SelectStaffActivity_pt.instance.finish();
+                    }
                 } else {
                     ToastUtil.showToast(arrayListResponse.msg);
                 }

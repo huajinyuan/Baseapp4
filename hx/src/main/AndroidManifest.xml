@@ -62,7 +62,8 @@
         <activity android:name=".hx.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
         <activity android:name=".hx.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
         <activity android:name=".hx.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
-        <activity android:name=".hx.ac_withdrawSetting.SettingActivity_pt" />
+        <activity android:name=".hx.ac_withdrawSetting.SettingActivity_pt"
+            android:windowSoftInputMode="stateUnchanged"/>
         <activity android:name=".hx.ac_withdrawSetting.AccountListActivity_cj" />
         <activity android:name=".hx.ac_withdrawSetting.AccountDetailActivity_pt" />
         <activity android:name=".hx.ac_withdrawSetting.WithdrawActivity_pt" />

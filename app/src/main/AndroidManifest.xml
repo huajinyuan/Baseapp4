@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.zt.baseapp">
+    package="com.zt.pintuan">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -26,19 +26,19 @@
             android:name="design_height"
             android:value="1920" />
         <meta-data
-            android:name="com.zt.baseapp.base.GlideConfiguration"
+            android:name="com.zt.pintuan.base.GlideConfiguration"
             android:value="GlideModule" />
 
 
         <receiver
-            android:name=".thirdpart.share.AppRegister"
+            android:name="com.zt.pintuan.thirdpart.share.AppRegister"
             android:permission="com.tencent.mm.plugin.permission.SEND">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".pt.PtIndextActivity">
+        <activity android:name="com.zt.pintuan.pt.PtIndextActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,34 +46,35 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".rxpicture.ui.RxPickerActivity" />
-        <activity android:name=".rxpicture.ui.PreviewActivity" />
-        <activity android:name=".rxpicture.ui.RxCameraActivity" />
-        <activity android:name=".rxpicture.ui.RxCropActivity" />
+        <activity android:name="com.zt.pintuan.rxpicture.ui.RxPickerActivity" />
+        <activity android:name="com.zt.pintuan.rxpicture.ui.PreviewActivity" />
+        <activity android:name="com.zt.pintuan.rxpicture.ui.RxCameraActivity" />
+        <activity android:name="com.zt.pintuan.rxpicture.ui.RxCropActivity" />
 
         <!--拼团-->
-        <activity android:name=".pt.ac_ptbb.AcBbActivity_pt" />
-        <activity android:name=".pt.ac_ptbb.StaffRankingActivity_pt" />
-        <activity android:name=".pt.ac_memberget.MemberGetActivity" />
-        <activity android:name=".pt.ac_memberget.MemberGetListActivity" />
-        <activity android:name=".pt.ac_ptbb.PtListActivity_pt" />
-        <activity android:name=".pt.ac_ptbb.PdListActivity_pt" />
-        <activity android:name=".pt.ac_ptList.AcInfoActivity_pt" />
-        <activity android:name=".pt.ac_ptList.AcListActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.AddShopActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.AddStaffActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.ShopActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.StaffActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.StaffSendActivity_pt" />
-        <activity android:name=".pt.ac_withdrawSetting.AccountDetailActivity_pt" />
-        <activity android:name=".pt.ac_withdrawSetting.WithdrawActivity_pt" />
-        <activity android:name=".pt.ac_withdrawSetting.AccountListActivity_pt" />
-        <activity android:name=".pt.ac_withdrawSetting.SettingActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
-        <activity android:name=".pt.ac_ptList.ac_createAc.CreateAcActivity_pt" />
-        <activity android:name=".pt.ac_ptList.ac_createAc.CreateAddGoodsActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptbb.AcBbActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptbb.StaffRankingActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_memberget.MemberGetActivity" />
+        <activity android:name="com.zt.pintuan.pt.ac_memberget.MemberGetListActivity" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptbb.PtListActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptbb.PdListActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptList.AcInfoActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptList.AcListActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.AddShopActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.AddStaffActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.ShopActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.StaffActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.StaffSendActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_withdrawSetting.AccountDetailActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_withdrawSetting.WithdrawActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_withdrawSetting.AccountListActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_withdrawSetting.SettingActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptList.ac_createAc.CreateAcActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_ptList.ac_createAc.CreateAddGoodsActivity_pt" />
+        <activity android:name="com.zt.pintuan.pt.ac_memberget.QrCodeActivity" />
     </application>
 
 </manifest>

@@ -28,10 +28,12 @@
             android:text="多选"
             android:textColor="@color/color_black"
             android:layout_centerVertical="true"/>
-        <Switch
+        <CheckBox
             android:id="@+id/switch_duoxuan"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="38dp"
+            android:layout_height="19dp"
+            android:button="@null"
+            android:background="@drawable/selector_switch_hx"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

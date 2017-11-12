@@ -11,5 +11,7 @@
         android:layout_height="wrap_content"
         android:text="公车"
         android:textSize="14sp"
-        android:textColor="@color/color_text_grey" />
+        android:textColor="@color/color_text_grey"
+        android:button="@drawable/selector_cb_topic"
+        android:checked="true" />
 </LinearLayout>

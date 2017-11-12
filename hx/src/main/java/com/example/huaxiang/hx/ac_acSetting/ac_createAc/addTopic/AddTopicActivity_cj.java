@@ -5,9 +5,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +38,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
     ImageView iv_topbar_right;
 
     String id;
-    Switch switch_duoxuan;
+    CheckBox switch_duoxuan;
     EditText et_question;
     RecyclerView rv_addTopic;
     ArrayList<TopicEditData> data = new ArrayList<>();

@@ -3,12 +3,14 @@ package com.example.huaxiang.hx.ac_staffSend.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_staffSend.m.StaffSend_hx;
@@ -45,21 +47,21 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
         holder.tv_shop.setText(staffSend_hx.storeName);
         holder.tv_activityNum.setText(staffSend_hx.actCount);
 
-//        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.e("aaa", position + "");
-//                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-//                data.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position, data.size() - position);
-//            }
-//        });
+        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("aaa", position + "");
+                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+                data.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, data.size() - position);
+            }
+        });
 
         holder.ll_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", 14));
+                context.startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", staffSend_hx.userId + ""));
             }
         });
     }
@@ -80,7 +82,7 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
         TextView tv_name;
         TextView tv_shop;
         TextView tv_activityNum;
-//        TextView tv_delete;
+        TextView tv_delete;
 
         LinearLayout ll_view;
 
@@ -90,7 +92,7 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_shop = (TextView) itemView.findViewById(R.id.tv_shop);
             tv_activityNum = (TextView) itemView.findViewById(R.id.tv_activityNum);
-//            tv_delete = (TextView) itemView.findViewById(R.id.tv_delete);
+            tv_delete = (TextView) itemView.findViewById(R.id.tv_delete);
 
             ll_view = (LinearLayout) itemView.findViewById(R.id.ll_view);
         }

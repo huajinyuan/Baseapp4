@@ -44,7 +44,7 @@ public class MemberGetListAdapter extends RecyclerView.Adapter<MemberGetListAdap
         holder.tv_name.setText(cjHistory.awardName);
         holder.tv_num.setText("数量 "+cjHistory.awardNum);
         holder.tv_code.setText(cjHistory.redeemCode);
-        holder.tv_personName.setText(cjHistory.user.roleNames);
+        holder.tv_personName.setText(cjHistory.member.name);
         holder.tv_date.setText(cjHistory.createDate);
 
     }

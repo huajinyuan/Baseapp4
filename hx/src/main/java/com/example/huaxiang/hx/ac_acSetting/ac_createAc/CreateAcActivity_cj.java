@@ -96,7 +96,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
             UiUtil.setImage(iv_ac, data.imgUrl);
         if (data.name != null)
             tv_name.setText(data.name);
-        tv_price.setText(data.money + "元博");
+        tv_price.setText(data.money + "块钱博");
         tv_num.setText(data.num + "人参与");
 
         //添加中奖列表

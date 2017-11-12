@@ -19,7 +19,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_190">
+                android:layout_height="@dimen/dp_190"
+                android:background="@color/color_white">
                 <ImageView
                     android:id="@+id/iv_ac"
                     android:layout_width="match_parent"
@@ -109,7 +110,8 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_winHistory"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>

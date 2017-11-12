@@ -26,7 +26,8 @@
             android:textColor="@color/black"
             android:text="双方的网上发文是个女的"
             android:maxLines="2"
-            android:layout_marginLeft="75dp"/>
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="1dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text_grey"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:text="抽奖支付：5元"
                 android:layout_marginTop="5dp"/>
             <TextView
@@ -47,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text_grey"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:text="代抽次数：5"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="25dp"/>

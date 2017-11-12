@@ -9,7 +9,8 @@
     <include layout="@layout/layout_topbar_hx" />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -93,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
                         android:layout_weight="1"
-                        android:hint="请填写"
+                        android:hint="请选择"
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
@@ -141,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
                         android:layout_weight="1"
-                        android:hint="请填写"
+                        android:hint="请选择"
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
@@ -237,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
                         android:layout_weight="1"
-                        android:hint="请填写"
+                        android:hint=""
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
@@ -285,7 +286,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
                         android:layout_weight="1"
-                        android:hint="请填写"
+                        android:hint=""
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
@@ -310,12 +311,18 @@
                 android:text="活动图片"
                 android:textColor="@color/color_black"
                 android:layout_centerVertical="true"/>
-            <ImageView
-                android:id="@+id/iv_ac"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="22dp"
-                android:src="@mipmap/icon_select_photo"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="13dp">
+                <ImageView
+                    android:id="@+id/iv_ac"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/icon_select_photo"/>
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -347,10 +354,12 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical|right"
                     android:minHeight="50dp">
-                    <Switch
+                    <CheckBox
                         android:id="@+id/switch_carCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="38dp"
+                        android:layout_height="19dp"
+                        android:button="@null"
+                        android:background="@drawable/selector_switch_hx"/>
                 </LinearLayout>
             </LinearLayout>
             <View
@@ -360,5 +369,13 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/bt_save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="22dp"
+        android:text="保存"
+        android:background="@drawable/shape_radius5_appblue"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

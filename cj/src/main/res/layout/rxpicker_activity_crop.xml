@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.zt.baseapp.rxpicture.widget.cropview.CropImageView
+    <com.zt.pintuan.rxpicture.widget.cropview.CropImageView
         android:id="@+id/cropImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

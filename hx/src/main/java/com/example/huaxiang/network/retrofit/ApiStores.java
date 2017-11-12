@@ -14,6 +14,7 @@ import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.hx.ac_staffSend.m.StaffSend_hx;
 import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
 import com.example.huaxiang.hx.ac_withdrawSetting.m.AccountDetail_cj;
+import com.example.huaxiang.hx.ac_withdrawSetting.m.WithdrawSetting;
 import com.example.huaxiang.hx.m.LoginData_pt;
 import com.example.huaxiang.hx.m.Report_hx;
 import com.example.huaxiang.model.Response;
@@ -53,7 +54,7 @@ public interface ApiStores {
 
     //员工活动列表 状态 0全部 1可用 2暂停 3作废
     @GET("api/hx/hxActivity/list")
-    Observable<Response<ArrayList<Activity_cj>>> getStaffAcDetail_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") int userId);
+    Observable<Response<ArrayList<Activity_cj>>> getStaffAcDetail_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") String userId);
 
     //员工列表
     @GET("api/common/staff/list")
@@ -182,5 +183,13 @@ public interface ApiStores {
     //奖品兑换
     @POST("api/hx/hxAwardDetail/exchange")
     Observable<Response> AwardExchange(@Header("authorization") String authorization, @Query("detailId") String detailId, @Query("redeemCode") String redeemCode);
+
+    //商户配置
+    @GET("api/common/merchantConfig")
+    Observable<Response<WithdrawSetting>> getSetting(@Header("authorization") String authorization, @Query("model") String model);
+
+    //保存商户配置
+    @POST("api/common/merchantConfig/save")
+    Observable<Response> saveSetting(@Header("authorization") String authorization, @Query("model") String model, @Query("type") int type, @Query("value") int value);
 
 }

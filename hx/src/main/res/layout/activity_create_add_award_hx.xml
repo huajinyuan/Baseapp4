@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="奖品价值"
+                    android:text="奖品价格"
                     android:textColor="@color/color_black"
                     android:layout_centerVertical="true"/>
                 <LinearLayout
@@ -194,12 +194,12 @@
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="11dp"
                         android:textSize="14sp"
                         android:inputType="numberDecimal"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="11dp"
                         android:text="%"
                         android:textSize="14sp"/>
                     <ImageView
@@ -247,12 +247,12 @@
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="11dp"
                         android:textSize="14sp"
                         android:inputType="numberDecimal"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="11dp"
                         android:text="%"
                         android:textSize="14sp"/>
                     <ImageView
@@ -266,14 +266,27 @@
                 android:layout_height="1px"
                 android:background="@color/color_line" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="22dp"
-                android:text="活动图片"
-                android:textColor="@color/color_black"
-                android:layout_centerVertical="true"/>
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="11dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_appRed"
+                    android:text="*"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="奖品图片"
+                    android:textColor="@color/color_black"
+                    android:layout_centerVertical="true"/>
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/iv_ac"
                 android:layout_width="80dp"

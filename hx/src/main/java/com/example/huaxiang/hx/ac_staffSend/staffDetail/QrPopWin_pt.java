@@ -16,6 +16,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class QrPopWin_pt extends PopupWindow {
     private Context context;
     private View view;
+    CloseListener listener;
 
     public QrPopWin_pt(Context mContext){
         context = mContext;
@@ -29,7 +30,17 @@ public class QrPopWin_pt extends PopupWindow {
             @Override
             public void onClick(View v) {
                 dismiss();
+                listener.close();
             }
         });
     }
+
+    public interface CloseListener{
+        void close();
+    }
+
+    public void setCloseListener(CloseListener closeListener){
+        listener = closeListener;
+    }
+
 }

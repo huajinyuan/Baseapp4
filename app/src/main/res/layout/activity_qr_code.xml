@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include
+            android:id="@+id/header"
+            layout="@layout/layout_topbar_pt" />
+
+        <SurfaceView
+            android:id="@+id/preview_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/header"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center" />
+
+        <com.example.huaxiang.hx.zxing.ViewfinderView
+            android:id="@+id/viewfinder_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/header"
+            android:background="@color/color_transparent" />
+    </RelativeLayout>
+
+</FrameLayout>

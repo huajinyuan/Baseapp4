@@ -10,6 +10,7 @@ import com.example.choujiang.cj.ac_staffSend.m.AccountDetail_cj;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.cj.ac_staffSend.m.StaffSend_cj;
 import com.example.choujiang.cj.ac_staffSend.m.Staff_cj;
+import com.example.choujiang.cj.ac_withdrawSetting.m.WithdrawSetting;
 import com.example.choujiang.cj.m.LoginData_pt;
 import com.example.choujiang.cj.m.Report_cj;
 import com.example.choujiang.model.Response;
@@ -129,4 +130,11 @@ public interface ApiStores {
     @POST("api/cj/cjActivityAward/save")
     Observable<Response> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("awardImgUrl") String awardImgUrl, @Query("awardId") String awardId);
 
+    //商户配置
+    @GET("api/common/merchantConfig")
+    Observable<Response<WithdrawSetting>> getSetting(@Header("authorization") String authorization, @Query("model") String model);
+
+    //保存商户配置
+    @POST("api/common/merchantConfig/save")
+    Observable<Response> saveSetting(@Header("authorization") String authorization, @Query("model") String model, @Query("type") int type, @Query("value") int value);
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.zt.baseapp.module.titlebar.AutoToolbar
+    <com.zt.pintuan.module.titlebar.AutoToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/TitleBar_Height"
@@ -14,6 +14,6 @@
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp">
 
-    </com.zt.baseapp.module.titlebar.AutoToolbar>
+    </com.zt.pintuan.module.titlebar.AutoToolbar>
 
 </com.zhy.autolayout.AutoRelativeLayout>

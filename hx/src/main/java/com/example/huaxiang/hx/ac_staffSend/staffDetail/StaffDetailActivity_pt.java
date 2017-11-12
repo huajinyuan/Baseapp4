@@ -1,16 +1,19 @@
 package com.example.huaxiang.hx.ac_staffSend.staffDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_staffSend.addStaffSend.SelectAcActivity_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.hx.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
 import com.example.huaxiang.model.Response;
@@ -36,7 +39,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
     RecyclerView rv_staffSend;
     ImageView iv_qr_bottom;
-    int userId;
+    String userId;
 
     StaffDetailAdapter_pt adapter;
     LinearLayoutManager layoutManager;
@@ -44,6 +47,8 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     boolean canGet = true;
     int page = 1;
     SwipeRefreshLayout swip_refresh;
+
+    int touchDownRawX, touchDownRawY, touchUpRawY;
 
     @Override
     protected int getLayoutId() {
@@ -81,7 +86,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        userId = getIntent().getIntExtra("userId", 0);
+        userId = getIntent().getStringExtra("userId");
         getData();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -123,15 +128,10 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", userId));
             }
         });
-        findViewById(R.id.iv_qr_bottom).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                QrPopWin_pt popWin_pt = new QrPopWin_pt(context);
-                popWin_pt.showAtLocation(findViewById(R.id.staff_detail_main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-            }
-        });
+        setDrag(iv_qr_bottom);
     }
 
     void getData(){
@@ -156,9 +156,11 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
             @Override
             public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
 
@@ -170,5 +172,43 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         getData();
     }
 
+    void setDrag(ImageView iv){
+        iv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+//                        touchDownRawX = (int) motionEvent.getRawX();
+                        touchDownRawY = (int) motionEvent.getRawY();
+                        Log.e("aaa  touchDownRawY", touchDownRawY + "");
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        touchUpRawY=(int) motionEvent.getRawY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e("aaa  touchUpRawY", touchUpRawY + "");
+                        if (touchDownRawY - touchUpRawY > 10) {
+                            popUp();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    void popUp(){
+        iv_qr_bottom.setVisibility(View.INVISIBLE);
+
+        QrPopWin_pt popWin_pt = new QrPopWin_pt(context);
+        popWin_pt.showAtLocation(findViewById(R.id.staff_detail_main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+
+        popWin_pt.setCloseListener(new QrPopWin_pt.CloseListener() {
+            @Override
+            public void close() {
+                iv_qr_bottom.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
 }

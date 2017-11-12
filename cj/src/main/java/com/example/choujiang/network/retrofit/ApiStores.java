@@ -137,4 +137,14 @@ public interface ApiStores {
     //保存商户配置
     @POST("api/common/merchantConfig/save")
     Observable<Response> saveSetting(@Header("authorization") String authorization, @Query("model") String model, @Query("type") int type, @Query("value") int value);
+
+    //抽奖明细--后台(扫描二维码获取detailId
+    @GET("api/cj/cjAwardDetail/{detailId}")
+    Observable<Response<CjHistory>> getCjQrDetail(@Header("authorization") String authorization, @Path("detailId") String detailId);
+
+    //奖品兑换
+    @POST("api/cj/cjAwardDetail/exchange")
+    Observable<Response> AwardExchange(@Header("authorization") String authorization, @Query("detailId") String detailId, @Query("redeemCode") String redeemCode);
+
+
 }

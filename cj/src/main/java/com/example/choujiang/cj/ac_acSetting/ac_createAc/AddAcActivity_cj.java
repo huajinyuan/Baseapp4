@@ -80,8 +80,8 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
         tv_topbar_title.setText("活动设置");
-        tv_topbar_right.setVisibility(View.VISIBLE);
-        tv_topbar_right.setText("保存");
+        tv_topbar_right.setVisibility(View.GONE);
+        tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
@@ -139,7 +139,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 finish();
             }
         });
-        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name, beginTime, endTime, cjNum, shareGetNum, remark;

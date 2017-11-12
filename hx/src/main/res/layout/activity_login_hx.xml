@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.huaxiang.hx.LoginActivity_hx">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:hint="用户名"
+            android:background="@drawable/shape_border3_grey"/>
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:hint="密码"
+            android:background="@drawable/shape_border3_grey"/>
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_radius5_appblue"
+            android:textColor="@color/color_white"
+            android:text="登录"/>
+
+        <Button
+            android:id="@+id/bt_relogin"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_radius5_appblue"
+            android:textColor="@color/color_white"
+            android:text="直接进入上次账号"/>
+
+    </LinearLayout>
+</RelativeLayout>

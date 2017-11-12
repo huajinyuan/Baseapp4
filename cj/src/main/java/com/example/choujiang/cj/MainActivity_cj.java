@@ -1,11 +1,19 @@
 package com.example.choujiang.cj;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_acSetting.AcListActivity_cj;
@@ -17,12 +25,16 @@ import com.example.choujiang.cj.ac_staffSend.StaffSendActivity_pt;
 import com.example.choujiang.cj.ac_withdrawSetting.SettingActivity_cj;
 import com.example.choujiang.cj.m.LoginData_pt;
 import com.example.choujiang.cj.m.Report_cj;
+import com.example.choujiang.cj.utils.DisplayMetricsUtil;
+import com.example.choujiang.cj.utils.RvDialogSelectAdapter;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
 import com.example.choujiang.utils.ACache;
 import com.example.choujiang.utils.ACacheKey;
 import com.example.choujiang.utils.AppContext;
+
+import java.util.ArrayList;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -40,6 +52,10 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
     TextView tv_totalShareCount;
     TextView tv_totalCount;
     TextView tv_totalAwardCount;
+
+    int requestStatus;
+
+    String username, password;
 
     @Override
     protected int getLayoutId() {
@@ -78,17 +94,20 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
 
     @Override
     protected void initData() {
-        if (aCache.getAsString(ACacheKey.TOKEN) == null) {
+        username = getIntent().getStringExtra("username");
+        password = getIntent().getStringExtra("password");
+
+        if (password != null) {
             login();
         } else {
-            token = aCache.getAsString(ACacheKey.TOKEN);
-            Log.e("aaa", token);
-            getReport();
+            if (aCache.getAsString(ACacheKey.TOKEN) == null) {
+                Toast.makeText(context, "没有登录记录", Toast.LENGTH_SHORT).show();
+            } else {
+                token = aCache.getAsString(ACacheKey.TOKEN);
+                Log.e("aaa", token);
+                getReport();
+            }
         }
-    }
-
-    void getReport(){
-        getReport(0);
     }
 
     @Override
@@ -97,6 +116,12 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             @Override
             public void onClick(View v) {
                 login();
+            }
+        });
+        findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogSelect();
             }
         });
         findViewById(R.id.ll_pt_acList).setOnClickListener(new View.OnClickListener() {
@@ -151,7 +176,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
     }
 
     void login(){
-        HttpMethods.getInstance().login("xzuo", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
+        HttpMethods.getInstance().login(username, password).subscribe(new Subscriber<Response<LoginData_pt>>(){
             @Override
             public void onStart() {
                 super.onStart();
@@ -182,8 +207,8 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             }
         });
     }
-    void getReport(int status){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_pt(token, status), new Subscriber<Response<Report_cj>>() {
+    void getReport(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_pt(token, requestStatus), new Subscriber<Response<Report_cj>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -198,7 +223,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
-                login();
+                Toast.makeText(context, "已在其他设备登录", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -213,5 +238,47 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         });
     }
 
+    void showDialogSelect() {
+        final AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogSelect);
+        dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select, null);
+        dialog.setContentView(view_dialog);
+
+        //->
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = DisplayMetricsUtil.dip2px(context, 50);
+        params.width = DisplayMetricsUtil.getScreenWidth(context);
+        window.setAttributes(params);
+        //->
+
+        RecyclerView rv_dialog = (RecyclerView) view_dialog.findViewById(R.id.rv_dialog_select);
+        LinearLayoutManager selectLayoutManager = new LinearLayoutManager(context);
+        rv_dialog.setLayoutManager(selectLayoutManager);
+        ArrayList<String> selectData = new ArrayList<>();
+        selectData.add("全部");
+        selectData.add("本日");
+        selectData.add("本月");
+        selectData.add("本年");
+        RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
+        rv_dialog.setAdapter(selectAdapter);
+
+        selectAdapter.setSelectPosition(requestStatus);
+        selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
+            @Override
+            public void select(int position) {
+                if (requestStatus != position) {
+                    requestStatus = position;
+                    getReport();
+                }
+                dialog.dismiss();
+            }
+        });
+    }
 
 }

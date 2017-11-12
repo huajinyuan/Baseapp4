@@ -50,12 +50,12 @@
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="11dp"
+                        android:paddingRight="11dp"
                         android:textSize="14sp"
                         android:text=""/>
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
+                        android:layout_height="15dp"
                         android:src="@mipmap/icon_arrow_grey_right_pt"/>
                 </LinearLayout>
             </LinearLayout>
@@ -103,7 +103,7 @@
                         android:focusable="false"/>
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
+                        android:layout_height="15dp"
                         android:src="@mipmap/icon_arrow_grey_right_pt"/>
                 </LinearLayout>
             </LinearLayout>
@@ -151,7 +151,7 @@
                         android:focusable="false"/>
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
+                        android:layout_height="15dp"
                         android:src="@mipmap/icon_arrow_grey_right_pt"/>
                 </LinearLayout>
             </LinearLayout>
@@ -194,12 +194,12 @@
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="11dp"
+                        android:paddingRight="11dp"
                         android:textSize="14sp"
                         android:inputType="numberDecimal"/>
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
+                        android:layout_height="15dp"
                         android:src="@mipmap/icon_arrow_grey_right_pt"/>
                 </LinearLayout>
             </LinearLayout>
@@ -247,7 +247,7 @@
                         android:inputType="number"/>
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
+                        android:layout_height="15dp"
                         android:src="@mipmap/icon_arrow_grey_right_pt"/>
                 </LinearLayout>
             </LinearLayout>
@@ -294,7 +294,7 @@
                         android:textSize="14sp"/>
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
+                        android:layout_height="15dp"
                         android:src="@mipmap/icon_arrow_grey_right_pt"/>
                 </LinearLayout>
             </LinearLayout>
@@ -303,31 +303,30 @@
                 android:layout_height="1px"
                 android:background="@color/color_line" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="22dp"
-                android:text="活动图片"
-                android:textColor="@color/color_black"
-                android:layout_centerVertical="true"/>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:paddingRight="13dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="22dp"
+                    android:text="活动图片"
+                    android:textColor="@color/color_black"/>
                 <ImageView
                     android:id="@+id/iv_ac"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/icon_select_photo"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_line"
-                android:layout_marginTop="8dp"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -14,11 +14,13 @@ import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.AcListPresenter_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.AddAwardListActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addReplace.AddReplaceActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.AddTopicListActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.AddWinListActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.adapter.AcDetailTopicAdapter;
 import com.example.huaxiang.hx.ac_acSetting.adapter.WinHistoryAdapter_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
+import com.example.huaxiang.hx.ac_acSetting.m.Award;
 import com.example.huaxiang.hx.ac_bb.m.HxTopic;
 import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.model.Response;
@@ -51,8 +53,13 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
     TextView tv_price;
     TextView tv_name;
     TextView tv_num;
+    TextView tv_replace_num;
+    TextView tv_replace_awardName;
 
     ActivityDetail_cj data = new ActivityDetail_cj();
+
+    public String replaceNum;
+    public Award replaceaward;
 
     @Override
     protected int getLayoutId() {
@@ -79,6 +86,8 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         tv_price = findView(R.id.tv_price);
         tv_name = findView(R.id.tv_name);
         tv_num = findView(R.id.tv_num);
+        tv_replace_num = findView(R.id.tv_replace_num);
+        tv_replace_awardName = findView(R.id.tv_replace_awardName);
     }
 
     @Override
@@ -91,7 +100,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         }
     }
 
-    void setData(){
+    public void setData(){
         if (data.imgUrl != null)
             UiUtil.setImage(iv_ac, data.imgUrl);
         if (data.name != null)
@@ -99,11 +108,27 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         tv_price.setText(data.money + "块钱博");
         tv_num.setText(data.num + "人参与");
 
-        //添加中奖列表
-        if (data.details != null) {
-            setRv_winHistory(data.details);
-        } else {
-            data.details = new ArrayList<>();
+//        //添加中奖列表
+//        if (data.details != null) {
+//            setRv_winHistory(data.details);
+//        } else {
+//            data.details = new ArrayList<>();
+//        }
+
+        //改 显示假数据 中奖列表
+        ArrayList<CjHistory> fakeCjHistorys = new ArrayList<>();
+        CjHistory fakeCjHistory = new CjHistory();
+        fakeCjHistory.mobile = "13875758686";
+        fakeCjHistory.awardName = "铠甲镀晶";
+        fakeCjHistorys.add(fakeCjHistory);
+        setRv_winHistory(fakeCjHistorys);
+
+        //添加代抽
+        if (replaceNum != null) {
+            tv_replace_num.setText(replaceNum);
+        }
+        if (replaceaward != null) {
+            tv_replace_awardName.setText(replaceaward.name);
         }
 
         //添加问卷
@@ -179,6 +204,16 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                     Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
                 } else {
                     startActivity(new Intent(context, AddWinListActivity_pt.class).putExtra("id", data.id));
+                }
+            }
+        });
+        findView(R.id.ll_replace).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.id == null) {
+                    Toast.makeText(context, "请先添加活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(context, AddReplaceActivity_pt.class).putExtra("id", data.id));
                 }
             }
         });

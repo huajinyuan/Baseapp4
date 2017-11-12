@@ -44,7 +44,9 @@ public class RebackListAdapter extends RecyclerView.Adapter<RebackListAdapter.An
         Reback_hx reback_hx = data.get(position);
 
         holder.tv_awardName.setText("产品：" + reback_hx.awardName);
-        holder.tv_date.setText(reback_hx.createDate);
+        if (reback_hx.createDate != null) {
+            holder.tv_date.setText(reback_hx.createDate.length() > 10 ? reback_hx.createDate.substring(0, 10) : reback_hx.createDate);
+        }
         holder.tv_phone.setText("手机：" + reback_hx.phone);
         holder.tv_carNumber.setText("车牌：" + reback_hx.licensePlate);
         holder.tv_staff.setText("员工：" + reback_hx.user.name);

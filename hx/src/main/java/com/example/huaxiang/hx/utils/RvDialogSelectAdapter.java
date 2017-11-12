@@ -45,7 +45,7 @@ public class RvDialogSelectAdapter extends RecyclerView.Adapter<RvDialogSelectAd
             holder.bt_select.setBackgroundResource(R.drawable.shape_radius3_appblue);
             holder.bt_select.setTextColor(ContextCompat.getColor(context, R.color.color_white));
         } else {
-            holder.bt_select.setBackgroundResource(R.drawable.shape_border3_grey);
+            holder.bt_select.setBackgroundResource(R.drawable.shape_border3_greystroke_whitesolid);
             holder.bt_select.setTextColor(ContextCompat.getColor(context, R.color.color_black_0D));
         }
 

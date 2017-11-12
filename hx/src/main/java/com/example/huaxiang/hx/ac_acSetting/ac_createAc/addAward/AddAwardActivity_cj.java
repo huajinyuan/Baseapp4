@@ -110,6 +110,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     void setData(){
         if (award.name != null) {
             et_name.setText(award.name);
+            et_name.setSelection(award.name.length());
         }
         if (award.price != 0) {
             et_price.setText(award.price + "");
@@ -340,7 +341,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             @Override
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
-                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "修改奖品成功", Toast.LENGTH_SHORT).show();
                     AddAwardListActivity_pt.instance.getData();
                     finish();
                 }

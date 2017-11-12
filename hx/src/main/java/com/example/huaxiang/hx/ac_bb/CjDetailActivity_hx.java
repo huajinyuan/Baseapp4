@@ -34,7 +34,7 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
 
-    RecyclerView rv_staffSend;
+    RecyclerView rv_replace;
     SelectStaffAdapter_pt adapter;
     LinearLayoutManager layoutManager;
     ArrayList<Staff_cj> pinDan_pts = new ArrayList<>();
@@ -61,7 +61,7 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
-        rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
+        rv_replace = (RecyclerView) findViewById(R.id.rv_replace);
 
     }
 
@@ -78,8 +78,8 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         pinDan_pts = pinDans;
         adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
         layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
+        rv_replace.setLayoutManager(layoutManager);
+        rv_replace.setAdapter(adapter);
     }
     void setData(){
         ((TextView) findView(R.id.tv_name)).setText(cjDetail.memberName);
@@ -90,6 +90,7 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         ((TextView) findView(R.id.tv_payMoney)).setText(cjDetail.money + "");
         ((TextView) findView(R.id.tv_cjTime)).setText(cjDetail.createDate);
         ((TextView) findView(R.id.tv_awardName)).setText(cjDetail.awardName);
+        ((TextView) findView(R.id.tv_replaceTime)).setText(cjDetail.replaced + "/" + cjDetail.replaceTime);
     }
 
     @Override

@@ -9,7 +9,8 @@
     <include layout="@layout/layout_topbar_cj" />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,7 +28,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appRed"
                     android:text="*"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:paddingTop="3dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +77,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appRed"
                     android:text="*"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:paddingTop="3dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appRed"
                     android:text="*"
-                    android:textSize="15sp"/>`
+                    android:textSize="15sp"
+                    android:paddingTop="3dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -171,7 +175,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appRed"
                     android:text="*"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:paddingTop="3dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,12 +198,12 @@
                         android:background="@null"
                         android:gravity="center_vertical|right"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="11dp"
                         android:textSize="14sp"
                         android:inputType="numberDecimal"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:text="%"
                         android:textSize="14sp"/>
                     <ImageView
@@ -229,5 +234,12 @@
         </LinearLayout>
     </ScrollView>
 
-
+    <Button
+        android:id="@+id/bt_save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="22dp"
+        android:text="保存"
+        android:background="@drawable/shape_radius5_appblue"
+        android:textColor="@color/white"/>
 </LinearLayout>

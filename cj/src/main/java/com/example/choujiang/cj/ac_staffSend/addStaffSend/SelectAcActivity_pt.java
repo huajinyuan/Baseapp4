@@ -53,10 +53,10 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
-        tv_topbar_title.setText("选择团购活动");
+        tv_topbar_title.setText("选择活动");
         tv_topbar_right.setVisibility(View.GONE);
         tv_topbar_right.setText("");
-        iv_topbar_right.setVisibility(View.VISIBLE);
+        iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);

@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/dp_20">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_40">
+            android:layout_height="50dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,7 +27,7 @@
             <ImageView
                 android:id="@+id/iv_camera"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="22dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/icon_camare" />

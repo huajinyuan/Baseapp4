@@ -190,7 +190,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
                 }
             }
             if (notMatch) {
-                Toast.makeText(context, str + " 未匹配到选项", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "请添加答案为 " + str + " 的选项", Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -205,7 +205,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
             }
         }
         if (notMatch) {
-            Toast.makeText(context, answer + " 未匹配到选项", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "请添加答案为 " + answer + " 的选项", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;

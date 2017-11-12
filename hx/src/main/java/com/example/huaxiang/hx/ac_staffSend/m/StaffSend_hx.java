@@ -19,5 +19,6 @@ public class StaffSend_hx {
     public String actCount;
     public String storeName;
     public String userName;
+    public int storeId;
     public int userId;
 }

@@ -49,10 +49,11 @@
                     android:layout_marginRight="11dp"
                     android:textSize="14sp"
                     android:text=""
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:textColor="@color/color_text_grey"/>
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="17dp"
+                    android:layout_height="14dp"
                     android:src="@mipmap/icon_arrow_grey_right_pt"/>
             </LinearLayout>
         </LinearLayout>
@@ -97,10 +98,11 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="11dp"
                     android:textSize="14sp"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:textColor="@color/color_text_grey"/>
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="17dp"
+                    android:layout_height="14dp"
                     android:src="@mipmap/icon_arrow_grey_right_pt"/>
             </LinearLayout>
         </LinearLayout>

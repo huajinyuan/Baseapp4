@@ -17,9 +17,9 @@
     <Button
         android:id="@+id/bt_next"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_height="38dp"
         android:background="@drawable/shape_radius5_appblue"
-        android:layout_margin="11dp"
+        android:layout_margin="22dp"
         android:text="提交"
         android:textColor="@color/color_white"
         android:textSize="15sp"/>

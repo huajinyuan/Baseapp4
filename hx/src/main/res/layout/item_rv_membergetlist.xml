@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_text_grey"
                         android:textSize="13sp"
-                        android:text="小明"
+                        android:text="--"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/tv_date"

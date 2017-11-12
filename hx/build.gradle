@@ -73,17 +73,16 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     //dagger2
+    compile files('libs/zxing-core-3.1.0.jar')
     compile 'com.github.yilylong:CBDialog:v1.0.4'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
     compile 'com.google.dagger:dagger:2.0'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
-    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
-    testCompile 'junit:junit:4.12'
-    apt 'com.google.dagger:dagger-compiler:2.0'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'
     compile 'com.qiniu:qiniu-android-sdk:7.3.+'
     compile 'com.qiniu:happy-dns:0.2.7'
-    compile files('libs/zxing-core-3.1.0.jar')
+    testCompile 'junit:junit:4.12'
+    apt 'com.google.dagger:dagger-compiler:2.0'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }

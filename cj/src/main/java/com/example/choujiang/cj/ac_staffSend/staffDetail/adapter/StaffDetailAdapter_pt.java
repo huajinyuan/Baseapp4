@@ -31,7 +31,7 @@ public class StaffDetailAdapter_pt extends RecyclerView.Adapter<StaffDetailAdapt
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_list_cj,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_staff_detail_cj,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }

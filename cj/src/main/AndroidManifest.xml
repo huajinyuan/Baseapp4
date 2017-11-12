@@ -39,7 +39,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".cj.MainActivity_cj">
+        <activity android:name=".cj.LoginActivity_cj">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +53,7 @@
         <activity android:name=".rxpicture.ui.RxCropActivity" />
 
         <!--抽奖-->
+        <activity android:name=".cj.MainActivity_cj" />
         <activity android:name=".cj.ac_cjbb.AcBbActivity" />
         <activity android:name=".cj.ac_cjbb.CjHistoryActivity" />
         <activity android:name=".cj.ac_cjbb.StaffRankingActivity" />
@@ -76,6 +77,7 @@
         <activity android:name=".cj.ac_acSetting.ac_createAc.AddWinListActivity_pt" />
         <activity android:name=".cj.ac_acSetting.ac_createAc.AddWinActivity_pt" />
         <activity android:name=".cj.ac_acSetting.ac_createAc.AwardListActivity_cj" />
+        <activity android:name=".cj.ac_memberget.QrCodeActivity" />
     </application>
 
 </manifest>

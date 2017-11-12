@@ -43,6 +43,7 @@ public class AcBbAdapter extends RecyclerView.Adapter<AcBbAdapter.AnchorHotViewH
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         Activity_cj activity_cj = data.get(position);
 
+        holder.tv_cjPrice.setVisibility(View.GONE);
         holder.tv_name.setText(activity_cj.name);
         holder.tv_totalNum.setText(activity_cj.totalNum + "");
         holder.tv_replaceNum.setText(activity_cj.replaceNum + "");
@@ -93,6 +94,7 @@ public class AcBbAdapter extends RecyclerView.Adapter<AcBbAdapter.AnchorHotViewH
     }
 
     class AnchorHotViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_cjPrice;
         TextView tv_name;
         TextView tv_totalNum;
         TextView tv_replaceNum;
@@ -107,6 +109,7 @@ public class AcBbAdapter extends RecyclerView.Adapter<AcBbAdapter.AnchorHotViewH
 
         public AnchorHotViewHolder(final View itemView) {
             super(itemView);
+            tv_cjPrice = (TextView) itemView.findViewById(R.id.tv_cjPrice);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_totalNum = (TextView) itemView.findViewById(R.id.tv_totalNum);
             tv_replaceNum = (TextView) itemView.findViewById(R.id.tv_replaceNum);

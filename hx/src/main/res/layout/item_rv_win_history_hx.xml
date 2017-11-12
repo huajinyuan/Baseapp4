@@ -18,12 +18,13 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_text_grey"/>
+            android:textColor="@color/color_black" />
         <TextView
             android:id="@+id/tv_jiangpin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_text_grey"
-            android:layout_alignParentRight="true"/>
+            android:textColor="@color/color_black"
+            android:layout_alignParentRight="true"
+            android:textSize="13sp"/>
     </RelativeLayout>
 </LinearLayout>

@@ -16,12 +16,13 @@ import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_staffSend.addStaffSend.SelectAcActivity_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.hx.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
+import com.example.huaxiang.hx.utils.BitmapUtil;
+import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
-import com.example.huaxiang.utils.AppContext;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(StaffDetailPresenter_pt.class)
 public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt> {
+    public static StaffDetailActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -57,7 +59,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
+        instance=this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -209,6 +211,12 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
                 iv_qr_bottom.setVisibility(View.VISIBLE);
             }
         });
+        popWin_pt.setQr(BitmapUtil.createQrCode(userId, DisplayMetricsUtil.dip2px(context, 190), DisplayMetricsUtil.dip2px(context, 190)));
     }
 
+    @Override
+    protected void onDestroy() {
+        instance=null;
+        super.onDestroy();
+    }
 }

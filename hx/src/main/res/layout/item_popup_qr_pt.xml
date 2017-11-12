@@ -9,8 +9,7 @@
         android:id="@+id/iv_staff_qr_pt"
         android:layout_width="190dp"
         android:layout_height="190dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/icon_sample_qr_pt"/>
+        android:layout_centerInParent="true"/>
     <ImageView
         android:id="@+id/iv_close"
         android:layout_width="50dp"

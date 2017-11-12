@@ -7,8 +7,8 @@
     <Button
         android:id="@+id/bt_select"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:background="@drawable/shape_border3_grey"
+        android:layout_height="38dp"
+        android:background="@drawable/shape_border3_greystroke_whitesolid"
         android:layout_marginBottom="12dp"/>
 
 </RelativeLayout>

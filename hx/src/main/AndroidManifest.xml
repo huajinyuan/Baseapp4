@@ -20,7 +20,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -42,10 +41,9 @@
             android:name="com.example.huaxiang.base.GlideConfiguration"
             android:value="GlideModule" />
 
-        <activity android:name=".hx.MainActivity_hx">
+        <activity android:name=".hx.LoginActivity_hx">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,16 +52,17 @@
         <activity android:name=".rxpicture.ui.RxCameraActivity" />
         <activity android:name=".rxpicture.ui.RxCropActivity" />
 
-
-        <!--画像-->
+        <!-- 画像 -->
+        <activity android:name=".hx.MainActivity_hx" />
         <activity android:name=".hx.ac_memberget.MemberGetActivity" />
         <activity android:name=".hx.ac_memberget.MemberGetListActivity" />
         <activity android:name=".hx.ac_staffSend.StaffSendActivity_pt" />
         <activity android:name=".hx.ac_staffSend.staffDetail.StaffDetailActivity_pt" />
         <activity android:name=".hx.ac_staffSend.addStaffSend.SelectStaffActivity_pt" />
         <activity android:name=".hx.ac_staffSend.addStaffSend.SelectAcActivity_pt" />
-        <activity android:name=".hx.ac_withdrawSetting.SettingActivity_pt"
-            android:windowSoftInputMode="stateUnchanged"/>
+        <activity
+            android:name=".hx.ac_withdrawSetting.SettingActivity_pt"
+            android:windowSoftInputMode="stateUnchanged" />
         <activity android:name=".hx.ac_withdrawSetting.AccountListActivity_cj" />
         <activity android:name=".hx.ac_withdrawSetting.AccountDetailActivity_pt" />
         <activity android:name=".hx.ac_withdrawSetting.WithdrawActivity_pt" />
@@ -74,8 +73,9 @@
         <activity android:name=".hx.ac_bb.StaffRankingActivity" />
         <activity android:name=".hx.ac_bb.TichengDetailActivity" />
         <activity android:name=".hx.ac_bb.RebackListActivity" />
-        <activity android:name=".hx.ac_bb.RebackDetailActivity"
-            android:windowSoftInputMode="stateUnchanged"/>
+        <activity
+            android:name=".hx.ac_bb.RebackDetailActivity"
+            android:windowSoftInputMode="stateUnchanged" />
         <activity android:name=".hx.ac_acSetting.AcListActivity_pt" />
         <activity android:name=".hx.ac_acSetting.AcInfoActivity_pt" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.CreateAcActivity_cj" />
@@ -88,8 +88,8 @@
         <activity android:name=".hx.ac_acSetting.ac_createAc.addTopic.AddTopicListActivity_pt" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addTopic.AddTopicActivity_cj" />
         <activity android:name=".hx.ac_memberget.QrCodeActivity" />
-
-
+        <activity android:name=".hx.ac_acSetting.ac_createAc.addReplace.AddReplaceAwardActivity_cj" />
+        <activity android:name=".hx.ac_acSetting.ac_createAc.addReplace.AddReplaceActivity_pt" />
     </application>
 
 </manifest>

@@ -37,12 +37,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-
     compile rootProject.ext.dependencies["support-v4"]
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["recyclerview-v7"]
@@ -74,7 +73,6 @@ dependencies {
     compile rootProject.ext.dependencies["photoview"]
     compile 'com.github.yilylong:CBDialog:v1.0.4'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
-
     //DBFlow
     apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
@@ -83,10 +81,9 @@ dependencies {
     compile 'com.google.dagger:dagger:2.0'
     apt 'com.google.dagger:dagger-compiler:2.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
-
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'
     compile 'com.qiniu:qiniu-android-sdk:7.3.+'
     compile 'com.qiniu:happy-dns:0.2.7'
+    compile files('libs/zxing-core-3.1.0.jar')
 }

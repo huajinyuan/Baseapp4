@@ -292,7 +292,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="22dp"
-                android:src="@mipmap/icon_img_add_hx"/>
+                android:src="@mipmap/icon_img_add_hx"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
     </ScrollView>
 

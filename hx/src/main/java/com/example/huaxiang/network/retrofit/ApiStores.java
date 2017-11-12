@@ -148,6 +148,14 @@ public interface ApiStores {
     @POST("api/hx/hxActivityAward/save")
     Observable<Response> saveAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardNum") String awardNum, @Query("awardOdds") String awardOdds, @Query("replaceAwardOdds") String replaceAwardOdds, @Query("awardImgUrl") String awardImgUrl, @Query("awardId") String awardId);
 
+    //创建代抽奖品
+    @POST("api/hx/hxActivityAward/replace")
+    Observable<Response<Award>> saveReplaceAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardImgUrl") String awardImgUrl);
+
+    //修改代抽奖品
+    @POST("api/hx/hxActivityAward/replace")
+    Observable<Response> saveReplaceAward(@Header("authorization") String authorization, @Query("actId") String actId, @Query("awardName") String awardName, @Query("awardPrice") String awardPrice, @Query("awardImgUrl") String awardImgUrl, @Query("awardId") String awardId);
+
     //删除活动奖品
     @DELETE("api/hx/hxActivityAward")
     Observable<Response> deleteAward(@Header("authorization") String authorization, @Query("awardId") String awardId);

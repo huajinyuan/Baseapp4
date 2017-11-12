@@ -112,6 +112,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         if (CreateAcActivity_cj.instance.data != null) {
             if (CreateAcActivity_cj.instance.data.name != null) {
                 et_name.setText(CreateAcActivity_cj.instance.data.name);
+                et_name.setSelection(CreateAcActivity_cj.instance.data.name.length());
             }
             if (CreateAcActivity_cj.instance.data.beginTime != null) {
                 et_beginTime.setText(CreateAcActivity_cj.instance.data.beginTime);
@@ -119,7 +120,9 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             if (CreateAcActivity_cj.instance.data.endTime != null) {
                 et_endTime.setText(CreateAcActivity_cj.instance.data.endTime);
             }
-            et_money.setText(CreateAcActivity_cj.instance.data.money + "");
+            if (CreateAcActivity_cj.instance.data.money != 0) {
+                et_money.setText(CreateAcActivity_cj.instance.data.money + "");
+            }
             et_num.setText(CreateAcActivity_cj.instance.data.num + "");
             if (CreateAcActivity_cj.instance.data.videoUrl != null) {
                 et_videoUrl.setText(CreateAcActivity_cj.instance.data.videoUrl);

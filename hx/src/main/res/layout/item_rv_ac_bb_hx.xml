@@ -15,26 +15,37 @@
         android:padding="11dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_8"
-                android:background="@color/color_appBlue"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/shape_radius3_appblue"
+                android:paddingBottom="3dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
                 android:text="活动"
-                android:textColor="@color/color_white" />
+                android:textColor="@color/color_white"/>
+            <TextView
+                android:id="@+id/tv_cjPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:paddingTop="3dp"
+                android:layout_marginLeft="11dp"
+                android:text="--块钱博"
+                android:textColor="@color/color_appBlue"/>
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="30dp"
-                android:layout_margin="@dimen/dp_5"
+                android:layout_marginTop="7dp"
+                android:paddingTop="3dp"
+                android:layout_marginLeft="8dp"
                 android:text="5人团价值999元保修卡5团价值999元保修卡5人团价值999元保修卡"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_14" />
@@ -142,7 +153,7 @@
             android:layout_marginTop="@dimen/dp_8"
             android:background="@color/color_f1"
             android:gravity="center"
-            android:text="员工排行"
+            android:text="员工排行 >"
             android:textSize="@dimen/sp_14"
             android:textColor="@color/color_appBlue" />
     </LinearLayout>

@@ -73,8 +73,8 @@ public class MyBitmapUtil {
         int width = options.outWidth;
         int inSampleSize = 1; // 默认像素压缩比例，压缩为原图的1/2
         int minLen = Math.min(height, width); // 原图的最小边长
-        if (minLen > 1280) { // 如果原始图像的最小边长大于1280dp
-            inSampleSize = (int) minLen / 1280; // 计算像素压缩比例
+        if (minLen > 700) { // 如果原始图像的最小边长大于1280dp
+            inSampleSize = (int) minLen / 700; // 计算像素压缩比例
         }
         options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
         options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例

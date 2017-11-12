@@ -2,6 +2,7 @@ package com.example.huaxiang.hx.ac_staffSend.addStaffSend;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_staffSend.addStaffSend.adapter.SelectAcAdapter_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
+import com.example.huaxiang.hx.ac_staffSend.staffDetail.StaffDetailActivity_pt;
 import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
 import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
@@ -181,6 +183,9 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
                     finish();
                     if (SelectStaffActivity_pt.instance != null) {
                         SelectStaffActivity_pt.instance.finish();
+                    }
+                    if (StaffDetailActivity_pt.instance==null){
+                        startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", userId));
                     }
                 } else {
                     ToastUtil.showToast(arrayListResponse.msg);

@@ -41,21 +41,23 @@ public class CjHistoryAdapter extends RecyclerView.Adapter<CjHistoryAdapter.Anch
         CjHistory cjHistory = data.get(position);
 
         holder.tv_date.setText(cjHistory.createDate);
-        holder.tv_number.setText(cjHistory.redeemCode);
+        holder.tv_number.setText(cjHistory.number);
         holder.tv_name.setText(cjHistory.actName);
         holder.tv_cjPerson.setText(cjHistory.userName);
 //        holder.tv_getType.setText(cjHistory.awardName);
         holder.tv_staff.setText(cjHistory.memberName);
-        holder.tv_jiangpin.setText("奖品：" + cjHistory.awardName);
 
         switch (cjHistory.isAward) {
             case "0":
                 holder.tv_status.setText("未中奖");
                 holder.tv_status.setBackgroundResource(R.drawable.shape_radius3_appblue);
+                holder.tv_jiangpin.setVisibility(View.INVISIBLE);
                 break;
             case "1":
                 holder.tv_status.setText("中奖");
                 holder.tv_status.setBackgroundResource(R.drawable.shape_radius3_appred);
+                holder.tv_jiangpin.setVisibility(View.VISIBLE);
+                holder.tv_jiangpin.setText("奖品：" + cjHistory.awardName);
                 break;
         }
 

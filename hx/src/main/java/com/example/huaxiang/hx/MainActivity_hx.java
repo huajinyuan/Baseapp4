@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.AcListActivity_pt;
@@ -55,6 +56,8 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
     int requestStatus;
 
+    String username, password;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_hx_index;
@@ -83,12 +86,19 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
     @Override
     protected void initData() {
-        if (aCache.getAsString(ACacheKey.TOKEN) == null) {
+        username = getIntent().getStringExtra("username");
+        password = getIntent().getStringExtra("password");
+
+        if (password != null) {
             login();
         } else {
-            token = aCache.getAsString(ACacheKey.TOKEN);
-            Log.e("aaa", token);
-            getReport();
+            if (aCache.getAsString(ACacheKey.TOKEN) == null) {
+                Toast.makeText(context, "没有登录记录", Toast.LENGTH_SHORT).show();
+            } else {
+                token = aCache.getAsString(ACacheKey.TOKEN);
+                Log.e("aaa", token);
+                getReport();
+            }
         }
     }
 
@@ -159,14 +169,30 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     }
 
     void setReport(Report_hx report_hx) {
-        tv_totalManCount.setText(report_hx.totalManCount + "");
-        tv_totalReplaceCount.setText(report_hx.totalReplaceCount + "");
-        tv_intentionCount.setText(report_hx.intentionCount + "");
-        tv_conversionCount.setText(report_hx.conversionCount + "");
+        if (report_hx.totalManCount == null || report_hx.totalManCount.equals("")) {
+            tv_totalManCount.setText("0");
+        } else {
+            tv_totalManCount.setText(report_hx.totalManCount + "");
+        }
+        if (report_hx.totalReplaceCount == null || report_hx.totalReplaceCount.equals("")) {
+            tv_totalReplaceCount.setText("0");
+        } else {
+            tv_totalReplaceCount.setText(report_hx.totalReplaceCount + "");
+        }
+        if (report_hx.intentionCount == null || report_hx.intentionCount.equals("")) {
+            tv_intentionCount.setText("0");
+        } else {
+            tv_intentionCount.setText(report_hx.intentionCount + "");
+        }
+        if (report_hx.conversionCount == null || report_hx.conversionCount.equals("")) {
+            tv_conversionCount.setText("0");
+        } else {
+            tv_conversionCount.setText(report_hx.conversionCount + "");
+        }
     }
 
     void login() {
-        HttpMethods.getInstance().login("xzuo", "123456").subscribe(new Subscriber<Response<LoginData_pt>>() {
+        HttpMethods.getInstance().login(username, password).subscribe(new Subscriber<Response<LoginData_pt>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -214,7 +240,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
-                login();
+                Toast.makeText(context, "已在其他设备登录", Toast.LENGTH_SHORT).show();
             }
 
             @Override

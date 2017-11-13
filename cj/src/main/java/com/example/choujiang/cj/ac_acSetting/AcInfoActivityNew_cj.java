@@ -28,9 +28,9 @@ import java.util.Random;
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-@RequiresPresenter(AcInfoPresenter_cj.class)
-public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
-    public static AcInfoActivity_cj instance;
+@RequiresPresenter(AcInfoPresenterNew_cj.class)
+public class AcInfoActivityNew_cj extends BaseActivity<AcInfoPresenter_cj> {
+    public static AcInfoActivityNew_cj instance;
     Context context;
     ACache aCache;
     public String token;

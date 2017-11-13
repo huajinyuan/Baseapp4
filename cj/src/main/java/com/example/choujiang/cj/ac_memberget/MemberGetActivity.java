@@ -75,7 +75,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
     void setData(){
         et_code.setText(detailId);
         tv_status.setText(cjHistory.codeStatus.equals("0") ? "未兑换" : "已兑换");
-        tv_personName.setText("");
+        tv_personName.setText(cjHistory.memberName);
         tv_goodsName.setText(cjHistory.awardName);
         tv_goodsPrice.setText(cjHistory.awardPrice + "");
         tv_goodsNum.setText(cjHistory.awardNum + "");

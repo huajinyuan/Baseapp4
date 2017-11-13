@@ -26,6 +26,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(AccountDetailPresenter_pt.class)
 public class AccountDetailActivity_pt extends BaseActivity<AccountDetailPresenter_pt> {
+    public static AccountDetailActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -44,7 +45,6 @@ public class AccountDetailActivity_pt extends BaseActivity<AccountDetailPresente
     ArrayList<AccountDetail_cj> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
-    public static AccountDetailActivity_pt instance;
 
     @Override
     protected int getLayoutId() {

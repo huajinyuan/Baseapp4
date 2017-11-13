@@ -1,6 +1,7 @@
 package com.example.choujiang.cj.ac_staffSend.staffDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_staffSend.addStaffSend.SelectAcActivity_pt;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.cj.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
 import com.example.choujiang.model.Response;
@@ -18,7 +20,6 @@ import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
 import com.example.choujiang.utils.ACache;
 import com.example.choujiang.utils.ACacheKey;
-import com.example.choujiang.utils.AppContext;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(StaffDetailPresenter_pt.class)
 public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt> {
+    public static StaffDetailActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -53,7 +55,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -114,6 +116,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", userId + ""));
             }
         });
         setDrag(iv_qr_bottom);
@@ -186,5 +189,9 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
+    }
 }

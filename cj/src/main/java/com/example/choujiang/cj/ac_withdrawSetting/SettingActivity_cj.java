@@ -75,6 +75,7 @@ public class SettingActivity_cj extends BaseActivity<SettingPresenter_cj> {
         type = setting.type;
         checkCb(type);
         et1.setText(setting.value1 + "");
+        et1.setSelection((setting.value1 + "").length());
         et2.setText(setting.value2 + "");
     }
 

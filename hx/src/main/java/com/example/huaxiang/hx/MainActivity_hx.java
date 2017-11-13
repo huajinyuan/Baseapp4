@@ -1,8 +1,13 @@
 package com.example.huaxiang.hx;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -80,6 +85,8 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         tv_totalReplaceCount = (TextView) findViewById(R.id.tv_totalReplaceCount);
         tv_intentionCount = (TextView) findViewById(R.id.tv_intentionCount);
         tv_conversionCount = (TextView) findViewById(R.id.tv_conversionCount);
+
+        getPermissions(this);
 
 
     }
@@ -296,6 +303,31 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
                 dialog.dismiss();
             }
         });
+    }
+
+    void getPermissions(Activity mActivity){
+        String[] PERMISSIONS_STORAGE = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.CAMERA"};
+        if (Build.VERSION.SDK_INT >= 23) {
+            Log.e("permission", ">23");
+            try {
+                //检测是否有写的权限
+                int permissionCAMERA = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+                int permissionSD = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permissionCAMERA != PackageManager.PERMISSION_GRANTED || permissionSD != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("permission", "permissionCAMERA:" + permissionCAMERA + " " + "permissionSD:" + permissionSD);
+                    // 没有写的权限，去申请写的权限，会弹出对话框
+                    ActivityCompat.requestPermissions(mActivity, PERMISSIONS_STORAGE, 1);
+                } else {
+                    Log.e("permission", "permission 2");
+                }
+            } catch (Exception e) {
+                Log.e("permission", "permission 3" + e.toString());
+                e.printStackTrace();
+            }
+        }
     }
 
 

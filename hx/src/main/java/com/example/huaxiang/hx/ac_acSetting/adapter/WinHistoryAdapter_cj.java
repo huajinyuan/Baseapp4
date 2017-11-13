@@ -46,7 +46,8 @@ public class WinHistoryAdapter_cj extends RecyclerView.Adapter<WinHistoryAdapter
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.click();
+                if(listener!=null)
+                    listener.click();
             }
         });
     }

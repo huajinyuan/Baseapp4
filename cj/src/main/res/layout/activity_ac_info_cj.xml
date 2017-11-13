@@ -84,7 +84,8 @@
                 <com.example.choujiang.cj.ac_acSetting.lucky.LuckyMonkeyPanelView
                     android:id="@+id/lucky_panel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:paddingBottom="1dp"/>
 
                 <Button
                     android:id="@+id/bt_action"

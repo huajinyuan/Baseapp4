@@ -1,6 +1,7 @@
 package com.example.choujiang.cj.ac_staffSend.addStaffSend;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_staffSend.addStaffSend.adapter.SelectAcAdapter_pt;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
+import com.example.choujiang.cj.ac_staffSend.staffDetail.StaffDetailActivity_pt;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -170,7 +172,12 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
                 if (arrayListResponse.code == 0) {
                     ToastUtil.showToast("提交成功");
                     finish();
-                    SelectStaffActivity_pt.instance.finish();
+                    if (SelectStaffActivity_pt.instance != null) {
+                        SelectStaffActivity_pt.instance.finish();
+                    }
+                    if (StaffDetailActivity_pt.instance==null){
+                        startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", Integer.parseInt(userId)));
+                    }
                 } else {
                     ToastUtil.showToast(arrayListResponse.msg);
                 }

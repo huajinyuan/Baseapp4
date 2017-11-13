@@ -17,7 +17,6 @@ import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
-import com.example.huaxiang.utils.AppContext;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,6 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         instance = this;
         aCache = ACache.get(context);

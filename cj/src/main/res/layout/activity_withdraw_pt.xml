@@ -23,7 +23,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="张萌萌"
+            android:text="--"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
@@ -47,7 +47,7 @@
             android:id="@+id/tv_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥590"
+            android:text="￥--"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
@@ -59,8 +59,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginLeft="20dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +77,8 @@
             android:gravity="right|center_vertical"
             android:textSize="17sp"
             android:textColor="@color/color_black"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:paddingRight="20dp"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

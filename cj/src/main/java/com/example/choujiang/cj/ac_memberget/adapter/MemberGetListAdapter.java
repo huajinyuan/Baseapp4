@@ -43,8 +43,12 @@ public class MemberGetListAdapter extends RecyclerView.Adapter<MemberGetListAdap
         UiUtil.setImage(holder.iv_ac, cjHistory.awardImg);
         holder.tv_name.setText(cjHistory.awardName);
         holder.tv_num.setText("数量 "+cjHistory.awardNum);
-        holder.tv_code.setText(cjHistory.number);
-        holder.tv_personName.setText(cjHistory.memberName);
+        if(cjHistory.number!=null)
+            if(!cjHistory.number.isEmpty())
+                holder.tv_code.setText(cjHistory.number);
+        if(cjHistory.memberName!=null)
+            if(!cjHistory.memberName.isEmpty())
+                holder.tv_personName.setText(cjHistory.memberName);
         holder.tv_date.setText(cjHistory.createDate);
 
     }

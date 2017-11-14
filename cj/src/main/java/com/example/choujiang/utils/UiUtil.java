@@ -40,6 +40,7 @@ public class UiUtil {
                     .error(errorRes)
                     .fitCenter()
                     .bitmapTransform(new RoundedCornersTransformation(context, radius, 0, RoundedCornersTransformation.CornerType.ALL))
+                    .dontAnimate()
                     .into(imageView);
         } catch (Exception e) {
         }
@@ -64,6 +65,7 @@ public class UiUtil {
                     .placeholder(loadingRes)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .error(errorRes)
+                    .dontAnimate()
                     .into(imageView);
         } catch (Exception e) {
             Log.e("aaa", e.toString());

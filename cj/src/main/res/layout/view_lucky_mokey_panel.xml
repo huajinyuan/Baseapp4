@@ -9,7 +9,7 @@
         android:id="@+id/bg_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/bubble_bg" />
+        android:src="@mipmap/bubble_bg"/>
 
     <ImageView
         android:id="@+id/bg_2"
@@ -21,8 +21,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="25dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="36dp">
 
         <LinearLayout
             android:layout_width="match_parent"

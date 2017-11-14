@@ -68,7 +68,7 @@ public interface ApiStores {
 
     //中奖记录
     @GET("api/cj/cjAwardDetail/list")
-    Observable<Response<ArrayList<CjHistory>>> getWinHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward);
+    Observable<Response<ArrayList<CjHistory>>> getWinHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward, @Query("actId") String actId);
 
     //员工列表
     @GET("api/common/staff/list")

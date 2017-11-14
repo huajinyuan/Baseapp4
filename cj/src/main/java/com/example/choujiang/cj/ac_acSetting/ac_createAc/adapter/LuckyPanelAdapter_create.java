@@ -1,7 +1,8 @@
-package com.example.choujiang.cj.ac_acSetting.adapter;
+package com.example.choujiang.cj.ac_acSetting.ac_createAc.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,13 @@ import java.util.ArrayList;
 /**
  * Created by  on 2016/9/2.
  */
-public class LuckyPanelAdapter_cj extends RecyclerView.Adapter<LuckyPanelAdapter_cj.AnchorHotViewHolder> {
+public class LuckyPanelAdapter_create extends RecyclerView.Adapter<LuckyPanelAdapter_create.AnchorHotViewHolder> {
     public ArrayList<Award> data = new ArrayList<>();
     private Context context;
     LayoutInflater layoutInflater;
     ClickListener listener;
 
-    public LuckyPanelAdapter_cj(Context mContext) {
+    public LuckyPanelAdapter_create(Context mContext) {
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
         for(int i=0;i<8;i++) {
@@ -38,13 +39,13 @@ public class LuckyPanelAdapter_cj extends RecyclerView.Adapter<LuckyPanelAdapter
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == 1) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_luckypanel_cj, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_luckypanel_create, parent, false);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_luckypanel_position4_cj, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_luckypanel_position4_create, parent, false);
         }
 
-        view.getLayoutParams().width = ((DisplayMetricsUtil.getScreenWidth(context) / 3) - (DisplayMetricsUtil.dip2px(context, 44)));
-        view.getLayoutParams().height = ((DisplayMetricsUtil.getScreenWidth(context) / 3) - (DisplayMetricsUtil.dip2px(context, 44)));
+        view.getLayoutParams().width = (DisplayMetricsUtil.getScreenWidth(context) - DisplayMetricsUtil.dip2px(context, 12)) / 3;
+        view.getLayoutParams().height = (DisplayMetricsUtil.getScreenWidth(context) - DisplayMetricsUtil.dip2px(context, 12)) / 3;
         return new AnchorHotViewHolder(view);
     }
 
@@ -59,6 +60,17 @@ public class LuckyPanelAdapter_cj extends RecyclerView.Adapter<LuckyPanelAdapter
                 if (award.imgUrl != null) {
                     UiUtil.setImage(holder.iv_award, award.imgUrl);
                 }
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.click(position-1);
+                        }else {
+                            Log.e("aaa","null");
+                        }
+                    }
+                });
             } else {
                 Award award = data.get(position);
                 if (award.name != null) {
@@ -67,6 +79,17 @@ public class LuckyPanelAdapter_cj extends RecyclerView.Adapter<LuckyPanelAdapter
                 if (award.imgUrl != null) {
                     UiUtil.setImage(holder.iv_award, award.imgUrl);
                 }
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.click(position);
+                        }else {
+                            Log.e("aaa","null");
+                        }
+                    }
+                });
             }
         }
     }
@@ -98,9 +121,18 @@ public class LuckyPanelAdapter_cj extends RecyclerView.Adapter<LuckyPanelAdapter
     }
 
     public interface ClickListener{
-        void click();
+        void click(int position);
     }
     public void setClickListener(ClickListener mListener){
         listener = mListener;
+    }
+
+    public void setAwards(ArrayList<Award> awards) {
+        int max = awards.size() > 8 ? 8 : awards.size();
+        for(int i=0;i<max;i++) {
+            data.get(i).name = awards.get(i).name;
+            data.get(i).imgUrl = awards.get(i).imgUrl;
+        }
+        notifyDataSetChanged();
     }
 }

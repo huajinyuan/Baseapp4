@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
-import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.Award;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
@@ -112,7 +111,6 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "添加记录成功", Toast.LENGTH_SHORT).show();
                     AddWinListActivity_pt.instance.getData();
-                    CreateAcActivity_cj.instance.getData();
                     finish();
                 }
             }
@@ -120,5 +118,9 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
+    }
 }

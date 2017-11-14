@@ -2,6 +2,7 @@ package com.example.choujiang.cj.ac_acSetting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,8 +13,8 @@ import android.widget.Toast;
 
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_acSetting.ac_createAc.CreateAcActivity_cj;
+import com.example.choujiang.cj.ac_acSetting.adapter.LuckyPanelAdapter_info;
 import com.example.choujiang.cj.ac_acSetting.adapter.WinHistoryAdapter_cj;
-import com.example.choujiang.cj.ac_acSetting.lucky.LuckyMonkeyPanelView;
 import com.example.choujiang.cj.ac_acSetting.m.ActivityDetail_cj;
 import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
 import com.example.choujiang.model.Response;
@@ -23,7 +24,6 @@ import com.example.choujiang.utils.ACache;
 import com.example.choujiang.utils.ACacheKey;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -37,7 +37,6 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
     TextView tv_topbar_title;
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
-    LuckyMonkeyPanelView lucky_panel;
 
     String  id;
     ActivityDetail_cj data;
@@ -47,6 +46,8 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
     TextView tv_available;
     TextView tv_stop;
     TextView tv_abandon;
+    RecyclerView rv_lucky;
+    LuckyPanelAdapter_info luckyPanelAdapter_info;
 
     @Override
     protected int getLayoutId() {
@@ -67,7 +68,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
-        lucky_panel = findView(R.id.lucky_panel);
+        rv_lucky = findView(R.id.rv_lucky);
         rv_winHistory = findView(R.id.rv_winHistory);
         tv_name = findView(R.id.tv_name);
         tv_tip = findView(R.id.tv_tip);
@@ -107,12 +108,16 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
             }
 
             //添加转盘商品
-            if (data.awards != null) {
-                ArrayList<String> urls = new ArrayList<>();
-                for(int i=0;i<data.awards.size();i++) {
-                    urls.add(data.awards.get(i).imgUrl);
-                }
-                lucky_panel.setImage(urls);
+            if (luckyPanelAdapter_info == null) {
+                luckyPanelAdapter_info = new LuckyPanelAdapter_info(context);
+                GridLayoutManager layoutManager = new GridLayoutManager(context, 3);
+                rv_lucky.setLayoutManager(layoutManager);
+                rv_lucky.setAdapter(luckyPanelAdapter_info);
+            }
+            if (data.awards == null) {
+                data.awards = new ArrayList<>();
+            } else {
+                luckyPanelAdapter_info.setAwards(data.awards);
             }
         }
     }
@@ -127,18 +132,6 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
     protected void setListener() {
         findView(R.id.iv_topbar_back).setOnClickListener(view -> finish());
 
-        findViewById(R.id.bt_action).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!lucky_panel.isGameRunning()) {
-                    lucky_panel.startGame();
-                } else {
-                    int stayIndex = new Random().nextInt(8);
-                    Log.e("LuckyMonkeyPanelView", "====stay===" + stayIndex);
-                    lucky_panel.tryToStop(stayIndex);
-                }
-            }
-        });
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

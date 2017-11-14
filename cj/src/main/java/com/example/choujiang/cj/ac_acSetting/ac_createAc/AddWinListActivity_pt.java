@@ -53,8 +53,8 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
         tv_topbar_right = (TextView) findViewById(R.id.tv_topbar_right);
         iv_topbar_right = (ImageView) findViewById(R.id.iv_topbar_right);
         tv_topbar_title.setText("中奖记录");
-        tv_topbar_right.setVisibility(View.VISIBLE);
-        tv_topbar_right.setText("保存");
+        tv_topbar_right.setVisibility(View.GONE);
+        tv_topbar_right.setText("");
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
@@ -66,6 +66,7 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         id = getIntent().getStringExtra("id");
+        getData();
     }
 
     void setRv() {
@@ -83,17 +84,6 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
                 finish();
             }
         });
-        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cjHistories.size() != 0) {
-                    CreateAcActivity_cj.instance.data.awardDetails.addAll(cjHistories);
-                    for(int i=0;i<cjHistories.size();i++) {
-                        saveData(cjHistories.get(i), i);
-                    }
-                }
-            }
-        });
         findViewById(R.id.bt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,13 +92,8 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
         });
     }
 
-    void saveData(CjHistory cjHistory, int position) {
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveWinHistory(token, id, cjHistory.mobile, cjHistory.awardId), new Subscriber<Response>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
+    void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getWinHistory(token, 1, 100, "1", id), new Subscriber<Response<ArrayList<CjHistory>>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -116,30 +101,17 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
 
             @Override
             public void onError(Throwable e) {
-                Log.e("aaa_savecjHistory", "onError position" + position + e.getMessage());
+                Log.e("aaa", "onError" + e.getMessage());
             }
 
             @Override
-            public void onNext(Response arrayListResponse) {
-                if (arrayListResponse.code == 0) {
-                    cjHistories.get(position).uploaded = true;
-
-                    boolean canFinish = true;
-                    for (CjHistory ch : cjHistories) {
-                        if (!ch.uploaded) {
-                            canFinish = false;
-                        }
-                    }
-                    if (canFinish) {
-                        CreateAcActivity_cj.instance.setData();
-                        finish();
-                    }
-
-                    Log.e("aaa_savecjHistory", "succeed position" + position);
+            public void onNext(Response<ArrayList<CjHistory>> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    cjHistories = arrayListResponse.data;
+                    setRv();
                 }
             }
         });
-
     }
 
     @Override

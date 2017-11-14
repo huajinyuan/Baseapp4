@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_acSetting.AcInfoActivity_cj;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;

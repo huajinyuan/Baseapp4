@@ -222,7 +222,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="22dp"
-                android:text="活动图片"
+                android:text="奖品图片"
                 android:textColor="@color/color_black"
                 android:layout_centerVertical="true"/>
             <ImageView
@@ -230,7 +230,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="22dp"
-                android:src="@mipmap/icon_img_add_cj"/>
+                android:src="@mipmap/icon_img_add_cj"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
     </ScrollView>
 

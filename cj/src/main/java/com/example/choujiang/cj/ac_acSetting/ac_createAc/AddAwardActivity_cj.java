@@ -149,24 +149,12 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 } else {
                     price = price.equals(".") ? ".0" : price;
                     awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
-                    award.name = name;
-                    award.price = Double.parseDouble(price);
-                    award.num = Integer.parseInt(num);
-                    award.awardOdds = Double.parseDouble(awardOdds);
-                    award.imgUrl = imgUrl;
 
                     if (position >= CreateAcActivity_cj.instance.data.awards.size()) {
-                        CreateAcActivity_cj.instance.data.awards.add(award);
                         addAward();
                     } else {
-                        CreateAcActivity_cj.instance.data.awards.get(position).name = award.name;
-                        CreateAcActivity_cj.instance.data.awards.get(position).price = award.price;
-                        CreateAcActivity_cj.instance.data.awards.get(position).num = award.num;
-                        CreateAcActivity_cj.instance.data.awards.get(position).awardOdds = award.awardOdds;
-                        CreateAcActivity_cj.instance.data.awards.get(position).imgUrl = award.imgUrl;
                         editAward();
                     }
-                    CreateAcActivity_cj.instance.setData();
                 }
             }
         });
@@ -320,8 +308,8 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             @Override
             public void onNext(Response<Award> arrayListResponse) {
                 if (arrayListResponse.code == 0) {
-                    CreateAcActivity_cj.instance.data.awards.get(CreateAcActivity_cj.instance.data.awards.size() - 1).id = arrayListResponse.data.id;
                     Toast.makeText(context, "添加奖品成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.getData();
                     finish();
                 }
             }
@@ -344,6 +332,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.getData();
                     finish();
                 }
             }

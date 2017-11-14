@@ -84,7 +84,7 @@ public interface ApiStores {
     @GET("api/hx/hxOrder/list")
     Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
     @GET("api/hx/hxOrder/list")
-    Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") int isAward);
+    Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward);
 
     //抽奖详情
     @GET("api/hx/hxOrder/{number}")
@@ -106,11 +106,15 @@ public interface ApiStores {
 
     //回访记录
     @GET("api/hx/hxMemberVisit/list")
-    Observable<Response<ArrayList<Reback_hx>>> getRebackList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("type") String type);
+    Observable<Response<ArrayList<Reback_hx>>> getRebackList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("type") int type);
 
     //回访详情--提交
     @POST("api/hx/hxMemberVisit/submit")
     Observable<Response<Reback_hx>> addRecord(@Header("authorization") String authorization, @Query("visitId") String visitId, @Query("content") String content);
+
+    //回访详情--操作   2转化客户 3无意向
+    @POST("api/hx/hxMemberVisit/operating")
+    Observable<Response<Reback_hx>> setRebackIntention(@Header("authorization") String authorization, @Query("visitId") String visitId, @Query("type") String type);
 
     //回访详情
     @GET("api/hx/hxMemberVisit/{visitId}")

@@ -1,11 +1,15 @@
 package com.example.huaxiang.hx.ac_bb;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +19,8 @@ import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_bb.adapter.RecordListAdapter;
 import com.example.huaxiang.hx.ac_bb.m.Reback_hx;
 import com.example.huaxiang.hx.ac_bb.m.Record;
+import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
+import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
@@ -103,10 +109,10 @@ public class RebackDetailActivity extends BaseActivity<RebackDetailPresenter> {
                 finish();
             }
         });
-        findViewById(R.id.iv_topbar_right_detail).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, TichengDetailActivity.class));
+                showDialogSelect();
             }
         });
         findViewById(R.id.bt_submit).setOnClickListener(new View.OnClickListener() {
@@ -170,8 +176,91 @@ public class RebackDetailActivity extends BaseActivity<RebackDetailPresenter> {
                 if (arrayListResponse.data != null) {
                     Toast.makeText(context, "提交成功", Toast.LENGTH_SHORT).show();
                     reback_hx = arrayListResponse.data;
-                    setRv();
+                    setData();
                 }
+            }
+        });
+    }
+
+    void setRebackIntention(String type){
+        HttpMethods.start(HttpMethods.getInstance().demoService.setRebackIntention(token, reback_hx.id, type), new Subscriber<Response<Reback_hx>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<Reback_hx> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    Toast.makeText(context, "提交成功", Toast.LENGTH_SHORT).show();
+                    reback_hx = arrayListResponse.data;
+                    setData();
+                }
+            }
+        });
+    }
+
+    void showDialogSelect() {
+        final AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogSelect);
+        dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select, null);
+        dialog.setContentView(view_dialog);
+
+        //->
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = DisplayMetricsUtil.dip2px(context, 50);
+        params.width = DisplayMetricsUtil.getScreenWidth(context);
+        window.setAttributes(params);
+        //->
+
+        RecyclerView rv_dialog = (RecyclerView) view_dialog.findViewById(R.id.rv_dialog_select);
+        LinearLayoutManager selectLayoutManager = new LinearLayoutManager(context);
+        rv_dialog.setLayoutManager(selectLayoutManager);
+        ArrayList<String> selectData = new ArrayList<>();
+        selectData.add("已购买");
+        selectData.add("无意向");
+        RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
+        rv_dialog.setAdapter(selectAdapter);
+
+        if (reback_hx != null) {
+            if (reback_hx.type != null) {
+                if (reback_hx.type.equals("2")) {
+                    selectAdapter.setSelectPosition(0);
+                }
+                if (reback_hx.type.equals("3")) {
+                    selectAdapter.setSelectPosition(1);
+                }
+            }
+        }
+
+        selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
+            @Override
+            public void select(int position) {
+                if (reback_hx != null) {
+                    if (position == 0) {
+                        setRebackIntention("2");
+                    }
+                    if (position == 1) {
+                        setRebackIntention("3");
+                    }
+                }
+                dialog.dismiss();
             }
         });
     }

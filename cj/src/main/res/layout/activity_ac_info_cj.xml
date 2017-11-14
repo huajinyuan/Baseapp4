@@ -55,7 +55,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:text="时间：2017/10/01-2017/10/10"
-                    android:paddingBottom="3dp"
+                    android:paddingBottom="2dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12" />
             </RelativeLayout>
@@ -95,7 +95,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/bubble_bg"/>
+                    android:src="@mipmap/bubble_bg"
+                    android:adjustViewBounds="true"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_lucky"
                     android:layout_width="match_parent"

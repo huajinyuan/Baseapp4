@@ -48,6 +48,10 @@ public interface ApiStores {
     @GET("api/cj/cjAwardDetail/list")
     Observable<Response<ArrayList<CjHistory>>> getCjHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
+    //抽奖记录搜索
+    @GET("api/cj/cjAwardDetail/list")
+    Observable<Response<ArrayList<CjHistory>>> searchCjHistory(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("keyword") String keyword);
+
     //员工排行-0全部 1本日 2本月 3本年
     @GET("api/cj/report/staffRanking")
     Observable<Response<ArrayList<Staff_cj>>> getStaffRanking_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);

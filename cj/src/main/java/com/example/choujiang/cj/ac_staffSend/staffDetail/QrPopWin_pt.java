@@ -1,10 +1,11 @@
 package com.example.choujiang.cj.ac_staffSend.staffDetail;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
-
 
 import com.example.choujiang.R;
 
@@ -18,6 +19,7 @@ public class QrPopWin_pt extends PopupWindow {
     private Context context;
     private View view;
     CloseListener listener;
+    ImageView iv_staff_qr_pt;
 
     public QrPopWin_pt(Context mContext){
         context = mContext;
@@ -34,6 +36,8 @@ public class QrPopWin_pt extends PopupWindow {
                 listener.close();
             }
         });
+
+        iv_staff_qr_pt = (ImageView) view.findViewById(R.id.iv_staff_qr_pt);
     }
 
     public interface CloseListener{
@@ -42,5 +46,9 @@ public class QrPopWin_pt extends PopupWindow {
 
     public void setCloseListener(CloseListener closeListener){
         listener = closeListener;
+    }
+
+    public void setQr(Bitmap bitmapQr){
+        iv_staff_qr_pt.setImageBitmap(bitmapQr);
     }
 }

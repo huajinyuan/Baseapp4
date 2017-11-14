@@ -63,7 +63,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:text="时间：2017/10/01-2017/10/10"
-                        android:paddingBottom="3dp"
+                        android:paddingBottom="2dp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12" />
                 </RelativeLayout>

@@ -18,7 +18,6 @@ import com.example.choujiang.cj.ac_acSetting.ac_createAc.adapter.LuckyPanelAdapt
 import com.example.choujiang.cj.ac_acSetting.adapter.WinHistoryAdapter_cj;
 import com.example.choujiang.cj.ac_acSetting.m.ActivityDetail_cj;
 import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
-import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -205,47 +204,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         });
     }
 
-    void addAc(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, data.name, data.imgUrl, data.beginTime, data.endTime, data.count + "", data.shareCount + "", data.exchangeCount + "", data.remarks), new Subscriber<Response<Activity_cj>>() {
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
-            }
-
-            @Override
-            public void onNext(Response<Activity_cj> arrayListResponse) {
-                if (arrayListResponse.code == 0) {
-                    data.id = arrayListResponse.data.id;
-                    Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    void editAc(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, data.name, data.imgUrl, data.beginTime, data.endTime, data.count + "", data.shareCount + "", data.exchangeCount + "", data.remarks, data.id), new Subscriber<Response>() {
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
-            }
-
-            @Override
-            public void onNext(Response arrayListResponse) {
-                if (arrayListResponse.code == 0) {
-                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {

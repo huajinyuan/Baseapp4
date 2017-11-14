@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.MyBitmapUtil;
 import com.example.huaxiang.hx.ac_acSetting.m.QiniuToKen;
 import com.example.huaxiang.model.Response;
@@ -69,6 +70,9 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     ImageView iv_ac;
     CheckBox switch_carCheck;
     String sdcardPath;
+
+    String name, beginTime, endTime, money, num, videoUrl;
+    int carCheck;
 
     @Override
     protected int getLayoutId() {
@@ -131,6 +135,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 imgUrl = CreateAcActivity_cj.instance.data.imgUrl;
                 UiUtil.setImage(iv_ac, imgUrl);
             }
+            switch_carCheck.setChecked(CreateAcActivity_cj.instance.data.carCheck == 0 ? false : true);
         }
     }
 
@@ -145,33 +150,24 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name, beginTime, endTime, money, num, videoUrl;
                 name = et_name.getText().toString().trim();
                 beginTime = et_beginTime.getText().toString().trim();
                 endTime = et_endTime.getText().toString().trim();
                 money = et_money.getText().toString().trim();
                 num = et_num.getText().toString().trim();
                 videoUrl = et_videoUrl.getText().toString().trim();
+                carCheck = switch_carCheck.isChecked() ? 1 : 0;
 
                 if (name.isEmpty() || beginTime.isEmpty() || endTime.isEmpty() || money.isEmpty()) {
                     Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else if (imgUrl == null) {
                     Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
                 } else {
-                    CreateAcActivity_cj.instance.data.name = name;
-                    CreateAcActivity_cj.instance.data.beginTime = beginTime;
-                    CreateAcActivity_cj.instance.data.endTime = endTime;
-                    CreateAcActivity_cj.instance.data.money = Double.parseDouble(money);
-                    CreateAcActivity_cj.instance.data.num = Integer.parseInt(num);
-                    CreateAcActivity_cj.instance.data.videoUrl = videoUrl;
-                    CreateAcActivity_cj.instance.data.imgUrl = imgUrl;
-                    CreateAcActivity_cj.instance.setData();
                     if (CreateAcActivity_cj.instance.data.id == null) {
-                        CreateAcActivity_cj.instance.addAc();
+                        addAc();
                     } else {
-                        CreateAcActivity_cj.instance.editAc();
+                        editAc();
                     }
-                    finish();
                 }
             }
         });
@@ -361,6 +357,56 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             @Override
             public void onClick(View view) {
                 dialog_date.dismiss();
+            }
+        });
+    }
+
+    void addAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", "0", carCheck), new Subscriber<Response<ActivityDetail_cj>>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.id = arrayListResponse.data.id;
+                    CreateAcActivity_cj.instance.getData();
+                    finish();
+                } else {
+                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    void editAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", "0", carCheck, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.getData();
+                    finish();
+                }
             }
         });
     }

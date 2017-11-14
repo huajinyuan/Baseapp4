@@ -15,6 +15,8 @@ import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_staffSend.addStaffSend.SelectAcActivity_pt;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.cj.ac_staffSend.staffDetail.adapter.StaffDetailAdapter_pt;
+import com.example.choujiang.cj.utils.BitmapUtil;
+import com.example.choujiang.cj.utils.DisplayMetricsUtil;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -187,6 +189,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
                 iv_qr_bottom.setVisibility(View.VISIBLE);
             }
         });
+        popWin_pt.setQr(BitmapUtil.createQrCode(userId + "", DisplayMetricsUtil.dip2px(context, 190), DisplayMetricsUtil.dip2px(context, 190)));
     }
 
     @Override

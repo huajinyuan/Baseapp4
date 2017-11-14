@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.choujiang.R;
 import com.example.choujiang.cj.ac_acSetting.m.MyBitmapUtil;
 import com.example.choujiang.cj.ac_acSetting.m.QiniuToKen;
+import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
@@ -66,6 +67,8 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     EditText et_remark;
     ImageView iv_ac;
     String sdcardPath;
+
+    String name, beginTime, endTime, cjNum, shareGetNum, remark;
 
     @Override
     protected int getLayoutId() {
@@ -142,7 +145,6 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name, beginTime, endTime, cjNum, shareGetNum, remark;
                 name = et_name.getText().toString().trim();
                 beginTime = et_beginTime.getText().toString().trim();
                 endTime = et_endTime.getText().toString().trim();
@@ -155,20 +157,11 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 } else if (imgUrl == null) {
                     Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
                 } else {
-                    CreateAcActivity_cj.instance.data.name = name;
-                    CreateAcActivity_cj.instance.data.beginTime = beginTime;
-                    CreateAcActivity_cj.instance.data.endTime = endTime;
-                    CreateAcActivity_cj.instance.data.count = Integer.parseInt(cjNum);
-                    CreateAcActivity_cj.instance.data.shareCount = Integer.parseInt(shareGetNum);
-                    CreateAcActivity_cj.instance.data.remarks = remark;
-                    CreateAcActivity_cj.instance.data.imgUrl = imgUrl;
-                    CreateAcActivity_cj.instance.setData();
                     if (CreateAcActivity_cj.instance.data.id == null) {
-                        CreateAcActivity_cj.instance.addAc();
+                        addAc();
                     } else {
-                        CreateAcActivity_cj.instance.editAc();
+                        editAc();
                     }
-                    finish();
                 }
             }
         });
@@ -355,6 +348,59 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             @Override
             public void onClick(View view) {
                 dialog_date.dismiss();
+            }
+        });
+    }
+
+    void addAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, beginTime, endTime, cjNum, shareGetNum, "0", remark), new Subscriber<Response<Activity_cj>>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(Response<Activity_cj> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.id = arrayListResponse.data.id;
+                    CreateAcActivity_cj.instance.getData();
+                    finish();
+                } else {
+                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+    void editAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, beginTime, endTime, cjNum, shareGetNum, "0", remark, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.getData();
+                    finish();
+                } else {
+                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

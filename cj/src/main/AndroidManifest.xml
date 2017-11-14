@@ -79,6 +79,7 @@
         <activity android:name=".cj.ac_acSetting.ac_createAc.AwardListActivity_cj" />
         <activity android:name=".cj.ac_memberget.QrCodeActivity" />
         <activity android:name=".cj.ac_acSetting.AcInfoActivityNew_cj" />
+        <activity android:name=".cj.ac_cjbb.SearchActivity_cj" />
     </application>
 
 </manifest>

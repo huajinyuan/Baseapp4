@@ -1,6 +1,7 @@
 package com.example.choujiang.cj.ac_cjbb;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -97,10 +98,10 @@ public class CjHistoryActivity extends BaseActivity<CjHistoryPresenter> {
                 finish();
             }
         });
-        findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context, SearchActivity_cj.class));
             }
         });
     }

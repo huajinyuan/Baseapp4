@@ -87,7 +87,6 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
 
         getPermissions(this);
 
-
     }
 
     @Override

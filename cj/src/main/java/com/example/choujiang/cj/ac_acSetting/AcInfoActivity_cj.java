@@ -93,7 +93,7 @@ public class AcInfoActivity_cj extends BaseActivity<AcInfoPresenter_cj> {
                 setRv_winHistory(data.awardDetails);
             }
             tv_name.setText(data.name);
-            tv_tip.setText(data.remarks);
+            tv_tip.setText("说明：" + data.remarks);
             tv_available.setText("时间：" + data.beginTime + "-" + data.endTime);
 
             //检查活动状态

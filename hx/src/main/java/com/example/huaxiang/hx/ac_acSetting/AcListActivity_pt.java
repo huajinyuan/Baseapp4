@@ -152,6 +152,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                swip_refresh.setRefreshing(false);
             }
 
             @Override

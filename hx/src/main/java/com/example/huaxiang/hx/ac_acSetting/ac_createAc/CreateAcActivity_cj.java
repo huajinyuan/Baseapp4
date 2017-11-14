@@ -268,49 +268,6 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         });
     }
 
-    void addAc(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, data.name, data.imgUrl, data.videoUrl, data.beginTime, data.endTime, data.money + "", data.num + "", data.saleNum + "", data.replaceTime + "", data.carCheck), new Subscriber<Response<ActivityDetail_cj>>() {
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
-            }
-
-            @Override
-            public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
-                if (arrayListResponse.data != null) {
-                    data.id = arrayListResponse.data.id;
-                    id = arrayListResponse.data.id;
-                    Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    void editAc(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, data.name, data.imgUrl, data.videoUrl, data.beginTime, data.endTime, data.money + "", data.num + "", data.saleNum + "", data.replaceTime + "", data.carCheck, data.id), new Subscriber<Response>() {
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
-            }
-
-            @Override
-            public void onNext(Response arrayListResponse) {
-                if (arrayListResponse.code == 0) {
-                    Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
     @Override
     protected void onDestroy() {
         instance = null;

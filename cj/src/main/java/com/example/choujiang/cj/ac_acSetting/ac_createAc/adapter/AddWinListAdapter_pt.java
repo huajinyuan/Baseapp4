@@ -2,15 +2,14 @@ package com.example.choujiang.cj.ac_acSetting.ac_createAc.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.choujiang.R;
+import com.example.choujiang.cj.ac_acSetting.ac_createAc.AddWinListActivity_pt;
 import com.example.choujiang.cj.ac_cjbb.m.CjHistory;
 
 import java.util.ArrayList;
@@ -47,11 +46,14 @@ public class AddWinListAdapter_pt extends RecyclerView.Adapter<AddWinListAdapter
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("aaa", position + "");
-                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-                data.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, data.size() - position);
+//                Log.e("aaa", position + "");
+//                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+//                data.remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position, data.size() - position);
+
+                AddWinListActivity_pt.instance.deleteItem(cjHistory.id);
+
             }
         });
     }

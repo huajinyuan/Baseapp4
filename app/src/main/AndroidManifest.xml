@@ -38,7 +38,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.zt.pintuan.pt.PtIndextActivity">
+        <activity android:name=".pt.LoginActivity_pt">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,6 +52,7 @@
         <activity android:name="com.zt.pintuan.rxpicture.ui.RxCropActivity" />
 
         <!--拼团-->
+        <activity android:name=".pt.MainActivity_pt" />
         <activity android:name="com.zt.pintuan.pt.ac_ptbb.AcBbActivity_pt" />
         <activity android:name="com.zt.pintuan.pt.ac_ptbb.StaffRankingActivity_pt" />
         <activity android:name="com.zt.pintuan.pt.ac_memberget.MemberGetActivity" />
@@ -75,6 +76,8 @@
         <activity android:name="com.zt.pintuan.pt.ac_ptList.ac_createAc.CreateAcActivity_pt" />
         <activity android:name="com.zt.pintuan.pt.ac_ptList.ac_createAc.CreateAddGoodsActivity_pt" />
         <activity android:name="com.zt.pintuan.pt.ac_memberget.QrCodeActivity" />
+        <activity android:name=".pt.ac_ptbb.TichengDetailActivity" />
+        <activity android:name=".pt.ac_ptbb.PdDetailActivity" />
     </application>
 
 </manifest>

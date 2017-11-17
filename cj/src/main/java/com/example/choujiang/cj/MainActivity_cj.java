@@ -112,7 +112,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         findViewById(R.id.iv_topbar_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                finish();
             }
         });
         findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
@@ -170,6 +170,14 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
         tv_totalShareCount.setText(report_cj.totalShareCount + "");
         tv_totalCount.setText(report_cj.totalCount + "");
         tv_totalAwardCount.setText(report_cj.totalAwardCount + "");
+    }
+
+    void refresh(){
+        tv_totalManCount.setText("0");
+        tv_totalShareCount.setText("0");
+        tv_totalCount.setText("0");
+        tv_totalAwardCount.setText("0");
+        getReport();
     }
 
     void login(){
@@ -271,7 +279,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             public void select(int position) {
                 if (requestStatus != position) {
                     requestStatus = position;
-                    getReport();
+                    refresh();
                 }
                 dialog.dismiss();
             }

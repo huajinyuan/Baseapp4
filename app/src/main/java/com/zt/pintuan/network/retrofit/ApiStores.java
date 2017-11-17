@@ -3,8 +3,10 @@ package com.zt.pintuan.network.retrofit;
 
 import com.zt.pintuan.model.Response;
 import com.zt.pintuan.pt.ac_ptList.m.QiniuToKen;
+import com.zt.pintuan.pt.ac_ptbb.m.PdDetail;
 import com.zt.pintuan.pt.ac_ptbb.m.PinDan_pt;
 import com.zt.pintuan.pt.ac_ptbb.m.PinTuan_pt;
+import com.zt.pintuan.pt.ac_ptbb.m.TichengDetail;
 import com.zt.pintuan.pt.ac_staffSend.m.Activity_pt;
 import com.zt.pintuan.pt.ac_staffSend.m.StaffSend_pt;
 import com.zt.pintuan.pt.ac_staffSend.m.Staff_pt;
@@ -86,13 +88,29 @@ public interface ApiStores {
     @GET("api/pt/ptOrderDetail/exChangeRecord")
     Observable<Response<ArrayList<PinDan_pt>>> getExchangeList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
-    //拼单明细
+    //拼单明细 扫二维码
     @GET("api/pt/ptOrderDetail/{detailId}")
     Observable<Response<PinDan_pt>> getPinDanDetail(@Header("authorization") String authorization, @Path("detailId") String detailId);
 
     //拼单兑换
     @POST("api/pt/ptOrderDetail/exchange")
     Observable<Response> PinDanExchange(@Header("authorization") String authorization, @Query("detailId") String detailId, @Query("redeemCode") String redeemCode);
+
+    //拼单退款
+    @POST("api/pt/ptGroupOrder/refund")
+    Observable<Response> refundPinDan(@Header("authorization") String authorization, @Query("id") String id);
+
+    //拼团按钮
+    @POST("api/pt/ptGroupOrder/group")
+    Observable<Response> pintuan(@Header("authorization") String authorization, @Query("id") String id);
+
+    //拼团员工提成明细
+    @GET("api/pt/ptStaffCommission/list")
+    Observable<Response<ArrayList<TichengDetail>>> getTichengList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    //拼单明细 扫二维码
+    @GET("api/pt/ptAppGroupOrder/detail")
+    Observable<Response<PdDetail>> getPdDetail(@Header("authorization") String authorization, @Query("orderNumber") String orderNumber);
 
 
 }

@@ -10,9 +10,11 @@ public class Member_pt implements Serializable {
     public String memberId;
     public String imgUrl;
     public String name;
-    public String ptDate;
+    public long ptDate;
     public String key;
     public String mobile;
     public String id;
     public String isNewRecord;
+
+    public String redeemCode;
 }

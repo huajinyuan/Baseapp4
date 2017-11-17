@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_staffSend.adapter.StaffSendAdapter_pt;
@@ -27,6 +28,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(StaffSendPresenter_pt.class)
 public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
+    public static StaffSendActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -49,6 +51,7 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -157,6 +160,37 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
                 }
             }
         });
+    }
+
+    public void deleteItem(String staffId){
+        HttpMethods.start(HttpMethods.getInstance().demoService.deleteStaffSend(token, staffId), new Subscriber<Response>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                canGet = false;
+                swip_refresh.setRefreshing(true);
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+                swip_refresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                swip_refresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code==0) {
+                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+                    refresh();
+                }
+            }
+        });
 
     }
 
@@ -166,5 +200,9 @@ public class StaffSendActivity_pt extends BaseActivity<StaffSendPresenter_pt> {
         getData();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
+    }
 }

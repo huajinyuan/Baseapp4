@@ -10,6 +10,8 @@ import java.util.ArrayList;
  */
 
 public class PinTuan_pt implements Serializable {
+    public boolean checked;
+
     public String id;
     public String isNewRecord;
     public String createDate;
@@ -21,9 +23,9 @@ public class PinTuan_pt implements Serializable {
     public String goodId;
 
     public String orderNumber;
-    public String status;//1待成团 2已成团 3失败 ,
-    public String count;
-    public String groupNum;
+    public int status;//1待成团 2已成团 3失败 ,
+    public int count;//拼团人数
+    public int groupNum;//已参团人数
     public String actualCount;
     public String totalPrice;
 

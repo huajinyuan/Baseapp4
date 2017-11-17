@@ -10,6 +10,7 @@ import com.example.choujiang.cj.ac_staffSend.m.AccountDetail_cj;
 import com.example.choujiang.cj.ac_staffSend.m.Activity_cj;
 import com.example.choujiang.cj.ac_staffSend.m.StaffSend_cj;
 import com.example.choujiang.cj.ac_staffSend.m.Staff_cj;
+import com.example.choujiang.cj.ac_staffSend.m.Store_cj;
 import com.example.choujiang.cj.ac_withdrawSetting.m.WithdrawSetting;
 import com.example.choujiang.cj.m.LoginData_pt;
 import com.example.choujiang.cj.m.Report_cj;
@@ -76,7 +77,11 @@ public interface ApiStores {
 
     //员工列表
     @GET("api/common/staff/list")
-    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("storeId") String storeId);
+
+    //门店列表
+    @GET("api/common/store/list")
+    Observable<Response<ArrayList<Store_cj>>> getStore_cj(@Header("authorization") String authorization);
 
     //账户明细
     @GET("api/common/staffAccount/{staffId}")
@@ -98,6 +103,10 @@ public interface ApiStores {
     @POST("api/cj/cjActivityStaff/save")
     Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("actIds") String actIds, @Query("staffId") String staffId);
 
+    //删除员工发送
+    @GET("api/cj/cjActivityStaff/delete")
+    Observable<Response> deleteStaffSend(@Header("authorization") String authorization, @Query("staffId") String staffId);
+
     //抽奖兑换记录
     @GET("api/cj/cjAwardDetail/exChangeRecord")
     Observable<Response<ArrayList<CjHistory>>> getMembergetList_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
@@ -117,6 +126,10 @@ public interface ApiStores {
     //新增中奖记录
     @POST("api/cj/cjAwardDetail/saveRecord")
     Observable<Response> saveWinHistory(@Header("authorization") String authorization, @Query("actId") String actId, @Query("mobile") String mobile, @Query("awardId") String awardId);
+
+    //删除中奖记录
+    @GET("api/cj/cjAwardDetail/delete")
+    Observable<Response> deleteWinHistory(@Header("authorization") String authorization, @Query("detailId") String detailId);
 
     //创建活动
     @POST("api/cj/cjActivity/save")

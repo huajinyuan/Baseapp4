@@ -138,30 +138,32 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 10, requestStatus), new Subscriber<Response<ArrayList<Activity_cj>>>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-                canGet = false;
-            }
+        if (userId != null) {
+            HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 10, requestStatus), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    canGet = false;
+                }
 
-            @Override
-            public void onCompleted() {
-                Log.e("aaa", "onCompleted");
-            }
+                @Override
+                public void onCompleted() {
+                    Log.e("aaa", "onCompleted");
+                }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
-            }
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("aaa", "onError" + e.getMessage());
+                }
 
-            @Override
-            public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
-            }
-        });
+                @Override
+                public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
+            });
+        }
     }
 
     void saveData(String userId, String activityIds) {
@@ -195,6 +197,9 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     }
 
     void refresh(){
+        pinDan_pts.clear();
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
         adapter = null;
         page = 1;
         getData();

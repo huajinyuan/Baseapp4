@@ -15,6 +15,7 @@
         android:padding="10dp"
         android:background="@drawable/shape_radius5_white">
         <LinearLayout
+            android:id="@+id/ll_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -24,7 +25,8 @@
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:background="@drawable/selector_cb"
-                android:button="@null"/>
+                android:button="@null"
+                android:clickable="false"/>
             <TextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
@@ -139,15 +141,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:gravity="right">
+            android:gravity="center_vertical">
+            <LinearLayout
+                android:id="@+id/ll_needNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="还差 "
+                    android:textColor="@color/color_black"
+                    android:textSize="13sp"/>
+                <TextView
+                    android:id="@+id/tv_needNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textColor="@color/color_appRed"
+                    android:textSize="13sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" 人拼团"
+                    android:textColor="@color/color_black"
+                    android:textSize="13sp"/>
+            </LinearLayout>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="14dp"
-                android:src="@mipmap/icon_arrow_grey_right_pt"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="12sp" />
+                android:src="@mipmap/icon_arrow_grey_right_pt"/>
         </LinearLayout>
     </LinearLayout>
 

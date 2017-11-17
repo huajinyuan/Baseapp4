@@ -13,6 +13,7 @@ import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.hx.ac_staffSend.m.Activity_cj;
 import com.example.huaxiang.hx.ac_staffSend.m.StaffSend_hx;
 import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
+import com.example.huaxiang.hx.ac_staffSend.m.Store_cj;
 import com.example.huaxiang.hx.ac_withdrawSetting.m.AccountDetail_cj;
 import com.example.huaxiang.hx.ac_withdrawSetting.m.WithdrawSetting;
 import com.example.huaxiang.hx.m.LoginData_pt;
@@ -58,7 +59,11 @@ public interface ApiStores {
 
     //员工列表
     @GET("api/common/staff/list")
-    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    Observable<Response<ArrayList<Staff_cj>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("storeId") String storeId);
+
+    //门店列表
+    @GET("api/common/store/list")
+    Observable<Response<ArrayList<Store_cj>>> getStore_cj(@Header("authorization") String authorization);
 
     //活动列表 状态 0全部 1可用 2暂停 3作废
     @GET("api/hx/hxActivity/list")
@@ -67,6 +72,10 @@ public interface ApiStores {
     //提交员工发送
     @POST("api/hx/hxActivityStaff/save")
     Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("staffId") String staffId, @Query("actIds") String actIds);
+
+    //删除员工发送
+    @GET("api/hx/hxActivityStaff/delete")
+    Observable<Response> deleteStaffSend(@Header("authorization") String authorization, @Query("staffId") String staffId);
 
     //账户明细
     @GET("api/common/staffAccount/{staffId}")
@@ -171,6 +180,10 @@ public interface ApiStores {
     //新增中奖记录
     @POST("api/hx/hxAwardDetail/saveRecord")
     Observable<Response> addWinHistory(@Header("authorization") String authorization, @Query("actId") String actId, @Query("mobile") String mobile, @Query("awardId") String awardId);
+
+    //删除中奖记录
+    @GET("api/hx/hxAwardDetail/delete")
+    Observable<Response> deleteWinHistory(@Header("authorization") String authorization, @Query("detailId") String detailId);
 
     //问卷调查列表
     @GET("api/hx/hxTopic/list")

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.adapter.AddWinListAdapter_pt;
@@ -113,6 +114,34 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
                 }
             }
         });
+    }
+
+    public void deleteItem(String detailId){
+        HttpMethods.start(HttpMethods.getInstance().demoService.deleteWinHistory(token, detailId), new Subscriber<Response>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code==0) {
+                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+                    getData();
+                }
+            }
+        });
+
     }
 
     @Override

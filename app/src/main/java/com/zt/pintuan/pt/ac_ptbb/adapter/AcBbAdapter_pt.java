@@ -48,6 +48,7 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
         holder.tv_totalNum.setText(activity_pt.groupSize + "");
         holder.tv_succeed.setText(activity_pt.cliqueNumber + "");
         holder.tv_inProgress.setText(activity_pt.spellTogether + "");
+        holder.tv_status.setBackgroundResource(activity_pt.status == 1 ? R.drawable.shape_radius3_appblue : R.drawable.shape_radius3_a1);
 
         holder.tv_staffRanking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +100,7 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
         TextView tv_succeed;
         TextView tv_inProgress;
         TextView tv_staffRanking;
+        TextView tv_status;
 
         LinearLayout ll_money;
         LinearLayout ll_ptNum;
@@ -113,6 +115,7 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
             tv_succeed = (TextView) itemView.findViewById(R.id.tv_succeed);
             tv_inProgress = (TextView) itemView.findViewById(R.id.tv_inProgress);
             tv_staffRanking = (TextView) itemView.findViewById(R.id.tv_staffRanking);
+            tv_status = (TextView) itemView.findViewById(R.id.tv_status);
 
             ll_money = (LinearLayout) itemView.findViewById(R.id.ll_money);
             ll_ptNum = (LinearLayout) itemView.findViewById(R.id.ll_ptNum);

@@ -1,6 +1,7 @@
 package com.example.huaxiang.hx.ac_bb;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class TichengDetailActivity extends BaseActivity<TichengDetailPresenter> 
     ArrayList<TichengDetail> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
+    SwipeRefreshLayout swip_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -56,6 +58,15 @@ public class TichengDetailActivity extends BaseActivity<TichengDetailPresenter> 
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
+
+        swip_refresh = findView(R.id.swip_refresh);
+        swip_refresh.setColorSchemeResources(R.color.colorAppRed, R.color.colorMyGreen, R.color.colorMyBlue);
+        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
     }
 
@@ -111,16 +122,19 @@ public class TichengDetailActivity extends BaseActivity<TichengDetailPresenter> 
             public void onStart() {
                 super.onStart();
                 canGet = false;
+                swip_refresh.setRefreshing(true);
             }
 
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
@@ -132,7 +146,15 @@ public class TichengDetailActivity extends BaseActivity<TichengDetailPresenter> 
                 }
             }
         });
+    }
 
+    void refresh(){
+        pinDan_pts.clear();
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        adapter = null;
+        page = 1;
+        getData();
     }
 
 }

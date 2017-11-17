@@ -361,7 +361,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
+                Log.e("aaa", "onError1" + e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
@@ -388,7 +388,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("aaa", "onError" + e.getMessage());
+                Log.e("aaa", "onError2" + e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 

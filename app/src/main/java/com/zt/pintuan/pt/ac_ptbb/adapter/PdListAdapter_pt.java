@@ -21,6 +21,8 @@ public class PdListAdapter_pt extends RecyclerView.Adapter<PdListAdapter_pt.Anch
     private Context context;
     LayoutInflater layoutInflater;
 
+    public int checkedPosition = -1;
+
     public PdListAdapter_pt(Context mContext, ArrayList<PinDan_pt> mData) {
         data = mData;
         context = mContext;
@@ -45,6 +47,7 @@ public class PdListAdapter_pt extends RecyclerView.Adapter<PdListAdapter_pt.Anch
         holder.tv_price.setText("￥" + pinDan_pt.price);
         holder.tv_leader.setText(pinDan_pt.member.name + "[" + pinDan_pt.member.mobile + "]");
         holder.tv_payType.setText(pinDan_pt.type.equals("1") ? "微信支付" : "会员支付");
+        holder.cb_check.setChecked(pinDan_pt.checked);
 
         switch (pinDan_pt.status) {
             case "1":
@@ -68,9 +71,13 @@ public class PdListAdapter_pt extends RecyclerView.Adapter<PdListAdapter_pt.Anch
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                clearCheck();
+                pinDan_pt.checked = true;
+                checkedPosition = position;
+                notifyDataSetChanged();
             }
         });
+
     }
 
 
@@ -104,6 +111,12 @@ public class PdListAdapter_pt extends RecyclerView.Adapter<PdListAdapter_pt.Anch
             tv_price = (TextView) itemView.findViewById(R.id.tv_price);
             tv_leader = (TextView) itemView.findViewById(R.id.tv_leader);
             tv_payType = (TextView) itemView.findViewById(R.id.tv_payType);
+        }
+    }
+
+    void clearCheck(){
+        for (PinDan_pt pinDan_pt : data) {
+            pinDan_pt.checked = false;
         }
     }
 

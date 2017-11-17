@@ -63,6 +63,7 @@ public class UiUtil {
                     .placeholder(loadingRes)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .error(errorRes)
+                    .dontAnimate()
                     .into(imageView);
         } catch (Exception e) {
         }

@@ -24,9 +24,9 @@ public class Activity_pt implements Serializable {
     public String endTime;
     public int num;
     public String saleNum;
-    public String surplus;
+    public int surplus;
     public String saleRemarks;
-    public String status;
+    public int status;
     public Goods_pt ptGood;
 
     public double drivingTurnover;

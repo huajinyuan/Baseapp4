@@ -114,7 +114,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         findViewById(R.id.iv_topbar_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                finish();
             }
         });
         findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
@@ -196,6 +196,14 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         } else {
             tv_conversionCount.setText(report_hx.conversionCount + "");
         }
+    }
+
+    void refresh(){
+        tv_totalManCount.setText("0");
+        tv_totalReplaceCount.setText("0");
+        tv_intentionCount.setText("0");
+        tv_conversionCount.setText("0");
+        getReport();
     }
 
     void login() {
@@ -298,7 +306,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             public void select(int position) {
                 if (requestStatus != position) {
                     requestStatus = position;
-                    getReport();
+                    refresh();
                 }
                 dialog.dismiss();
             }

@@ -11,7 +11,7 @@ import com.zt.pintuan.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class PtIndextPresenter extends BasePresenter<PtIndextActivity> {
+public class MainPresenter_pt extends BasePresenter<MainActivity_pt> {
 
     @Override
     protected void onCreate(Bundle savedState) {

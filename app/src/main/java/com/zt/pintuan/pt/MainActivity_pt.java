@@ -1,34 +1,51 @@
 package com.zt.pintuan.pt;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zt.pintuan.R;
 import com.zt.pintuan.model.Response;
 import com.zt.pintuan.module.base.BaseActivity;
 import com.zt.pintuan.network.retrofit.HttpMethods;
-import com.zt.pintuan.pt.ac_ptbb.AcBbActivity_pt;
-import com.zt.pintuan.pt.m.LoginData_pt;
-import com.zt.pintuan.pt.m.PtReport_pt;
 import com.zt.pintuan.pt.ac_memberget.MemberGetActivity;
-import com.zt.pintuan.pt.ac_ptbb.StaffRankingActivity_pt;
-import com.zt.pintuan.pt.ac_ptbb.PtListActivity_pt;
 import com.zt.pintuan.pt.ac_ptList.AcListActivity_pt;
+import com.zt.pintuan.pt.ac_ptbb.AcBbActivity_pt;
+import com.zt.pintuan.pt.ac_ptbb.PtListActivity_pt;
+import com.zt.pintuan.pt.ac_ptbb.StaffRankingActivity_pt;
 import com.zt.pintuan.pt.ac_staffSend.StaffSendActivity_pt;
 import com.zt.pintuan.pt.ac_withdrawSetting.SettingActivity_pt;
+import com.zt.pintuan.pt.m.LoginData_pt;
+import com.zt.pintuan.pt.m.PtReport_pt;
+import com.zt.pintuan.pt.utils.DisplayMetricsUtil;
+import com.zt.pintuan.pt.utils.RvDialogSelectAdapter;
 import com.zt.pintuan.utils.ACache;
 import com.zt.pintuan.utils.ACacheKey;
 import com.zt.pintuan.utils.AppContext;
 
+import java.util.ArrayList;
+
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-@RequiresPresenter(PtIndextPresenter.class)
-public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
+@RequiresPresenter(MainPresenter_pt.class)
+public class MainActivity_pt extends BaseActivity<MainPresenter_pt> {
     Context context;
     ACache aCache;
     public String token;
@@ -40,6 +57,10 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
     TextView tv_groupSize;
     TextView tv_cliqueNumber;
     TextView tv_spellTogether;
+
+    int requestStatus;
+
+    String username, password;
 
     @Override
     protected int getLayoutId() {
@@ -64,31 +85,25 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
         tv_cliqueNumber = (TextView) findViewById(R.id.tv_cliqueNumber);
         tv_spellTogether = (TextView) findViewById(R.id.tv_spellTogether);
 
-//        ResponseHandle.IRetryListener listener = new ResponseHandle.IRetryListener() {
-//            @Override
-//            public Func1<Observable<? extends Throwable>, Observable<?>> retry() {
-//                Log.e("=========","==============");
-//                return null;
-//            }
-//        };
-//        ResponseHandle.setRetryListener(listener);
-
-
+        getPermissions(this);
     }
 
     @Override
     protected void initData() {
-        if (aCache.getAsString(ACacheKey.TOKEN) == null) {
+        username = getIntent().getStringExtra("username");
+        password = getIntent().getStringExtra("password");
+
+        if (password != null) {
             login();
         } else {
-            token = aCache.getAsString(ACacheKey.TOKEN);
-            Log.e("aaa", token);
-            getReport();
+            if (aCache.getAsString(ACacheKey.TOKEN) == null) {
+                Toast.makeText(context, "没有登录记录", Toast.LENGTH_SHORT).show();
+            } else {
+                token = aCache.getAsString(ACacheKey.TOKEN);
+                Log.e("aaa", token);
+                getReport();
+            }
         }
-    }
-
-    void getReport(){
-        getReport(0);
     }
 
     @Override
@@ -96,7 +111,13 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
         findViewById(R.id.iv_topbar_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                finish();
+            }
+        });
+        findViewById(R.id.iv_topbar_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogSelect();
             }
         });
         findViewById(R.id.ll_pt_acList).setOnClickListener(new View.OnClickListener() {
@@ -151,7 +172,7 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
     }
 
     void login(){
-        HttpMethods.getInstance().login("shanghu1", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
+        HttpMethods.getInstance().login(username, password).subscribe(new Subscriber<Response<LoginData_pt>>(){
 
             @Override
             public void onStart() {
@@ -183,8 +204,8 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
             }
         });
     }
-    void getReport(int status){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_pt(token, status), new Subscriber<Response<PtReport_pt>>() {
+    void getReport(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getReport_pt(token, requestStatus), new Subscriber<Response<PtReport_pt>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -199,12 +220,12 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
-                login();
+                Toast.makeText(context, "已在其他设备登录", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNext(Response<PtReport_pt> response) {
-                if (response.code == 0) {
+                if (response.data !=null) {
                     setReport(response.data);
                     Log.e("aaa======onNext", response.data.toString());
                 } else {
@@ -212,6 +233,82 @@ public class PtIndextActivity extends BaseActivity<PtIndextPresenter> {
                 }
             }
         });
+    }
+
+    void refresh(){
+        tv_drivingTurnover.setText("0");
+        tv_groupSize.setText("0");
+        tv_cliqueNumber.setText("0");
+        tv_spellTogether.setText("0");
+        getReport();
+    }
+
+    void showDialogSelect() {
+        final AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogSelect);
+        dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_select, null);
+        dialog.setContentView(view_dialog);
+
+        //->
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = DisplayMetricsUtil.dip2px(context, 50);
+        params.width = DisplayMetricsUtil.getScreenWidth(context);
+        window.setAttributes(params);
+        //->
+
+        RecyclerView rv_dialog = (RecyclerView) view_dialog.findViewById(R.id.rv_dialog_select);
+        LinearLayoutManager selectLayoutManager = new LinearLayoutManager(context);
+        rv_dialog.setLayoutManager(selectLayoutManager);
+        ArrayList<String> selectData = new ArrayList<>();
+        selectData.add("全部");
+        selectData.add("本日");
+        selectData.add("本月");
+        selectData.add("本年");
+        RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
+        rv_dialog.setAdapter(selectAdapter);
+
+        selectAdapter.setSelectPosition(requestStatus);
+        selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
+            @Override
+            public void select(int position) {
+                if (requestStatus != position) {
+                    requestStatus = position;
+                    refresh();
+                }
+                dialog.dismiss();
+            }
+        });
+    }
+
+    void getPermissions(Activity mActivity){
+        String[] PERMISSIONS_STORAGE = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.CAMERA"};
+        if (Build.VERSION.SDK_INT >= 23) {
+            Log.e("permission", ">23");
+            try {
+                //检测是否有写的权限
+                int permissionCAMERA = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+                int permissionSD = ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permissionCAMERA != PackageManager.PERMISSION_GRANTED || permissionSD != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("permission", "permissionCAMERA:" + permissionCAMERA + " " + "permissionSD:" + permissionSD);
+                    // 没有写的权限，去申请写的权限，会弹出对话框
+                    ActivityCompat.requestPermissions(mActivity, PERMISSIONS_STORAGE, 1);
+                } else {
+                    Log.e("permission", "permission 2");
+                }
+            } catch (Exception e) {
+                Log.e("permission", "permission 3" + e.toString());
+                e.printStackTrace();
+            }
+        }
     }
 
 

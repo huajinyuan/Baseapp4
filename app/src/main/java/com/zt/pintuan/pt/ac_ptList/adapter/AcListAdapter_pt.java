@@ -46,7 +46,7 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
         holder.tv_money.setText("￥" + activity_pt.ptGood.price);
         holder.tv_peopleNum.setText(activity_pt.num + "");
         holder.tv_acNum.setText(activity_pt.saleNum);
-        holder.tv_ac_status.setText(getStatus(activity_pt.status));
+        holder.tv_ac_status.setText(getStatus(activity_pt.status + ""));
 
         UiUtil.setImage(holder.iv_ac, activity_pt.imgUrl);
 

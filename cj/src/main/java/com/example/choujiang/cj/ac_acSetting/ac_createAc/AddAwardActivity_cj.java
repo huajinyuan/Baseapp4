@@ -14,6 +14,7 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     String imgUrl;
     String name, price, num, awardOdds;
 
+    Button bt_save;
     EditText et_name;
     EditText et_price;
     EditText et_num;
@@ -89,6 +91,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         et_num = (EditText) findViewById(R.id.et_num);
         et_odds = (EditText) findViewById(R.id.et_odds);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
+        bt_save = findView(R.id.bt_save);
 
         getPermissions(this);
         sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
@@ -296,13 +299,21 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     void addAward(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, CreateAcActivity_cj.instance.data.id, name, price, num, awardOdds, imgUrl), new Subscriber<Response<Award>>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override

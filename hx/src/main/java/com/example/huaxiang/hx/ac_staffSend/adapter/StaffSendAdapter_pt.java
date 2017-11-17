@@ -3,16 +3,15 @@ package com.example.huaxiang.hx.ac_staffSend.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_staffSend.StaffSendActivity_pt;
 import com.example.huaxiang.hx.ac_staffSend.m.StaffSend_hx;
 import com.example.huaxiang.hx.ac_staffSend.staffDetail.StaffDetailActivity_pt;
 
@@ -50,11 +49,13 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("aaa", position + "");
-                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-                data.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, data.size() - position);
+//                Log.e("aaa", position + "");
+//                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+//                data.remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position, data.size() - position);
+
+                StaffSendActivity_pt.instance.deleteItem(staffSend_hx.userId + "");
             }
         });
 

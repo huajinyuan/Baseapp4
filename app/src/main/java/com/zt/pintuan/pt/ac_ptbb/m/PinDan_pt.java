@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 
 public class PinDan_pt implements Serializable {
+    public boolean checked;
+
     public String id;
     public String isNewRecord;
     public String createDate;

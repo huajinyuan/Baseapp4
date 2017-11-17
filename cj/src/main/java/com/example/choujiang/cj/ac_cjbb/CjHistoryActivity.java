@@ -2,6 +2,7 @@ package com.example.choujiang.cj.ac_cjbb;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class CjHistoryActivity extends BaseActivity<CjHistoryPresenter> {
     ArrayList<CjHistory> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
+    SwipeRefreshLayout swip_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -57,6 +59,15 @@ public class CjHistoryActivity extends BaseActivity<CjHistoryPresenter> {
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_pt);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
+
+        swip_refresh = findView(R.id.swip_refresh);
+        swip_refresh.setColorSchemeResources(R.color.colorAppRed, R.color.colorMyGreen, R.color.colorMyBlue);
+        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
     }
 
@@ -79,6 +90,7 @@ public class CjHistoryActivity extends BaseActivity<CjHistoryPresenter> {
 
     void setRv(ArrayList<CjHistory> pinDans) {
         if (adapter == null) {
+            pinDan_pts.clear();
             pinDan_pts.addAll(pinDans);
             adapter = new CjHistoryAdapter(context, pinDan_pts);
             layoutManager = new LinearLayoutManager(context);
@@ -112,26 +124,40 @@ public class CjHistoryActivity extends BaseActivity<CjHistoryPresenter> {
             public void onStart() {
                 super.onStart();
                 canGet = false;
+                swip_refresh.setRefreshing(true);
             }
 
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
             public void onNext(Response<ArrayList<CjHistory>> arrayListResponse) {
-                setRv(arrayListResponse.data);
-                canGet = true;
-                page++;
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
-
     }
+
+    void refresh(){
+        pinDan_pts.clear();
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        adapter = null;
+        page = 1;
+        getData();
+    }
+
 
 }

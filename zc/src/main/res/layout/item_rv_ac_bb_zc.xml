@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="带动营业额："
+                android:text="营业额："
                 android:textColor="@color/color_text_grey"
                 android:textSize="13sp" />
             <TextView
@@ -79,7 +79,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="拼团总人数"
+                    android:text="总单数"
                     android:textColor="@color/color_text_grey"
                     android:textSize="13sp" />
                 <TextView
@@ -102,7 +102,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已成功拼团"
+                    android:text="已下单"
                     android:textColor="@color/color_text_grey"
                     android:textSize="13sp" />
                 <TextView
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="拼团进行中"
+                    android:text="待下单"
                     android:textColor="@color/color_text_grey"
                     android:textSize="13sp" />
                 <TextView

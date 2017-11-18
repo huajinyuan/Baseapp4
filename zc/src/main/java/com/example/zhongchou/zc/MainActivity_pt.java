@@ -165,10 +165,10 @@ public class MainActivity_pt extends BaseActivity<MainPresenter_pt> {
     }
 
     void setReport(PtReport_pt ptReport_pt) {
-        tv_drivingTurnover.setText(ptReport_pt.getDrivingTurnover() + "");
-        tv_groupSize.setText(ptReport_pt.getGroupSize() + "");
-        tv_cliqueNumber.setText(ptReport_pt.getCliqueNumber() + "");
-        tv_spellTogether.setText(ptReport_pt.getSpellTogether() + "");
+        tv_drivingTurnover.setText(ptReport_pt.drivingTurnover + "");
+        tv_groupSize.setText(ptReport_pt.orderCount + "");
+        tv_cliqueNumber.setText(ptReport_pt.completedCount + "");
+        tv_spellTogether.setText(ptReport_pt.awaitCount + "");
     }
 
     void login(){

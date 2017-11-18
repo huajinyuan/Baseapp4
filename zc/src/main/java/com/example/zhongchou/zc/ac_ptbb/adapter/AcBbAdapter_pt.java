@@ -34,7 +34,7 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
 
     @Override
     public AnchorHotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_bb_pt,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_ac_bb_zc,
                 parent, false);
         return new AnchorHotViewHolder(view);
     }
@@ -45,9 +45,9 @@ public class AcBbAdapter_pt extends RecyclerView.Adapter<AcBbAdapter_pt.AnchorHo
 
         holder.tv_name.setText(activity_pt.name);
         holder.tv_money.setText(activity_pt.drivingTurnover + "");
-        holder.tv_totalNum.setText(activity_pt.groupSize + "");
-        holder.tv_succeed.setText(activity_pt.cliqueNumber + "");
-        holder.tv_inProgress.setText(activity_pt.spellTogether + "");
+        holder.tv_totalNum.setText(activity_pt.orderCount + "");
+        holder.tv_succeed.setText(activity_pt.completedCount + "");
+        holder.tv_inProgress.setText(activity_pt.awaitCount + "");
         holder.tv_status.setBackgroundResource(activity_pt.status == 1 ? R.drawable.shape_radius3_appblue : R.drawable.shape_radius3_a1);
 
         holder.tv_staffRanking.setOnClickListener(new View.OnClickListener() {

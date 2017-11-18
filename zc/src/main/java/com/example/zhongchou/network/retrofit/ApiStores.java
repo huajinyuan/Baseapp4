@@ -37,9 +37,6 @@ public interface ApiStores {
     @DELETE("api/common/tokens")
     Observable<Response<LoginData_pt>> doLogout(@Query("authorization") String authorization);
 
-    //拼团汇总报表
-    @GET("api/pt/report/total/report")
-    Observable<Response<PtReport_pt>> getReport_pt(@Header("authorization") String authorization, @Query("status") int status);
 
     //拼团员工发送
     @GET("api/pt/ptActivityStaff/list")
@@ -69,9 +66,6 @@ public interface ApiStores {
     @POST("api/pt/ptActivities/state")
     Observable<Response> changeAcStatus(@Header("authorization") String authorization, @Query("actId") String actId, @Query("status") int status);
 
-    //活动报表-0全部 1本日 2本月 3本年
-    @GET("api/pt/ptActivities/report")
-    Observable<Response<ArrayList<Activity_pt>>> getAcReport_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
     //员工排行-0全部 1本日 2本月 3本年
     @GET("api/pt/ptActivities/report/staffRanking")
@@ -154,6 +148,18 @@ public interface ApiStores {
     //员工账户提现
     @POST("api/common/staffAccount/withdrawals")
     Observable<Response> accountWithDraw(@Header("authorization") String authorization, @Query("staffId") String staffId, @Query("amount") String amount);
+
+
+
+
+    //---------------------------------------------------------------------------------------------------
+    //拼团汇总报表  0全部 1本日 2本月 3本年
+    @GET("api/zc/report/total")
+    Observable<Response<PtReport_pt>> getReport_pt(@Header("authorization") String authorization, @Query("status") int status);
+
+    //活动报表-0全部 1本日 2本月 3本年
+    @GET("api/zc/report/report")
+    Observable<Response<ArrayList<Activity_pt>>> getAcReport_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
 
 }

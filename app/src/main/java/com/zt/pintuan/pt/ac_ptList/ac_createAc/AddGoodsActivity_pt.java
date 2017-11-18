@@ -46,8 +46,8 @@ import rx.Subscriber;
 
 import static com.zt.pintuan.pt.m.StringConfig.QiniuBase;
 
-@RequiresPresenter(CreateAddGoodsPresenter_pt.class)
-public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresenter_pt> {
+@RequiresPresenter(AddGoodsPresenter_pt.class)
+public class AddGoodsActivity_pt extends BaseActivity<AddGoodsPresenter_pt> {
     Context context;
     ACache aCache;
     public String token;
@@ -55,6 +55,7 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
 
+    Goods_pt goods;
     String imgUrl;
 
     EditText et_name;
@@ -99,8 +100,13 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        imgUrl = getIntent().getStringExtra("imgUrl");
+        goods = (Goods_pt) getIntent().getSerializableExtra("goods");
+        if(goods!=null)
+            imgUrl = goods.imgUrl;
 
+        setData();
+    }
+    void setData(){
         if (imgUrl != null) {
             String[] imgs = imgUrl.split(",");
             if (imgs.length != 0) {
@@ -111,8 +117,16 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
         }
         setRv_imgs();
 
-    }
+        if (goods != null) {
+            et_name.setText(goods.name);
+            et_name.setSelection(goods.name.length());
+            et_oldPrice.setText(goods.originalPrice);
+            et_price.setText(goods.price + "");
+            et_num.setText(goods.count + "");
+            et_url.setText(goods.videoUrl);
+        }
 
+    }
     void setRv_imgs(){
         RvImgAdapter_pt adapter = new RvImgAdapter_pt(context, list_imgs);
         adapter.setClickListener(new RvImgAdapter_pt.ClickListener() {
@@ -127,41 +141,48 @@ public class CreateAddGoodsActivity_pt extends BaseActivity<CreateAddGoodsPresen
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        imgUrl = "";
-        for (String str : list_imgs) {
-            imgUrl += str + ",";
-        }
-        if (imgUrl.length() > 0) {
-            imgUrl = imgUrl.substring(0, imgUrl.length() - 1);
-        }
-
-        String name, oldPrice, price, num;
-        name = et_name.getText().toString().trim();
-        oldPrice = et_oldPrice.getText().toString().trim();
-        price = et_price.getText().toString().trim();
-        num = et_num.getText().toString().trim();
-
-        Goods_pt goods_pt = new Goods_pt();
-        goods_pt.name = name;
-        goods_pt.originalPrice = oldPrice;
-        if(!price.isEmpty())
-            goods_pt.price = Double.parseDouble(price);
-        if(!num.isEmpty())
-            goods_pt.count = Integer.parseInt(num);
-        goods_pt.imgUrl = imgUrl;
-
-        CreateAcActivity_pt.instance.activity_pt.ptGood = goods_pt;
-        CreateAcActivity_pt.instance.setData();
-    }
-
-    @Override
     protected void setListener() {
         findViewById(R.id.iv_topbar_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imgUrl = "";
+                for (String str : list_imgs) {
+                    imgUrl += str + ",";
+                }
+                if (imgUrl.length() > 0) {
+                    imgUrl = imgUrl.substring(0, imgUrl.length() - 1);
+                }
+
+                String name, oldPrice, price, num, videoUrl;
+                name = et_name.getText().toString().trim();
+                oldPrice = et_oldPrice.getText().toString().trim();
+                price = et_price.getText().toString().trim();
+                num = et_num.getText().toString().trim();
+                videoUrl = et_url.getText().toString().trim();
+
+                if (name.isEmpty() || oldPrice.isEmpty() || price.isEmpty() || num.isEmpty()) {
+                    Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
+                } else if (imgUrl.isEmpty()) {
+                    Toast.makeText(context, "请上传商品图片", Toast.LENGTH_SHORT).show();
+                } else {
+                    price = price.equals(".") ? ".0" : price;
+
+                    CreateAcActivity_pt.instance.activity_pt.ptGood.name = name;
+                    CreateAcActivity_pt.instance.activity_pt.ptGood.originalPrice = oldPrice;
+                    CreateAcActivity_pt.instance.activity_pt.ptGood.price = Double.parseDouble(price);
+                    CreateAcActivity_pt.instance.activity_pt.ptGood.count = Integer.parseInt(num);
+                    CreateAcActivity_pt.instance.activity_pt.ptGood.videoUrl = videoUrl;
+                    CreateAcActivity_pt.instance.activity_pt.ptGood.imgUrl = imgUrl;
+                    CreateAcActivity_pt.instance.setData();
+                    finish();
+                }
             }
         });
     }

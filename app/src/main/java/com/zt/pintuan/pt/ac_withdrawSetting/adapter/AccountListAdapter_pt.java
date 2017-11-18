@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zt.pintuan.R;
+import com.zt.pintuan.pt.ac_staffSend.m.Staff_pt;
 import com.zt.pintuan.pt.ac_withdrawSetting.AccountDetailActivity_pt;
-import com.zt.pintuan.pt.ac_withdrawSetting.m.Account_pt;
 
 import java.util.ArrayList;
 
@@ -19,11 +19,11 @@ import java.util.ArrayList;
  * Created by  on 2016/9/2.
  */
 public class AccountListAdapter_pt extends RecyclerView.Adapter<AccountListAdapter_pt.AnchorHotViewHolder> {
-    private ArrayList<Account_pt> data;
+    private ArrayList<Staff_pt> data;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public AccountListAdapter_pt(Context mContext, ArrayList<Account_pt> mData) {
+    public AccountListAdapter_pt(Context mContext, ArrayList<Staff_pt> mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
@@ -39,17 +39,16 @@ public class AccountListAdapter_pt extends RecyclerView.Adapter<AccountListAdapt
 
     @Override
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
-        Account_pt account = data.get(position);
+        Staff_pt account = data.get(position);
 
         holder.tv_name.setText(account.name);
-        holder.tv_commission.setText("总提成 ￥" + account.commission);
+        holder.tv_commission.setText("总提成 ￥" + account.totalWithdrawals);
         holder.tv_balance.setText("￥" + account.balance);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, AccountDetailActivity_pt.class));
-
+                context.startActivity(new Intent(context, AccountDetailActivity_pt.class).putExtra("staff", account));
             }
         });
     }

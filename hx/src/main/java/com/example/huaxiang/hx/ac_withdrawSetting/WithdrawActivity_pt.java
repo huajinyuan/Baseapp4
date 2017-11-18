@@ -81,8 +81,19 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
             @Override
             public void onClick(View v) {
                 String money = et_money.getText().toString().trim();
-                if (!money.isEmpty()) {
-                    getData();
+                if (staff_cj != null) {
+                    if (!money.isEmpty()) {
+                        money = money.equals(".") ? ".0" : money;
+                        if (Double.parseDouble(money) > staff_cj.balance) {
+                            Toast.makeText(context, "不能大于余额", Toast.LENGTH_SHORT).show();
+                        } else if (Double.parseDouble(money) == 0) {
+                            Toast.makeText(context, "不能为0", Toast.LENGTH_SHORT).show();
+                        } else {
+                            getData();
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "未获取到员工信息", Toast.LENGTH_SHORT).show();
                 }
             }
         });

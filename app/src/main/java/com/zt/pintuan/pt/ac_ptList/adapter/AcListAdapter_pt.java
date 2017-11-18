@@ -53,7 +53,7 @@ public class AcListAdapter_pt extends RecyclerView.Adapter<AcListAdapter_pt.Anch
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, AcInfoActivity_pt.class).putExtra("ac",activity_pt));
+                context.startActivity(new Intent(context, AcInfoActivity_pt.class).putExtra("actId", activity_pt.id));
             }
         });
     }

@@ -93,7 +93,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
         findViewById(R.id.iv_camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(context, QrCodeActivity.class));
+                startActivity(new Intent(context, QrCodeActivity.class));
             }
         });
         findViewById(R.id.bt_submit).setOnClickListener(new View.OnClickListener() {

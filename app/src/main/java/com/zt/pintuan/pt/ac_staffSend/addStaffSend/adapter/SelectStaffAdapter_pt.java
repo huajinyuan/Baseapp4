@@ -22,7 +22,7 @@ public class SelectStaffAdapter_pt extends RecyclerView.Adapter<SelectStaffAdapt
     private Context context;
     LayoutInflater layoutInflater;
     int checkedPosition = 0;
-    public int userId;
+    public String userId;
 
     public SelectStaffAdapter_pt(Context mContext, ArrayList<Staff_pt> mData) {
         data = mData;

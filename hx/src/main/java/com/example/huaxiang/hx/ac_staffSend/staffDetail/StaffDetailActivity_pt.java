@@ -154,6 +154,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                swip_refresh.setRefreshing(false);
             }
 
             @Override

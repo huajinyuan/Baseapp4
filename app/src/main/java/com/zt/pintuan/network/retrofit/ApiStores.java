@@ -3,6 +3,7 @@ package com.zt.pintuan.network.retrofit;
 
 import com.zt.pintuan.model.Response;
 import com.zt.pintuan.pt.ac_ptList.m.QiniuToKen;
+import com.zt.pintuan.pt.ac_ptList.m.Store_cj;
 import com.zt.pintuan.pt.ac_ptbb.m.PdDetail;
 import com.zt.pintuan.pt.ac_ptbb.m.PinDan_pt;
 import com.zt.pintuan.pt.ac_ptbb.m.PinTuan_pt;
@@ -10,6 +11,8 @@ import com.zt.pintuan.pt.ac_ptbb.m.TichengDetail;
 import com.zt.pintuan.pt.ac_staffSend.m.Activity_pt;
 import com.zt.pintuan.pt.ac_staffSend.m.StaffSend_pt;
 import com.zt.pintuan.pt.ac_staffSend.m.Staff_pt;
+import com.zt.pintuan.pt.ac_withdrawSetting.m.AccountDetail_pt;
+import com.zt.pintuan.pt.ac_withdrawSetting.m.WithdrawSetting;
 import com.zt.pintuan.pt.m.LoginData_pt;
 import com.zt.pintuan.pt.m.PtReport_pt;
 
@@ -44,11 +47,15 @@ public interface ApiStores {
 
     //员工活动列表 状态 0全部 1可用 2暂停 3作废
     @GET("api/pt/ptActivities/list")
-    Observable<Response<ArrayList<Activity_pt>>> getStaffDetail_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") int userId);
+    Observable<Response<ArrayList<Activity_pt>>> getStaffDetail_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("userId") String userId);
 
     //活动列表 状态 0全部 1可用 2暂停 3作废
     @GET("api/pt/ptActivities/list")
     Observable<Response<ArrayList<Activity_pt>>> getAc_pt(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
+
+    //活动详情
+    @GET("api/pt/ptActivities/info")
+    Observable<Response<Activity_pt>> getAcDetail(@Header("authorization") String authorization, @Query("actId") String actId);
 
     //员工列表
     @GET("api/pt/ptActivityStaff/staff/list")
@@ -56,7 +63,7 @@ public interface ApiStores {
 
     //提交员工发送
     @POST("api/pt/ptActivityStaff/submit")
-    Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("activityIds") String activityIds, @Query("userId") int userId);
+    Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("activityIds") String activityIds, @Query("userId") String userId);
 
     //活动停用/作废 2停用 3作废
     @POST("api/pt/ptActivities/state")
@@ -111,6 +118,42 @@ public interface ApiStores {
     //拼单明细 扫二维码
     @GET("api/pt/ptAppGroupOrder/detail")
     Observable<Response<PdDetail>> getPdDetail(@Header("authorization") String authorization, @Query("orderNumber") String orderNumber);
+
+    //员工列表
+    @GET("api/common/staff/list")
+    Observable<Response<ArrayList<Staff_pt>>> getStaff_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("storeId") String storeId);
+
+    //门店列表
+    @GET("api/common/store/list")
+    Observable<Response<ArrayList<Store_cj>>> getStore_cj(@Header("authorization") String authorization);
+
+    //创建活动
+    @POST("api/pt/ptActivities/save")
+    Observable<Response> addAc(@Header("authorization") String authorization, @Query("goodName") String goodName, @Query("originalPrice") String originalPrice, @Query("price") String price, @Query("count") String count
+            , @Query("videoUrl") String videoUrl, @Query("goodImgUrl") String goodImgUrl, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime
+            , @Query("endTime") String endTime, @Query("num") String num, @Query("saleNum") String saleNum, @Query("storeId") String storeId, @Query("saleRemarks") String saleRemarks);
+
+    //修改活动
+    @POST("api/pt/ptActivities/update")
+    Observable<Response> editAc(@Header("authorization") String authorization, @Query("actId") String actId, @Query("goodName") String goodName, @Query("originalPrice") String originalPrice, @Query("price") String price, @Query("count") String count
+            , @Query("videoUrl") String videoUrl, @Query("goodImgUrl") String goodImgUrl, @Query("activityName") String activityName, @Query("activityImgUrl") String activityImgUrl, @Query("beginTime") String beginTime
+            , @Query("endTime") String endTime, @Query("num") String num, @Query("saleNum") String saleNum, @Query("storeId") String storeId, @Query("saleRemarks") String saleRemarks);
+
+    //商户配置
+    @GET("api/common/merchantConfig")
+    Observable<Response<WithdrawSetting>> getSetting(@Header("authorization") String authorization, @Query("model") String model);
+
+    //保存商户配置
+    @POST("api/common/merchantConfig/save")
+    Observable<Response> saveSetting(@Header("authorization") String authorization, @Query("model") String model, @Query("type") int type, @Query("value") int value);
+
+    //账户明细
+    @GET("api/common/staffAccount/{staffId}")
+    Observable<Response<ArrayList<AccountDetail_pt>>> getAccountDetail(@Header("authorization") String authorization, @Path("staffId") String staffId, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    //员工账户提现
+    @POST("api/common/staffAccount/withdrawals")
+    Observable<Response> accountWithDraw(@Header("authorization") String authorization, @Query("staffId") String staffId, @Query("amount") String amount);
 
 
 }

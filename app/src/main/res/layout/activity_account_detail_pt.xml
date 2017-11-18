@@ -18,6 +18,7 @@
             android:layout_height="62dp"
             android:src="@mipmap/icon_account_detail_default_pt"/>
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="张萌萌"
@@ -40,6 +41,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/tv_totalWithdraw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥1000.00"
@@ -66,6 +68,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/tv_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥590.00"

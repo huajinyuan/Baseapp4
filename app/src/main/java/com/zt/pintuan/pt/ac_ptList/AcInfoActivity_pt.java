@@ -1,9 +1,11 @@
 package com.zt.pintuan.pt.ac_ptList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,18 +14,20 @@ import com.zt.pintuan.R;
 import com.zt.pintuan.model.Response;
 import com.zt.pintuan.module.base.BaseActivity;
 import com.zt.pintuan.network.retrofit.HttpMethods;
+import com.zt.pintuan.pt.ac_ptList.ac_createAc.CreateAcActivity_pt;
 import com.zt.pintuan.pt.ac_staffSend.m.Activity_pt;
+import com.zt.pintuan.pt.utils.DisplayMetricsUtil;
 import com.zt.pintuan.pt.widget.CarouselView.CarouselView;
 import com.zt.pintuan.utils.ACache;
 import com.zt.pintuan.utils.ACacheKey;
-import com.zt.pintuan.utils.ScreenUtils;
 import com.zt.pintuan.utils.UiUtil;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
 
-@RequiresPresenter(AcListPresenter_pt.class)
+@RequiresPresenter(AcInfoPresenter_pt.class)
 public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
+    public static AcInfoActivity_pt instance;
     Context context;
     ACache aCache;
     public String token;
@@ -32,6 +36,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
     ImageView iv_topbar_right;
 
     Activity_pt activity_pt;
+    String actId;
 
     TextView tv_name;
     TextView tv_price;
@@ -42,8 +47,8 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
     TextView tv_address;
     TextView tv_availableTime;
     TextView tv_tip;
-    TextView tv_stop;
-    TextView tv_abandon;
+    TextView bt_stop;
+    TextView bt_abandon;
     CarouselView cv;
 
     @Override
@@ -53,6 +58,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -73,27 +79,37 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         tv_address = (TextView) findViewById(R.id.tv_address);
         tv_availableTime = (TextView) findViewById(R.id.tv_availableTime);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
-        tv_stop = (TextView) findViewById(R.id.tv_stop);
-        tv_abandon = (TextView) findViewById(R.id.tv_abandon);
+        bt_stop = (Button) findViewById(R.id.bt_stop);
+        bt_abandon = (Button) findViewById(R.id.bt_abandon);
         cv = (CarouselView) findViewById(R.id.cv);
 
-        cv.getLayoutParams().height = ScreenUtils.getScreenWidth();
+        cv.getLayoutParams().height = DisplayMetricsUtil.getScreenWidth(context);
     }
 
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        activity_pt = (Activity_pt) getIntent().getSerializableExtra("ac");
+        actId = getIntent().getStringExtra("actId");
 
-        if (activity_pt != null) {
-            setData();
+        if (actId != null) {
+            getData();
         }
 
     }
 
     void setData() {
+        //检查活动状态
+        if (activity_pt.status == 2) {
+            bt_stop.setClickable(false);
+            bt_stop.setText("已停用");
+        } else if (activity_pt.status == 3) {
+            bt_stop.setClickable(false);
+            bt_abandon.setClickable(false);
+            bt_abandon.setText("已作废");
+        }
+
         tv_name.setText(activity_pt.name);
-        tv_price.setText("￥" + activity_pt.ptGood.price);
+        tv_price.setText(activity_pt.ptGood.price + "");
         tv_oldPrice.setText("原价￥" + activity_pt.ptGood.originalPrice);
         tv_soldNum.setText("已售" + activity_pt.saleNum);
         tv_leftTime.setText(activity_pt.endTime);
@@ -149,61 +165,104 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-        findViewById(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (activity_pt != null) {
-                    HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, activity_pt.id, 2), new Subscriber<Response>() {
-                        @Override
-                        public void onCompleted() {
-                            Log.e("aaa", "onCompleted");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("aaa", "onError" + e.getMessage());
-                        }
-
-                        @Override
-                        public void onNext(Response arrayListResponse) {
-                            if (arrayListResponse.code == 0) {
-                                Toast.makeText(context, "已停用", Toast.LENGTH_SHORT).show();
-                                tv_stop.setClickable(false);
-                                tv_stop.setText("已停用");
-                            }
-                        }
-                    });
+                    startActivity(new Intent(context, CreateAcActivity_pt.class).putExtra("ac", activity_pt));
                 }
             }
         });
-        findViewById(R.id.tv_abandon).setOnClickListener(new View.OnClickListener() {
+        bt_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (activity_pt != null) {
-                    HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, activity_pt.id, 3), new Subscriber<Response>() {
-                        @Override
-                        public void onCompleted() {
-                            Log.e("aaa", "onCompleted");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("aaa", "onError" + e.getMessage());
-                        }
-
-                        @Override
-                        public void onNext(Response arrayListResponse) {
-                            if (arrayListResponse.code == 0) {
-                                Toast.makeText(context, "已作废", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }
-                    });
+                    stopAc();
                 }
             }
         });
+        bt_abandon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (activity_pt != null) {
+                    abandonAc();
+                }
+            }
+        });
+    }
+
+    public void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAcDetail(token, actId), new Subscriber<Response<Activity_pt>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<Activity_pt> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    activity_pt = arrayListResponse.data;
+                    setData();
+                }
+            }
+        });
+    }
+    void stopAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, activity_pt.id, 2), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "已停用", Toast.LENGTH_SHORT).show();
+                    bt_stop.setClickable(false);
+                    bt_stop.setText("已停用");
+                }
+            }
+        });
+    }
+
+    void abandonAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, activity_pt.id, 3), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "已作废", Toast.LENGTH_SHORT).show();
+                    bt_stop.setClickable(false);
+                    bt_abandon.setClickable(false);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
     }
 }

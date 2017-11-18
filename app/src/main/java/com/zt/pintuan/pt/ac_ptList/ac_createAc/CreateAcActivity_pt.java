@@ -2,14 +2,20 @@ package com.zt.pintuan.pt.ac_ptList.ac_createAc;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zt.pintuan.R;
+import com.zt.pintuan.model.Response;
 import com.zt.pintuan.module.base.BaseActivity;
+import com.zt.pintuan.network.retrofit.HttpMethods;
+import com.zt.pintuan.pt.ac_ptList.AcInfoActivity_pt;
 import com.zt.pintuan.pt.ac_staffSend.m.Activity_pt;
+import com.zt.pintuan.pt.ac_staffSend.m.Goods_pt;
 import com.zt.pintuan.pt.widget.CarouselView.CarouselView;
 import com.zt.pintuan.utils.ACache;
 import com.zt.pintuan.utils.ACacheKey;
@@ -17,6 +23,7 @@ import com.zt.pintuan.utils.ScreenUtils;
 import com.zt.pintuan.utils.UiUtil;
 
 import nucleus.factory.RequiresPresenter;
+import rx.Subscriber;
 
 @RequiresPresenter(CreateAcPresenter_pt.class)
 public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
@@ -28,7 +35,7 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
 
-    Activity_pt activity_pt;
+    public Activity_pt activity_pt;
 
     TextView tv_name;
     TextView tv_price;
@@ -39,7 +46,6 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
     TextView tv_address;
     TextView tv_availableTime;
     TextView tv_tip;
-    TextView tv_save;
     CarouselView cv;
 
     @Override
@@ -70,9 +76,7 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
         tv_address = (TextView) findViewById(R.id.tv_address);
         tv_availableTime = (TextView) findViewById(R.id.tv_availableTime);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
-        tv_save = (TextView) findViewById(R.id.tv_save);
         cv = (CarouselView) findViewById(R.id.cv);
-
         cv.getLayoutParams().height = ScreenUtils.getScreenWidth();
     }
 
@@ -89,14 +93,13 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
         cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, CreateAddGoodsActivity_pt.class));
+                startActivity(new Intent(context, AddGoodsActivity_pt.class));
             }
         });
 
-
     }
 
-    void setData(){
+    public void setData(){
         if(activity_pt.endTime!=null)
             tv_leftTime.setText(activity_pt.endTime);
         if(activity_pt.storeName!=null)
@@ -111,11 +114,11 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
             tv_soldNum.setText("已售" + activity_pt.saleNum);
 
         if (activity_pt.ptGood != null) {
-            if(activity_pt.ptGood.name!=null)
+            if (activity_pt.ptGood.name != null)
                 tv_name.setText(activity_pt.ptGood.name);
-            if(activity_pt.ptGood.price!=0)
-                tv_price.setText("￥" + activity_pt.ptGood.price);
-            if(activity_pt.ptGood.originalPrice!=null)
+            if (activity_pt.ptGood.price != 0)
+                tv_price.setText("" + activity_pt.ptGood.price);
+            if (activity_pt.ptGood.originalPrice != null)
                 tv_oldPrice.setText("原价￥" + activity_pt.ptGood.originalPrice);
             if (activity_pt.ptGood.imgUrl != null) {
                 if (!activity_pt.ptGood.imgUrl.equals("")) {
@@ -125,6 +128,8 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
                     }
                 }
             }
+        } else {
+            activity_pt.ptGood = new Goods_pt();
         }
     }
 
@@ -144,7 +149,7 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
                 iv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(context, CreateAddGoodsActivity_pt.class).putExtra("imgUrl", activity_pt.ptGood.imgUrl));
+                        startActivity(new Intent(context, AddGoodsActivity_pt.class).putExtra("goods",activity_pt.ptGood));
                     }
                 });
                 return view;
@@ -165,16 +170,95 @@ public class CreateAcActivity_pt extends BaseActivity<CreateAcPresenter_pt> {
                 finish();
             }
         });
-        findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_addAc).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context, AddAcActivity_pt.class));
             }
         });
-        findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_setStore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, StoreListActivity_pt.class));
+            }
+        });
+        findViewById(R.id.ll_setTip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, AddTipActivity.class));
+            }
+        });
+        findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (activity_pt.name == null || activity_pt.imgUrl == null || activity_pt.beginTime == null || activity_pt.endTime == null) {
+                    Toast.makeText(context, "活动信息不完整", Toast.LENGTH_SHORT).show();
+                } else if (activity_pt.ptGood.name == null || activity_pt.ptGood.originalPrice == null || activity_pt.ptGood.imgUrl == null) {
+                    Toast.makeText(context, "商品信息不完整", Toast.LENGTH_SHORT).show();
+                } else if (activity_pt.saleRemarks == null || activity_pt.saleRemarks.isEmpty()) {
+                    Toast.makeText(context, "未设置消费提示", Toast.LENGTH_SHORT).show();
+                } else if (activity_pt.storeId == null) {
+                    Toast.makeText(context, "未设置门店", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (activity_pt.id == null) {
+                        addAc();
+                    } else {
+                        editAc();
+                    }
+                }
+            }
+        });
+    }
 
+    void addAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.addAc(token, activity_pt.ptGood.name, activity_pt.ptGood.originalPrice, activity_pt.ptGood.price + "", activity_pt.ptGood.count + "",
+                activity_pt.ptGood.videoUrl, activity_pt.ptGood.imgUrl, activity_pt.name, activity_pt.imgUrl, activity_pt.beginTime, activity_pt.endTime, activity_pt.num + "",
+                activity_pt.saleNum, activity_pt.storeId, activity_pt.saleRemarks), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
+                    if (AcInfoActivity_pt.instance != null) {
+                        AcInfoActivity_pt.instance.getData();
+                    }
+                    finish();
+                }
+            }
+        });
+    }
+    void editAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.editAc(token, activity_pt.id, activity_pt.ptGood.name, activity_pt.ptGood.originalPrice, activity_pt.ptGood.price + "", activity_pt.ptGood.count + "",
+                activity_pt.ptGood.videoUrl, activity_pt.ptGood.imgUrl, activity_pt.name, activity_pt.imgUrl, activity_pt.beginTime, activity_pt.endTime, activity_pt.num + "",
+                activity_pt.saleNum, activity_pt.storeId, activity_pt.saleRemarks), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
+                    if (AcInfoActivity_pt.instance != null) {
+                        AcInfoActivity_pt.instance.getData();
+                    }
+                    finish();
+                }
             }
         });
     }

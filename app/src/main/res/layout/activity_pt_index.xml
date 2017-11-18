@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/color_appBlue">
 
-    <include layout="@layout/layout_topbar_pt" />
+    <include layout="@layout/layout_topbar_pt_mainactivity" />
 
     <ScrollView
         android:layout_width="match_parent"

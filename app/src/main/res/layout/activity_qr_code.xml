@@ -18,7 +18,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center" />
 
-        <com.example.huaxiang.hx.zxing.ViewfinderView
+        <com.zt.pintuan.pt.zxing.ViewfinderView
             android:id="@+id/viewfinder_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

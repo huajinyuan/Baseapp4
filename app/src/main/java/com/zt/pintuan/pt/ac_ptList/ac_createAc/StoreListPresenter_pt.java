@@ -1,4 +1,4 @@
-package com.zt.pintuan.pt.ac_staffSend;
+package com.zt.pintuan.pt.ac_ptList.ac_createAc;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,7 @@ import com.zt.pintuan.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class StaffPresenter_pt extends BasePresenter<StaffActivity_pt> {
+public class StoreListPresenter_pt extends BasePresenter<StoreListActivity_pt> {
 
     @Override
     protected void onCreate(Bundle savedState) {

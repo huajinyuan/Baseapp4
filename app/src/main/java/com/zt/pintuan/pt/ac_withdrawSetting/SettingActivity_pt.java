@@ -2,16 +2,24 @@ package com.zt.pintuan.pt.ac_withdrawSetting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zt.pintuan.R;
+import com.zt.pintuan.model.Response;
 import com.zt.pintuan.module.base.BaseActivity;
+import com.zt.pintuan.network.retrofit.HttpMethods;
+import com.zt.pintuan.pt.ac_withdrawSetting.m.WithdrawSetting;
 import com.zt.pintuan.utils.ACache;
+import com.zt.pintuan.utils.ACacheKey;
 
 import nucleus.factory.RequiresPresenter;
+import rx.Subscriber;
 
 @RequiresPresenter(SettingPresenter_pt.class)
 public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
@@ -24,6 +32,10 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
 
     CheckBox cb_persent;
     CheckBox cb_num;
+    EditText et1, et2;
+
+    int type = 1;
+    int value1, value2;
 
 
     @Override
@@ -47,12 +59,24 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
         cb_persent = (CheckBox) findViewById(R.id.cb_persent);
         cb_num = (CheckBox) findViewById(R.id.cb_num);
 
+        et1 = findView(R.id.et1);
+        et2 = findView(R.id.et2);
     }
 
     @Override
     protected void initData() {
+        token = aCache.getAsString(ACacheKey.TOKEN);
+
+        getData();
     }
 
+    void setData(WithdrawSetting setting) {
+        type = setting.type;
+        checkCb(type);
+        et1.setText(setting.value1 + "");
+        et1.setSelection((setting.value1 + "").length());
+        et2.setText(setting.value2 + "");
+    }
 
     @Override
     protected void setListener() {
@@ -65,15 +89,13 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
         findViewById(R.id.rl_persent).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearCB();
-                cb_persent.setChecked(true);
+                checkCb(1);
             }
         });
         findViewById(R.id.rl_num).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearCB();
-                cb_num.setChecked(true);
+                checkCb(2);
             }
         });
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
@@ -82,77 +104,86 @@ public class SettingActivity_pt extends BaseActivity<SettingPresenter_pt> {
                 startActivity(new Intent(context, AccountListActivity_pt.class));
             }
         });
-    }
+        findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et1.getText().toString().trim().equals("") || et2.getText().toString().trim().equals("")) {
+                    Toast.makeText(context, "不可为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    value1 = Integer.parseInt(et1.getText().toString().trim());
+                    value2 = Integer.parseInt(et2.getText().toString().trim());
 
-    private void clearCB(){
+                    saveSetting(type, type == 1 ? value1 : value2);
+                }
+            }
+        });
+
+    }
+    private void checkCb(int position){
         cb_persent.setChecked(false);
         cb_num.setChecked(false);
+        if (position == 1) {
+            cb_persent.setChecked(true);
+        } else {
+            cb_num.setChecked(true);
+        }
+        type = position;
     }
 
+    void getData(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getSetting(token, "1"), new Subscriber<Response<WithdrawSetting>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
 
-//    void login(){
-//        HttpMethods.getInstance().login("shanghu2", "123456").subscribe(new Subscriber<Response<LoginData_pt>>(){
-//
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                Log.e("=============", "onStart");
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                Log.e("=============", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("=======onError", e.toString() + "");
-//            }
-//
-//            @Override
-//            public void onNext(Response<LoginData_pt> logdResponse) {
-//                if (logdResponse.code==0){
-//                    aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
-//                    token = logdResponse.data.getToken();
-//                    getReport();
-//                    Log.e("aaa========Token:", token);
-//
-//                }else {
-//                    Log.e("=======onNext", logdResponse.msg);
-//                }
-//            }
-//        });
-//    }
-//    void getReport(int status){
-//        HttpMethods.getInstance().getReport(token, status).subscribe(new Subscriber<Response<PtReport_pt>>() {
-//
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                Log.e("aaa", "onStart");
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                Log.e("aaa", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("aaa======onError", e.toString() + "");
-//            }
-//
-//            @Override
-//            public void onNext(Response<PtReport_pt> response) {
-//                if (response.code == 0) {
-//                    setReport(response.data);
-//                    Log.e("aaa======onNext", response.data.toString());
-//                } else {
-//                    Log.e("aaa======onNext", response.msg);
-//                }
-//            }
-//        });
-//    }
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response<WithdrawSetting> arrayListResponse) {
+                if (arrayListResponse.data != null) {
+                    setData(arrayListResponse.data);
+                }
+            }
+        });
+
+    }
+
+    void saveSetting(int type, int value) {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveSetting(token, "1", type, value), new Subscriber<Response>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, arrayListResponse.code, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 
 }

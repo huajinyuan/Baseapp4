@@ -1,11 +1,13 @@
 package com.zt.pintuan.pt.ac_staffSend.m;
 
+import java.io.Serializable;
+
 /**
  * Created by zuoyun on 2017/10/10.
  */
 
-public class Staff_pt {
-    public int id;
+public class Staff_pt implements Serializable{
+    public String id;
     public String isNewRecord;
     public String name;
     public String loginFlag;
@@ -19,4 +21,6 @@ public class Staff_pt {
     public String drivingTurnover;
     public String loginName;
 
+    public double balance;
+    public double totalWithdrawals;
 }

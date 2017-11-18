@@ -9,7 +9,7 @@ import com.zt.pintuan.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class CreateAddGoodsPresenter_pt extends BasePresenter<CreateAddGoodsActivity_pt> {
+public class AddGoodsPresenter_pt extends BasePresenter<AddGoodsActivity_pt> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;

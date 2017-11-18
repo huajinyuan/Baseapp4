@@ -39,10 +39,10 @@ public class AccountDetailAdapter_pt extends RecyclerView.Adapter<AccountDetailA
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         AccountDetail_pt detail = data.get(position);
 
-        holder.tv_change.setText("+ ￥" + detail.change);
-        holder.tv_type.setText(detail.type);
+        holder.tv_change.setText((detail.type == 1 ? "-" : "+") + " ￥" + detail.amount);
+        holder.tv_type.setText(getType(detail.billType));
         holder.tv_balance.setText("￥" + detail.balance);
-        holder.tv_date.setText(detail.date);
+        holder.tv_date.setText(detail.createDate);
     }
 
 
@@ -68,6 +68,15 @@ public class AccountDetailAdapter_pt extends RecyclerView.Adapter<AccountDetailA
             tv_type = (TextView) itemView.findViewById(R.id.tv_type);
             tv_balance = (TextView) itemView.findViewById(R.id.tv_balance);
             tv_date = (TextView) itemView.findViewById(R.id.tv_date);
+        }
+    }
+    String getType(int i){
+        if (i == 1) {
+            return "提现";
+        } else if (i == 2) {
+            return "拼团奖励";
+        } else {
+            return "其他";
         }
     }
 }

@@ -158,9 +158,11 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
 
                 @Override
                 public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
-                    setRv(arrayListResponse.data);
-                    canGet = true;
-                    page++;
+                    if (arrayListResponse.data != null) {
+                        setRv(arrayListResponse.data);
+                        canGet = true;
+                        page++;
+                    }
                 }
             });
         }

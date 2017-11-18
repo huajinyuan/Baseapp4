@@ -69,10 +69,6 @@
         <activity android:name=".pt.ac_ptbb.PdListActivity_pt" />
         <activity android:name=".pt.ac_ptList.AcInfoActivity_pt" />
         <activity android:name=".pt.ac_ptList.AcListActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.AddShopActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.AddStaffActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.ShopActivity_pt" />
-        <activity android:name=".pt.ac_staffSend.StaffActivity_pt" />
         <activity android:name=".pt.ac_staffSend.StaffSendActivity_pt" />
         <activity android:name=".pt.ac_withdrawSetting.AccountDetailActivity_pt" />
         <activity android:name=".pt.ac_withdrawSetting.WithdrawActivity_pt" />

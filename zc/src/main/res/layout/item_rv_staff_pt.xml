@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="101dp"
+    android:background="@color/color_backGrey"
+    android:paddingLeft="11dp"
+    android:paddingTop="11dp"
+    android:paddingRight="11dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_radius5_white">
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="61dp"
+            android:layout_height="61dp"
+            android:layout_marginLeft="11dp"
+            android:src="@mipmap/icon_accoount_default_pt"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="13dp">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张滨华"
+                android:textColor="@color/color_black"/>
+            <TextView
+                android:id="@+id/tv_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="众途一号店"
+                android:layout_marginTop="3dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="14dp"
+                android:src="@mipmap/icon_arrow_grey_right_pt"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="68dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="9dp"
+            android:background="@drawable/shape_radius5_appred"
+            android:text="删除"
+            android:textColor="@color/color_white"
+            android:textSize="15sp"
+            android:gravity="center"/>
+    </RelativeLayout>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+

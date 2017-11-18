@@ -1,1 +1,1 @@
-include ':app', ':cj', ':hx'
+include ':app', ':cj', ':hx', ':zc'

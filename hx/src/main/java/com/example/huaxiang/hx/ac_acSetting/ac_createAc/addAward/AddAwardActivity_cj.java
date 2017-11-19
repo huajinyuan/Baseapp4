@@ -11,6 +11,8 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +97,73 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         getPermissions(this);
         sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
 //        sdcardPath = Environment.getExternalStorageDirectory().getPath();
+
+        et_price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String temp = s.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    s.delete(posDot + 3, posDot + 4);
+                }
+            }
+        });
+        et_odds.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String temp = s.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    s.delete(posDot + 3, posDot + 4);
+                }
+            }
+        });
+        et_replaceOdds.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String temp = s.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    s.delete(posDot + 3, posDot + 4);
+                }
+            }
+        });
     }
 
     @Override
@@ -162,11 +231,11 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty() || replaceOdds.isEmpty()) {
             Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
         } else if (imgUrl == null) {
-            Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
+            imgUrl = "";
         } else {
             price = price.equals(".") ? ".0" : price;
             awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
-            replaceOdds = replaceOdds.equals(".") ? ".0" : awardOdds;
+            replaceOdds = replaceOdds.equals(".") ? ".0" : replaceOdds;
 
             if (award == null) {
                 addAward();

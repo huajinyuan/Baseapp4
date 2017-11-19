@@ -108,20 +108,20 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         tv_price.setText(data.money + "块钱博");
         tv_num.setText(data.num + "人参与");
 
-//        //添加中奖列表
-//        if (data.details != null) {
-//            setRv_winHistory(data.details);
-//        } else {
-//            data.details = new ArrayList<>();
-//        }
+        //添加中奖列表
+        if (data.details != null) {
+            setRv_winHistory(data.details);
+        } else {
+            data.details = new ArrayList<>();
+        }
 
-        //改 显示假数据 中奖列表
-        ArrayList<CjHistory> fakeCjHistorys = new ArrayList<>();
-        CjHistory fakeCjHistory = new CjHistory();
-        fakeCjHistory.mobile = "13875758686";
-        fakeCjHistory.awardName = "铠甲镀晶";
-        fakeCjHistorys.add(fakeCjHistory);
-        setRv_winHistory(fakeCjHistorys);
+//        //改 显示假数据 中奖列表
+//        ArrayList<CjHistory> fakeCjHistorys = new ArrayList<>();
+//        CjHistory fakeCjHistory = new CjHistory();
+//        fakeCjHistory.mobile = "13875758686";
+//        fakeCjHistory.awardName = "铠甲镀晶";
+//        fakeCjHistorys.add(fakeCjHistory);
+//        setRv_winHistory(fakeCjHistorys);
 
         //添加代抽
         if (replaceNum != null) {

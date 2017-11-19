@@ -173,6 +173,31 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             }
         });
 
+        findViewById(R.id.ll_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, IntentionCustomerActivity.class));
+            }
+        });
+        findViewById(R.id.ll_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, IntentionCustomerActivity.class));
+            }
+        });
+        findViewById(R.id.ll_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, IntentionCustomerActivity.class));
+            }
+        });
+        findViewById(R.id.ll_4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, RebackListActivity.class));
+            }
+        });
+
     }
 
     void setReport(Report_hx report_hx) {

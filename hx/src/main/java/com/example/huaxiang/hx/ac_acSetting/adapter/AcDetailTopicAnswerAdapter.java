@@ -18,14 +18,15 @@ public class AcDetailTopicAnswerAdapter extends RecyclerView.Adapter<AcDetailTop
     private Context context;
     LayoutInflater layoutInflater;
     String[] options;
-    String[] rightAnswers;
+    String[] rightAnswers = null;
 
     public AcDetailTopicAnswerAdapter(Context mContext, HxTopic mData) {
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
         options = data.option.split(";");
-        rightAnswers = data.answer.split(",");
+        if(data.answer!=null)
+            rightAnswers = data.answer.split(",");
     }
 
 
@@ -41,9 +42,11 @@ public class AcDetailTopicAnswerAdapter extends RecyclerView.Adapter<AcDetailTop
         holder.cb_option.setText(options[position]);
 
         boolean isRight = false;
-        for (String str : rightAnswers) {
-            if (((position + 1) + "").equals(str)) {
-                isRight = true;
+        if (rightAnswers != null) {
+            for (String str : rightAnswers) {
+                if (((position + 1) + "").equals(str)) {
+                    isRight = true;
+                }
             }
         }
         holder.cb_option.setChecked(isRight);

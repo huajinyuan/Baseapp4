@@ -114,6 +114,7 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

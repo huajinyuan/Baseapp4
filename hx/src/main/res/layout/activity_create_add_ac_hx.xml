@@ -52,7 +52,8 @@
                         android:layout_marginLeft="20dp"
                         android:paddingRight="11dp"
                         android:textSize="14sp"
-                        android:text=""/>
+                        android:text=""
+                        android:maxLength="50"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
@@ -196,7 +197,8 @@
                         android:layout_marginLeft="20dp"
                         android:paddingRight="11dp"
                         android:textSize="14sp"
-                        android:inputType="numberDecimal"/>
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"

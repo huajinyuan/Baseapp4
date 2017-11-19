@@ -1,4 +1,4 @@
-package com.example.huaxiang.hx.ac_acSetting;
+package com.example.huaxiang.hx.ac_bb;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import com.example.huaxiang.module.base.BasePresenter;
  * Created by caiyk on 2017/9/28.
  */
 
-public class AcListPresenter_pt extends BasePresenter<AcListActivity_pt> {
+public class StaffRankingAcListPresenter_pt extends BasePresenter<StaffRankingAcListActivity_pt> {
     //    @Inject
 //    @Named(EnumFile.CACHE)
 //    public File mCacheFile;

@@ -1,5 +1,6 @@
 package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,6 +57,14 @@ public class AddWinListAdapter_pt extends RecyclerView.Adapter<AddWinListAdapter
                 
             }
         });
+
+        holder.ll_view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showDeleteDialog(cjHistory.id);
+                return true;
+            }
+        });
     }
 
 
@@ -82,5 +91,22 @@ public class AddWinListAdapter_pt extends RecyclerView.Adapter<AddWinListAdapter
             tv_delete = (TextView) itemView.findViewById(R.id.tv_delete);
             ll_view = (LinearLayout) itemView.findViewById(R.id.ll_view);
         }
+    }
+
+    void showDeleteDialog(String id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTransBackGround);
+        final AlertDialog mydialog = builder.create();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_dialog_delete, null);
+        mydialog.show();
+        mydialog.setContentView(view);
+
+        // dialog内部的点击事件
+        view.findViewById(R.id.bt_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mydialog.dismiss();
+                AddWinListActivity_pt.instance.deleteItem(id);
+            }
+        });
     }
 }

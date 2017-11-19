@@ -90,6 +90,7 @@
         <activity android:name=".hx.ac_memberget.QrCodeActivity" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addReplace.AddReplaceAwardActivity_cj" />
         <activity android:name=".hx.ac_acSetting.ac_createAc.addReplace.AddReplaceActivity_pt" />
+        <activity android:name=".hx.ac_bb.StaffRankingAcListActivity_pt" />
     </application>
 
 </manifest>

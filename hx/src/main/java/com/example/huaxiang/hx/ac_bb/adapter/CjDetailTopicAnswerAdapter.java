@@ -20,7 +20,7 @@ public class CjDetailTopicAnswerAdapter extends RecyclerView.Adapter<CjDetailTop
     LayoutInflater layoutInflater;
     String[] answers;
     String[] options;
-    String[] rightAnswers;
+    String[] rightAnswers = null;
 
     public CjDetailTopicAnswerAdapter(Context mContext, HxTopic mData) {
         data = mData;
@@ -28,7 +28,8 @@ public class CjDetailTopicAnswerAdapter extends RecyclerView.Adapter<CjDetailTop
         layoutInflater = LayoutInflater.from(context);
         answers = data.hxTopicMember.answer.split(",");
         options = data.option.split(";");
-        rightAnswers = data.answer.split(",");
+        if(data.answer!=null)
+            rightAnswers = data.answer.split(",");
     }
 
 
@@ -45,11 +46,14 @@ public class CjDetailTopicAnswerAdapter extends RecyclerView.Adapter<CjDetailTop
         holder.tv_answer.setText(options[optionPosition]);
 
         boolean isRight = false;
-        for (String str : rightAnswers) {
-            if (answers[position].equals(str)) {
-                isRight = true;
+        if (rightAnswers != null) {
+            for (String str : rightAnswers) {
+                if (answers[position].equals(str)) {
+                    isRight = true;
+                }
             }
         }
+
         holder.iv_answer.setImageResource(isRight ? R.mipmap.icon_answer_right : R.mipmap.icon_answer_wrong);
     }
 

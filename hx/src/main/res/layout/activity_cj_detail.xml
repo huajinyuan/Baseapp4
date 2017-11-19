@@ -250,6 +250,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="11dp"
                 android:paddingRight="11dp"
+                android:paddingBottom="16dp"
                 android:layout_marginTop="11dp"
                 android:background="@drawable/shape_radius5_white"
                 android:orientation="vertical">

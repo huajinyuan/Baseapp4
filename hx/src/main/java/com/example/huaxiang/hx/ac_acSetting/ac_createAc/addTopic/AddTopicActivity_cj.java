@@ -81,23 +81,27 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
             setRv();
         } else {
             String[] topicOptions = hxTopic.option.split(";");
-            String[] topicAnswers = hxTopic.answer.split(",");
-
-            ArrayList<String> topicAnswersstr = new ArrayList<>();
-            for (String str : topicAnswers) {
-                topicAnswersstr.add(topicOptions[Integer.parseInt(str)-1]);
+            String[] topicAnswers = null;
+            ArrayList<Integer> answerPositions = new ArrayList<>();
+            if(hxTopic.answer!=null) {
+                topicAnswers = hxTopic.answer.split(",");
+                for (String str : topicAnswers) {
+                    if(!str.equals(""))
+                        answerPositions.add(Integer.parseInt(str) - 1);
+                }
             }
 
-            for (String str : topicOptions) {
+            for (int i = 0; i < topicOptions.length; i++) {
                 TopicEditData ted = new TopicEditData();
+                ted.text = topicOptions[i];
                 ted.isOption = true;
-                ted.text = str;
-                data.add(ted);
-            }
-            for (String str : topicAnswersstr) {
-                TopicEditData ted = new TopicEditData();
-                ted.isOption = false;
-                ted.text = str;
+                if (answerPositions.size() > 0) {
+                    for (int position : answerPositions) {
+                        if (i == position) {
+                            ted.isOption = false;
+                        }
+                    }
+                }
                 data.add(ted);
             }
             setRv();
@@ -135,36 +139,22 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
                 if (question.isEmpty() || haveEmpty()) {
                     Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else {
-                    ArrayList<String> options = new ArrayList<String>();
+                    option = getOptionStr(data);
                     ArrayList<String> answers = new ArrayList<String>();
-                    for (TopicEditData ted : data) {
-                        if (ted.isOption) {
-                            options.add(ted.text);
-                        } else {
-                            answers.add(ted.text);
+                    for (int i=0;i<data.size();i++) {
+                        if (!data.get(i).isOption) {
+                            answers.add((i + 1) + "");
                         }
                     }
-                    if (options.size() == 0) {
-                        Toast.makeText(context, "请添加选项", Toast.LENGTH_SHORT).show();
-                    } else if (answers.size() == 0) {
-                        Toast.makeText(context, "请添加答案", Toast.LENGTH_SHORT).show();
-                    } else if (answers.size() > options.size()) {
-                        Toast.makeText(context, "答案数量不应多于选项数量", Toast.LENGTH_SHORT).show();
+                    answer = getAnswerStr(answers);
+
+                    if (type==2) {
+                        saveData(question, type, option, answer);
                     } else {
-                        if (type==2) {
-                            if (!matchDuoxuanWrong(options, answers)) {
-                                option = getOptionStr(options);
-                                answer = getAnswerStr(options, answers);
-                                saveData(question, type, option, answer);
-                            }
+                        if (answers.size() > 1) {
+                            Toast.makeText(context, "单选只能有一个答案", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (answers.size() > 1) {
-                                Toast.makeText(context, "单选只能有一个答案", Toast.LENGTH_SHORT).show();
-                            } else if (!matchDanxuanWrong(answers.get(0), options)) {
-                                option = getOptionStr(options);
-                                answer = getAnswerStr(options, answers);
-                                saveData(question, type, option, answer);
-                            }
+                            saveData(question, type, option, answer);
                         }
                     }
                 }
@@ -181,56 +171,23 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
         return false;
     }
 
-    boolean matchDuoxuanWrong(ArrayList<String> strsOption, ArrayList<String> strsAnswer) {
-        for (String str : strsAnswer) {
-            boolean notMatch = true;
-            for (String str2 : strsOption) {
-                if (str.equals(str2)) {
-                    notMatch = false;
-                }
-            }
-            if (notMatch) {
-                Toast.makeText(context, "请添加选项 " + str, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        }
-        return false;
-    }
 
-    boolean matchDanxuanWrong(String answer, ArrayList<String> strsOption) {
-        boolean notMatch = true;
-        for (String str2 : strsOption) {
-            if (answer.equals(str2)) {
-                notMatch = false;
-            }
-        }
-        if (notMatch) {
-            Toast.makeText(context, "请添加选项 " + answer, Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
-    }
-
-
-    String getOptionStr(ArrayList<String> strings) {
+    String getOptionStr(ArrayList<TopicEditData> teds) {
         String str = "";
-        for (String strr : strings) {
-            str += strr + ";";
+        for (TopicEditData asas : teds) {
+            str += asas.text + ";";
         }
         str = str.substring(0, str.length() - 1);
         return str;
     }
 
-    String getAnswerStr(ArrayList<String> strsOption, ArrayList<String> strsAnswer) {
+    String getAnswerStr(ArrayList<String> strsAnswer) {
         String str = "";
         for (String stra : strsAnswer) {
-            for (int i = 0; i < strsOption.size(); i++) {
-                if (stra.equals(strsOption.get(i))) {
-                    str = str + (i + 1) + ",";
-                }
-            }
+            str += stra + ",";
         }
-        str = str.substring(0, str.length() - 1);
+        if(str.length()>1)
+            str = str.substring(0, str.length() - 1);
         return str;
     }
 

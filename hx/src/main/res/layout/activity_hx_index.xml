@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -73,7 +74,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/ll_pt_totalNum"
+                        android:id="@+id/ll_2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_100"
                         android:layout_weight="1"
@@ -106,7 +107,7 @@
                         android:background="@color/color_line" />
 
                     <LinearLayout
-                        android:id="@+id/ll_pt_succeed"
+                        android:id="@+id/ll_3"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_100"
                         android:layout_weight="1"
@@ -139,7 +140,7 @@
                         android:background="@color/color_line" />
 
                     <LinearLayout
-                        android:id="@+id/ll_pt_inProgress"
+                        android:id="@+id/ll_4"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_100"
                         android:layout_weight="1"

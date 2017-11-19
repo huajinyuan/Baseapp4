@@ -8,27 +8,32 @@
 
     <include layout="@layout/layout_topbar_hx" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ll_selectAc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_8">
+        android:layout_marginTop="@dimen/dp_8"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_acName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="全部活动"
             android:textColor="@color/color_white"
-            android:layout_centerVertical="true"/>
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginRight="11dp"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="17dp"
-            android:src="@mipmap/icon_arrow_white_right_pt"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
+            android:src="@mipmap/icon_arrow_white_right_pt"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

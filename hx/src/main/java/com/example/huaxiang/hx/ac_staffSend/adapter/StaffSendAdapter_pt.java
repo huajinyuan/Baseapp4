@@ -1,5 +1,6 @@
 package com.example.huaxiang.hx.ac_staffSend.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -46,18 +47,18 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
         holder.tv_shop.setText(staffSend_hx.storeName);
         holder.tv_activityNum.setText(staffSend_hx.actCount);
 
-        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Log.e("aaa", position + "");
-//                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-//                data.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position, data.size() - position);
-
-                StaffSendActivity_pt.instance.deleteItem(staffSend_hx.userId + "");
-            }
-        });
+//        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Log.e("aaa", position + "");
+////                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+////                data.remove(position);
+////                notifyItemRemoved(position);
+////                notifyItemRangeChanged(position, data.size() - position);
+//
+//                StaffSendActivity_pt.instance.deleteItem(staffSend_hx.userId + "");
+//            }
+//        });
 
         holder.ll_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +67,13 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
                 intent.putExtra("userId", staffSend_hx.userId + "");
                 intent.putExtra("staffSendId", staffSend_hx.id);
                 context.startActivity(intent);
+            }
+        });
+        holder.ll_view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showDeleteDialog(staffSend_hx.userId + "");
+                return true;
             }
         });
     }
@@ -100,5 +108,22 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
 
             ll_view = (LinearLayout) itemView.findViewById(R.id.ll_view);
         }
+    }
+
+    void showDeleteDialog(String id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTransBackGround);
+        final AlertDialog mydialog = builder.create();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_dialog_delete, null);
+        mydialog.show();
+        mydialog.setContentView(view);
+
+        // dialog内部的点击事件
+        view.findViewById(R.id.bt_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mydialog.dismiss();
+                StaffSendActivity_pt.instance.deleteItem(id);
+            }
+        });
     }
 }

@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_bb.adapter.ReplaceListAdapter;
 import com.example.huaxiang.hx.ac_bb.m.CjDetail;
-import com.example.huaxiang.hx.ac_staffSend.addStaffSend.adapter.SelectStaffAdapter_pt;
-import com.example.huaxiang.hx.ac_staffSend.m.Staff_cj;
+import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
@@ -35,9 +35,9 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
     ImageView iv_topbar_right;
 
     RecyclerView rv_replace;
-    SelectStaffAdapter_pt adapter;
+    ReplaceListAdapter adapter;
     LinearLayoutManager layoutManager;
-    ArrayList<Staff_cj> pinDan_pts = new ArrayList<>();
+    ArrayList<CjHistory> pinDan_pts = new ArrayList<>();
 
     String number;
     CjDetail cjDetail;
@@ -74,9 +74,9 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         }
     }
 
-    void setRv(ArrayList<Staff_cj> pinDans) {
+    void setRv(ArrayList<CjHistory> pinDans) {
         pinDan_pts = pinDans;
-        adapter = new SelectStaffAdapter_pt(context, pinDan_pts);
+        adapter = new ReplaceListAdapter(context, pinDan_pts);
         layoutManager = new LinearLayoutManager(context);
         rv_replace.setLayoutManager(layoutManager);
         rv_replace.setAdapter(adapter);
@@ -91,6 +91,10 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         ((TextView) findView(R.id.tv_cjTime)).setText(cjDetail.createDate);
         ((TextView) findView(R.id.tv_awardName)).setText(cjDetail.awardName);
         ((TextView) findView(R.id.tv_replaceTime)).setText(cjDetail.replaced + "/" + cjDetail.replaceTime);
+
+        if (cjDetail.hxAwardDetails != null) {
+            setRv(cjDetail.hxAwardDetails);
+        }
     }
 
     @Override
@@ -138,5 +142,6 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         });
 
     }
+
 
 }

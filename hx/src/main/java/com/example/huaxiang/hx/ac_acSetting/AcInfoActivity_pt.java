@@ -96,13 +96,14 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
 
         //检查活动状态
         if (data.status == 2) {
-            tv_stop.setClickable(false);
-            tv_stop.setText("已停用");
+            tv_stop.setText("启用");
+            tv_abandon.setText("作废");
         } else if (data.status == 3) {
-            tv_stop.setClickable(false);
-            tv_abandon.setClickable(false);
-            tv_abandon.setText("已作废");
-            iv_topbar_right.setClickable(false);
+            tv_stop.setText("停用");
+            tv_abandon.setText("启用");
+        } else if (data.status == 1) {
+            tv_stop.setText("停用");
+            tv_abandon.setText("作废");
         }
 
         //添加中奖列表
@@ -134,8 +135,26 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
     protected void setListener() {
         findView(R.id.iv_topbar_back).setOnClickListener(view -> finish());
         findView(R.id.tv_topbar_right).setOnClickListener(view -> startActivity(new Intent(context, CreateAcActivity_cj.class).putExtra("id", data.id)));
-        findView(R.id.tv_stop).setOnClickListener(view -> changeAcStatus(2));
-        findView(R.id.tv_abandon).setOnClickListener(view -> changeAcStatus(3));
+        findView(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.status == 2) {
+                    changeAcStatus(1);
+                } else {
+                    changeAcStatus(2);
+                }
+            }
+        });
+        findView(R.id.tv_abandon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.status == 3) {
+                    changeAcStatus(1);
+                } else {
+                    changeAcStatus(3);
+                }
+            }
+        });
     }
 
     public void getData(){
@@ -177,13 +196,13 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
                 if (arrayListResponse.code == 0) {
                     if (status == 2) {
                         Toast.makeText(context, "已停用", Toast.LENGTH_SHORT).show();
-                        tv_stop.setClickable(false);
-                        tv_stop.setText("已停用");
                     } else if (status == 3) {
                         Toast.makeText(context, "已作废", Toast.LENGTH_SHORT).show();
-                        finish();
+                    } else if (status == 1) {
+                        Toast.makeText(context, "已启用", Toast.LENGTH_SHORT).show();
                     }
                 }
+                getData();
             }
         });
     }

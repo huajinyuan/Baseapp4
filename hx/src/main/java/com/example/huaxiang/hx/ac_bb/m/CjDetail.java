@@ -1,9 +1,11 @@
 package com.example.huaxiang.hx.ac_bb.m;
 
+import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.hx.ac_memberget.m.Member;
 import com.example.huaxiang.hx.ac_memberget.m.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by zuoyun on 2017/11/5.
@@ -34,5 +36,6 @@ public class CjDetail implements Serializable {
 
     public User user;
     public Member member;
+    public ArrayList<CjHistory> hxAwardDetails;
 
 }

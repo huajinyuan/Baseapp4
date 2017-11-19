@@ -12,6 +12,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -104,6 +108,29 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         getPermissions(this);
 //        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
         sdcardPath = Environment.getExternalStorageDirectory().getPath();
+
+        et_money.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String temp = s.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    s.delete(posDot + 3, posDot + 4);
+                }
+            }
+        });
     }
 
     @Override
@@ -160,6 +187,8 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
 
                 if (name.isEmpty() || beginTime.isEmpty() || endTime.isEmpty() || money.isEmpty()) {
                     Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
+                } else if(getDateLong(beginTime)>getDateLong(endTime)){
+                    Toast.makeText(context, "结束时间不能早于开始时间", Toast.LENGTH_SHORT).show();
                 } else if (imgUrl == null) {
                     Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
                 } else {
@@ -171,6 +200,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 }
             }
         });
+
         findViewById(R.id.iv_ac).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -409,5 +439,15 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 }
             }
         });
+    }
+
+    long getDateLong(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = sdf.parse(str);
+            return date.getTime();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

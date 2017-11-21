@@ -48,7 +48,7 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
     ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
-    int requestStatus;
+    int requestStatus = 1;
     SwipeRefreshLayout swip_refresh;
 
     @Override
@@ -198,19 +198,18 @@ public class AcListActivity_cj extends BaseActivity<AcListPresenter_cj> {
         LinearLayoutManager selectLayoutManager = new LinearLayoutManager(context);
         rv_dialog.setLayoutManager(selectLayoutManager);
         ArrayList<String> selectData = new ArrayList<>();
-        selectData.add("全部");
         selectData.add("可用");
-        selectData.add("停用");
-        selectData.add("作废");
+        selectData.add("已暂停");
+        selectData.add("已作废");
         RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
         rv_dialog.setAdapter(selectAdapter);
 
-        selectAdapter.setSelectPosition(requestStatus);
+        selectAdapter.setSelectPosition(requestStatus - 1);
         selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
             @Override
             public void select(int position) {
-                if (requestStatus != position) {
-                    requestStatus = position;
+                if (requestStatus - 1 != position) {
+                    requestStatus = position + 1;
                     refresh();
                 }
                 dialog.dismiss();

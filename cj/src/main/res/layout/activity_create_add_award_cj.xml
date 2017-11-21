@@ -53,7 +53,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="11dp"
                         android:textSize="14sp"
-                        android:text=""/>
+                        android:text=""
+                        android:maxLength="20"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"
@@ -102,7 +103,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="11dp"
                         android:textSize="14sp"
-                        android:inputType="numberDecimal"/>
+                        android:inputType="numberDecimal"
+                        android:maxLength="9"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"
@@ -151,7 +153,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="11dp"
                         android:textSize="14sp"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:maxLength="8"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"

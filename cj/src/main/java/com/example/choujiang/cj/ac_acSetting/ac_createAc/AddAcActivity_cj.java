@@ -39,7 +39,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -154,8 +156,8 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
 
                 if (name.isEmpty() || beginTime.isEmpty() || endTime.isEmpty() || cjNum.isEmpty() || shareGetNum.isEmpty() || remark.isEmpty()) {
                     Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
-                } else if (imgUrl == null) {
-                    Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
+                } else if(getDateLong(beginTime)>getDateLong(endTime)){
+                    Toast.makeText(context, "结束时间不能早于开始时间", Toast.LENGTH_SHORT).show();
                 } else {
                     if (CreateAcActivity_cj.instance.data.id == null) {
                         addAc();
@@ -403,5 +405,15 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 }
             }
         });
+    }
+
+    long getDateLong(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = sdf.parse(str);
+            return date.getTime();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

@@ -163,6 +163,31 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
                 context.startActivity(new Intent(context, StaffSendActivity_pt.class));
             }
         });
+
+//        findViewById(R.id.ll_1).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(context, IntentionCustomerActivity.class));
+//            }
+//        });
+//        findViewById(R.id.ll_2).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(context, IntentionCustomerActivity.class));
+//            }
+//        });
+//        findViewById(R.id.ll_3).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(context, IntentionCustomerActivity.class));
+//            }
+//        });
+//        findViewById(R.id.ll_4).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(context, RebackListActivity.class));
+//            }
+//        });
     }
 
     void setReport(Report_cj report_cj) {
@@ -228,7 +253,7 @@ public class MainActivity_cj extends BaseActivity<MainPresenter_cj> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
-                Toast.makeText(context, "已在其他设备登录", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

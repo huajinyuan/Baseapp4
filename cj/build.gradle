@@ -86,4 +86,5 @@ dependencies {
     compile 'com.qiniu:qiniu-android-sdk:7.3.+'
     compile 'com.qiniu:happy-dns:0.2.7'
     compile files('libs/zxing-core-3.1.0.jar')
+    compile 'com.weigan:loopView:0.1.2'
 }

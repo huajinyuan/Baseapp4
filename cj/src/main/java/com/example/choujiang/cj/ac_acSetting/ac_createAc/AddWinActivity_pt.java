@@ -85,8 +85,8 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
             @Override
             public void onClick(View v) {
                 String mobile = et_mobile.getText().toString().trim();
-                if (mobile.isEmpty()) {
-                    Toast.makeText(context, "请填写手机号", Toast.LENGTH_SHORT).show();
+                if (mobile.length()!=11) {
+                    Toast.makeText(context, "请填写11位手机号", Toast.LENGTH_SHORT).show();
                 } else if (award == null) {
                     Toast.makeText(context, "请选择奖品", Toast.LENGTH_SHORT).show();
                 } else {

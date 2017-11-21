@@ -1,5 +1,6 @@
 package com.example.choujiang.cj.ac_acSetting.ac_createAc.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,17 +44,25 @@ public class AddWinListAdapter_pt extends RecyclerView.Adapter<AddWinListAdapter
         holder.tv_mobile.setText("手机号：" + cjHistory.mobile);
         holder.tv_awardName.setText("奖品：￥" + cjHistory.awardPrice + "元" + cjHistory.awardName);
 
-        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
+//        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Log.e("aaa", position + "");
+////                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+////                data.remove(position);
+////                notifyItemRemoved(position);
+////                notifyItemRangeChanged(position, data.size() - position);
+//
+//                AddWinListActivity_pt.instance.deleteItem(cjHistory.id);
+//
+//            }
+//        });
+
+        holder.ll_view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-//                Log.e("aaa", position + "");
-//                Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-//                data.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position, data.size() - position);
-
-                AddWinListActivity_pt.instance.deleteItem(cjHistory.id);
-
+            public boolean onLongClick(View v) {
+                showDeleteDialog(cjHistory.id);
+                return true;
             }
         });
     }
@@ -82,5 +91,22 @@ public class AddWinListAdapter_pt extends RecyclerView.Adapter<AddWinListAdapter
             tv_delete = (TextView) itemView.findViewById(R.id.tv_delete);
             ll_view = (LinearLayout) itemView.findViewById(R.id.ll_view);
         }
+    }
+
+    void showDeleteDialog(String id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTransBackGround);
+        final AlertDialog mydialog = builder.create();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_dialog_delete, null);
+        mydialog.show();
+        mydialog.setContentView(view);
+
+        // dialog内部的点击事件
+        view.findViewById(R.id.bt_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mydialog.dismiss();
+                AddWinListActivity_pt.instance.deleteItem(id);
+            }
+        });
     }
 }

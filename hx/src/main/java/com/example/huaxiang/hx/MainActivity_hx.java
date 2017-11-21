@@ -280,7 +280,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa======onError", e.toString() + "");
-                Toast.makeText(context, "已在其他设备登录", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

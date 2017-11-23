@@ -269,17 +269,17 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             @Override
             public void onStart() {
                 super.onStart();
-                Log.e("aaa", "onStart");
+                Log.e("aaa", "getReport onStart");
             }
 
             @Override
             public void onCompleted() {
-                Log.e("aaa", "onCompleted");
+                Log.e("aaa", "getReport onCompleted");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("aaa======onError", e.toString() + "");
+                Log.e("aaa getReport", e.toString() + "");
                 Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
 

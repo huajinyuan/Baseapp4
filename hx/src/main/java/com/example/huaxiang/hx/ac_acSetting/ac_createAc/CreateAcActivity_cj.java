@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
+import com.example.huaxiang.hx.ac_acSetting.AcListActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.AcListPresenter_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.AddAwardListActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addReplace.AddReplaceActivity_pt;
@@ -240,6 +241,9 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
             public void onClick(View v) {
                 if (AcInfoActivity_pt.instance != null) {
                     AcInfoActivity_pt.instance.getData();
+                }
+                if (AcListActivity_pt.instance != null) {
+                    AcListActivity_pt.instance.refresh();
                 }
                 finish();
             }

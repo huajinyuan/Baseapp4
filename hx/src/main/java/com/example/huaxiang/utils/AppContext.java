@@ -35,7 +35,7 @@ public class AppContext {
     }
 
     public synchronized void init(Context context) {
-        AppContext.context = context;
+        AppContext.context = context.getApplicationContext();
         VERSION_NAME = AppUtils.getAppVersionName(context);
         try {
             DEVICE_ID = DeviceUidGenerator.generate(context);

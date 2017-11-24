@@ -137,6 +137,10 @@ public interface ApiStores {
     @POST("api/hx/hxActivity/state")
     Observable<Response> changeAcStatus(@Header("authorization") String authorization, @Query("actId") String actId, @Query("status") int status);
 
+    //删除活动
+    @POST("api/hx/hxActivity/delete")
+    Observable<Response> deleteAc(@Header("authorization") String authorization, @Query("actId") String actId);
+
     //获取七牛上传token
     @GET("api/common/uploadTokens")
     Observable<Response<QiniuToKen>> getQiniuToken(@Header("authorization") String authorization);

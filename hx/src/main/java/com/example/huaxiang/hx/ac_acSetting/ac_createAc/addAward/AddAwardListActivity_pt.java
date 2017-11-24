@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addAward.adapter.AddAwardListAdapter_pt;
 import com.example.huaxiang.hx.ac_acSetting.m.Award;
 import com.example.huaxiang.model.Response;
@@ -123,6 +124,13 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
 
     }
 
+    public void refresh(){
+        awards.clear();
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        getData();
+    }
+
     public void deleteAward(String awardId) {
         HttpMethods.start(HttpMethods.getInstance().demoService.deleteAward(token, awardId), new Subscriber<Response>() {
             @Override
@@ -144,7 +152,8 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "删除奖品成功", Toast.LENGTH_SHORT).show();
-                    getData();
+                    CreateAcActivity_cj.instance.getData();
+                    refresh();
                 }
             }
         });

@@ -2,6 +2,7 @@ package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addReplace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,11 +11,14 @@ import android.widget.Toast;
 
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
+import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
+import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 
 import nucleus.factory.RequiresPresenter;
+import rx.Subscriber;
 
 @RequiresPresenter(AddReplacePresenter_pt.class)
 public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> {
@@ -95,37 +99,37 @@ public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> 
                     Toast.makeText(context, "请填写奖品", Toast.LENGTH_SHORT).show();
                 } else {
                     CreateAcActivity_cj.instance.replaceNum = num;
-                    CreateAcActivity_cj.instance.setData();
-                    finish();
+                    editAc();
                 }
             }
         });
     }
 
-//    void addAward(String mobile){
-//        HttpMethods.start(HttpMethods.getInstance().demoService.addWinHistory(token, id, mobile, award.id), new Subscriber<Response>() {
-//            @Override
-//            public void onCompleted() {
-//                Log.e("aaa", "onCompleted");
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                Log.e("aaa", "onError" + e.getMessage());
-//            }
-//
-//            @Override
-//            public void onNext(Response arrayListResponse) {
-//                if (arrayListResponse.code == 0) {
-//                    Toast.makeText(context, "添加记录成功", Toast.LENGTH_SHORT).show();
-//                    CreateAcActivity_cj.instance.getData();
-//                    finish();
-//                }
-//            }
-//        });
-//
-//    }
+    void editAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, CreateAcActivity_cj.instance.data.name, CreateAcActivity_cj.instance.data.imgUrl, CreateAcActivity_cj.instance.data.videoUrl,
+                CreateAcActivity_cj.instance.data.beginTime, CreateAcActivity_cj.instance.data.endTime, CreateAcActivity_cj.instance.data.money + "", CreateAcActivity_cj.instance.data.num + "", "0",
+                CreateAcActivity_cj.instance.replaceNum, CreateAcActivity_cj.instance.data.carCheck, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "更新代抽成功", Toast.LENGTH_SHORT).show();
+                    CreateAcActivity_cj.instance.getData();
+                    finish();
+                }
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {

@@ -4,6 +4,7 @@ package com.example.huaxiang.hx.m;
 import com.example.huaxiang.model.BaseInfo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by gtgs on 17/10/17.
@@ -13,6 +14,7 @@ public class LoginData_pt extends BaseInfo implements Serializable {
 
     private String userId;
     private String token;
+    public ArrayList<AppMenu> menuList;
 
     public String getUserId() {
         return userId;

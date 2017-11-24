@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addWin.adapter.AddWinListAdapter_pt;
 import com.example.huaxiang.hx.ac_memberget.m.CjHistory;
 import com.example.huaxiang.model.Response;
@@ -116,6 +117,13 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
         });
     }
 
+    public void refresh(){
+        cjHistories.clear();
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        getData();
+    }
+
     public void deleteItem(String detailId){
         HttpMethods.start(HttpMethods.getInstance().demoService.deleteWinHistory(token, detailId), new Subscriber<Response>() {
             @Override
@@ -137,7 +145,8 @@ public class AddWinListActivity_pt extends BaseActivity<AddWinListPresenter_pt> 
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code==0) {
                     Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-                    getData();
+                    CreateAcActivity_cj.instance.getData();
+                    refresh();
                 }
             }
         });

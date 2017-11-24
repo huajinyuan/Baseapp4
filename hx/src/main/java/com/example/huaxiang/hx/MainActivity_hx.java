@@ -65,7 +65,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_hx_index;
+        return R.layout.activity_main_hx;
     }
 
     @Override

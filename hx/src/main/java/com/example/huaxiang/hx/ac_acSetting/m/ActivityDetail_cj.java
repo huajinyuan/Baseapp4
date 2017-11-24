@@ -32,6 +32,7 @@ public class ActivityDetail_cj implements Serializable{
     public double money;
 
     public ArrayList<Award> awards;
+    public Award award;
     public ArrayList<CjHistory> details;
     public ArrayList<HxTopic> topics;
 

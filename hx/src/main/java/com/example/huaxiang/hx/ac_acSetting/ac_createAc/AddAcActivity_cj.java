@@ -6,6 +6,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -16,12 +22,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,6 +87,18 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     String name, beginTime, endTime, money, num, videoUrl;
     int carCheck;
 
+    RelativeLayout rl_cuticon;
+    ImageView iv_cut_back;
+    TextView tv_cut_right;
+    ImageView iv_icon;
+    Matrix matrix = new Matrix();
+    int mode=0;
+    int DRAG=1;
+    int ZOOM=2;
+    PointF startPoint = new PointF();   //起始点
+    float startDis = 0;
+    Bitmap bitmap1000;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_create_add_ac_hx;
@@ -104,6 +125,11 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         et_videoUrl = (EditText) findViewById(R.id.et_videoUrl);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
         switch_carCheck = (CheckBox) findView(R.id.switch_carCheck);
+
+        rl_cuticon = findView(R.id.rl_cuticon);
+        iv_cut_back = findView(R.id.iv_cut_back);
+        tv_cut_right = findView(R.id.tv_cut_right);
+        iv_icon = findView(R.id.iv_icon);
 
         getPermissions(this);
 //        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
@@ -219,6 +245,54 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 showDialogDatePicker(et_endTime);
             }
         });
+
+        iv_cut_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iv_icon.setImageBitmap(null);
+                rl_cuticon.setVisibility(View.GONE);
+            }
+        });
+        tv_cut_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if(new File(mPhotoPath).exists())
+                        new File(mPhotoPath).delete();
+                }catch (Exception e){
+
+                }
+
+                matrix.postTranslate(0, 0);//选中中心位置
+                try {
+                    Bitmap smallbitmap = Bitmap.createBitmap(720, 405, Bitmap.Config.RGB_565);
+                    Canvas canvas = new Canvas(smallbitmap);
+                    canvas.drawColor(0xffffffff);
+                    canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
+                    canvas.drawBitmap(bitmap1000, matrix, null);
+                    FileOutputStream os = new FileOutputStream(mPhotoPath);
+                    smallbitmap.compress(Bitmap.CompressFormat.PNG, 90, os);
+                    os.close();
+                    matrix.reset();//清空matrix
+
+                    iv_icon.setImageBitmap(null);
+                    rl_cuticon.setVisibility(View.GONE);
+                    if((bitmap1000!=null)){//释放bitmap_normal
+                        bitmap1000.recycle();
+                        bitmap1000=null;
+                    }
+
+                    if (new File(mPhotoPath).exists()) {
+                        uploadphoto(new File(mPhotoPath));
+                    } else {
+                        Toast.makeText(context,"裁剪失败",Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Log.e("dda", "wrong at 确定裁剪");
+                }
+            }
+        });
     }
 
     void getPermissions(Activity mActivity){
@@ -275,28 +349,28 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     String mPhotoPath;
     File mPhotoFile;
     void takePicture() {
-        try {
-            mPhotoPath = sdcardPath + "/icon.jpg";
-            mPhotoFile = new File(mPhotoPath);
-            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            if (Build.VERSION.SDK_INT >= 23) {
+        mPhotoPath = sdcardPath + "/icon.png";
+        mPhotoFile = new File(mPhotoPath);
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
                 Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", mPhotoFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            } else {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+            } catch (Exception e) {
+
             }
-            startActivityForResult(intent, 1);
-        } catch (Exception e) {
-            Log.e("aaa takePicture", e.toString());
+        } else {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
         }
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            mPhotoPath = sdcardPath + "/icon.jpg";
+            mPhotoPath = sdcardPath + "/icon.png";
             String pathurl = null;
             if (requestCode == 1) {
                 pathurl = mPhotoPath;
@@ -304,8 +378,68 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 Uri uri = data.getData();
                 pathurl = MyBitmapUtil.getFilePath(context, uri);
             }
-            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), sdcardPath+"/temp.jpg"));
+//            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), sdcardPath+"/temp.jpg"));
+
+            matrix.reset();
+            rl_cuticon.setVisibility(View.VISIBLE);
+            bitmap1000 = MyBitmapUtil.getBitmap(pathurl);
+            iv_icon.setImageBitmap(bitmap1000);
+            int oldwidth = bitmap1000.getWidth();
+            int oldheight = bitmap1000.getHeight();
+
+            float scale = oldwidth >= oldheight ? 720f / oldheight: 720f / oldwidth;
+            matrix.postScale(scale, scale);
+            iv_icon.setImageMatrix(matrix);
+            iv_icon.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+                    switch (event.getAction() & MotionEvent.ACTION_MASK){
+                        case MotionEvent.ACTION_DOWN:
+                            Log.e("sds","ACTION_DOWN");
+                            mode = DRAG;
+                            startPoint.set(event.getX(),event.getY());
+                            break;
+                        case MotionEvent.ACTION_POINTER_DOWN:
+                            Log.e("sds","ACTION_POINTER_DOWN");
+                            mode = ZOOM;
+                            startDis = distance(event);
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            Log.e("dsad", mode + "");
+                            if (mode == DRAG) {
+                                float dx = event.getX() - startPoint.x;
+                                float dy = event.getY() - startPoint.y;
+                                matrix.postTranslate(dx, dy);
+                                startPoint.set(event.getX(),event.getY());
+                                iv_icon.setImageMatrix(matrix);
+                            } else if(mode==ZOOM){
+                                float endDis = distance(event);
+                                float mscale = endDis / startDis;
+                                matrix.postScale(mscale, mscale);
+                                iv_icon.setImageMatrix(matrix);
+                                startDis = endDis;
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            Log.e("dw", "ACTION_UP");
+                            mode = 0;
+                            break;
+                        case MotionEvent.ACTION_POINTER_UP:
+                            Log.e("dw", "ACTION_POINTER_UP");
+                            mode = 0;
+                            break;
+                    }
+                    return true;
+                }
+            });
         }
+    }
+
+    private static float distance(MotionEvent event){
+        //两根线的距离
+        float dx = event.getX(1) - event.getX(0);
+        float dy = event.getY(1) - event.getY(0);
+        return (float) Math.sqrt(dx*dx + dy*dy);
     }
 
     //qiniu
@@ -392,7 +526,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     }
 
     void addAc(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", "0", carCheck), new Subscriber<Response<ActivityDetail_cj>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", CreateAcActivity_cj.instance.replaceNum, carCheck), new Subscriber<Response<ActivityDetail_cj>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -418,7 +552,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         });
     }
     void editAc(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", "0", carCheck, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", CreateAcActivity_cj.instance.replaceNum, carCheck, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");

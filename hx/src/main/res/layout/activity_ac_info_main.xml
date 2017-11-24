@@ -32,7 +32,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:background="@color/color_appBlue">
-
                     <TextView
                         android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
@@ -44,18 +43,6 @@
                         android:background="@drawable/shape_border3_white"
                         android:padding="2dp"
                         android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_toRightOf="@+id/tv_price"
-                        android:text="￥4980元铠甲镀晶"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_12"
-                        android:layout_centerVertical="true"/>
-
                     <TextView
                         android:id="@+id/tv_num"
                         android:layout_width="wrap_content"
@@ -63,6 +50,17 @@
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/dp_5"
                         android:text="720人参与"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_toRightOf="@+id/tv_price"
+                        android:layout_toLeftOf="@id/tv_num"
+                        android:text="￥4980元铠甲镀晶"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         android:layout_centerVertical="true"/>

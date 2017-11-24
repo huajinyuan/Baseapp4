@@ -199,8 +199,8 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
         ArrayList<String> selectData = new ArrayList<>();
         selectData.add("全部");
         selectData.add("可用");
-        selectData.add("暂停");
-        selectData.add("作废");
+        selectData.add("已暂停");
+        selectData.add("已作废");
         RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
         rv_dialog.setAdapter(selectAdapter);
 

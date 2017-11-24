@@ -28,6 +28,7 @@ public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
+        data.get(0).checked = true;
     }
 
 

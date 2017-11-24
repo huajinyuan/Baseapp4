@@ -1,11 +1,14 @@
 package com.example.huaxiang.hx.ac_acSetting.ac_createAc;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,9 +60,9 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
     TextView tv_replace_num;
     TextView tv_replace_awardName;
 
-    ActivityDetail_cj data = new ActivityDetail_cj();
+    public ActivityDetail_cj data = new ActivityDetail_cj();
 
-    public String replaceNum;
+    public String replaceNum = "0";
     public Award replaceaward;
 
     @Override
@@ -125,10 +128,11 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
 //        setRv_winHistory(fakeCjHistorys);
 
         //添加代抽
-        if (replaceNum != null) {
-            tv_replace_num.setText(replaceNum);
-        }
-        if (replaceaward != null) {
+        replaceNum = data.replaceTime + "";
+        tv_replace_num.setText(replaceNum);
+
+        if (data.award != null) {
+            replaceaward = data.award;
             tv_replace_awardName.setText(replaceaward.name);
         }
 
@@ -181,7 +185,6 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
 
     @Override
     protected void setListener() {
-        findView(R.id.iv_topbar_back).setOnClickListener(view -> finish());
         findView(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -236,16 +239,44 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
             }
         });
 
+        findView(R.id.iv_topbar_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (data.id == null) {
+                    finish();
+                } else {
+                    if (data.award == null || data.awards == null || data.topics == null || data.awards.size() == 0 || data.topics.size() == 0) {
+                        showDialogDelete();
+                    } else {
+                        finish();
+                    }
+                }
+            }
+        });
         findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AcInfoActivity_pt.instance != null) {
-                    AcInfoActivity_pt.instance.getData();
+                if (data.id == null) {
+                    Toast.makeText(context, "未添加活动", Toast.LENGTH_SHORT).show();
+                } else if (data.name == null || data.beginTime == null || data.endTime == null) {
+                    Toast.makeText(context, "请完善活动信息", Toast.LENGTH_SHORT).show();
+                } else if (data.award == null) {
+                    Toast.makeText(context, "未添加代抽", Toast.LENGTH_SHORT).show();
+                } else if (data.awards == null || data.awards.size() == 0) {
+                    Toast.makeText(context, "未添加奖品", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (data.topics == null || data.topics.size() == 0) {
+                        Toast.makeText(context, "未添加问卷", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (AcInfoActivity_pt.instance != null) {
+                            AcInfoActivity_pt.instance.getData();
+                        }
+                        if (AcListActivity_pt.instance != null) {
+                            AcListActivity_pt.instance.refresh();
+                        }
+                        finish();
+                    }
                 }
-                if (AcListActivity_pt.instance != null) {
-                    AcListActivity_pt.instance.refresh();
-                }
-                finish();
             }
         });
     }
@@ -268,6 +299,64 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                     data = arrayListResponse.data;
                     setData();
                 }
+            }
+        });
+    }
+
+    public void deleteAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.deleteAc(token, data.id), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Toast.makeText(context, "活动已删除", Toast.LENGTH_SHORT).show();
+                    if (AcInfoActivity_pt.instance != null) {
+                        AcInfoActivity_pt.instance.finish();
+                    }
+                    if (AcListActivity_pt.instance != null) {
+                        AcListActivity_pt.instance.refresh();
+                    }
+                    finish();
+                }
+            }
+        });
+    }
+
+    public void showDialogDelete(){
+        final AlertDialog dialog_finish;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.DialogTransBackGround);
+        dialog_finish = builder.create();
+        dialog_finish.setCancelable(true);
+        dialog_finish.show();
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_confirm, null);
+        dialog_finish.setContentView(view_dialog);
+        TextView tv_title = (TextView) view_dialog.findViewById(R.id.tv_dialog_title);
+        TextView tv_content = (TextView) view_dialog.findViewById(R.id.tv_dialog_content);
+        Button bt_yes = (Button) view_dialog.findViewById(R.id.bt_yes);
+        Button bt_no = (Button) view_dialog.findViewById(R.id.bt_no);
+
+        tv_title.setText("提示");
+        tv_content.setText("活动设置不全，是否返回并删除该活动？");
+        bt_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_finish.dismiss();
+            }
+        });
+        bt_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_finish.dismiss();
+                deleteAc();
             }
         });
     }

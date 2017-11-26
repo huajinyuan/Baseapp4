@@ -46,8 +46,8 @@ public class AddAwardListAdapter_pt extends RecyclerView.Adapter<AddAwardListAda
 
         holder.tv_name.setText(award.name);
         holder.tv_num.setText("奖品数：" + award.num);
-        holder.tv_awardOdds.setText("抽奖中奖率：" + award.awardOdds + "%");
-        holder.tv_replaceAwardOdds.setText("代抽中奖率：" + award.replaceAwardOdds + "%");
+        holder.tv_awardOdds.setText("抽奖中奖率：" + (award.awardOdds * 100) + "%");
+        holder.tv_replaceAwardOdds.setText("代抽中奖率：" + (award.replaceAwardOdds * 100) + "%");
 
 //        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
 //            @Override

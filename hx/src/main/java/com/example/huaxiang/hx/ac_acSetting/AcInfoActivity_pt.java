@@ -100,7 +100,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
             tv_abandon.setText("作废");
         } else if (data.status == 3) {
             tv_stop.setText("停用");
-            tv_abandon.setText("启用");
+            tv_abandon.setText("已作废");
         } else if (data.status == 1) {
             tv_stop.setText("停用");
             tv_abandon.setText("作废");
@@ -149,7 +149,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
             @Override
             public void onClick(View v) {
                 if (data.status == 3) {
-                    changeAcStatus(1);
+//                    changeAcStatus(1);
                 } else {
                     changeAcStatus(3);
                 }

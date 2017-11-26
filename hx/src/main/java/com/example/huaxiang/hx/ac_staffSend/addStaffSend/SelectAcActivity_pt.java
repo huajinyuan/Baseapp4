@@ -51,6 +51,8 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     int page = 1;
     int requestStatus;
 
+    ArrayList<Activity_cj> oldCheckAcs;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_select_ac_hx;
@@ -77,7 +79,7 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         userId = getIntent().getStringExtra("userId");
-        getData();
+        getOldCheckedAc();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -103,6 +105,7 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
             pinDan_pts.addAll(pinDans);
             adapter.notifyDataSetChanged();
         }
+        adapter.resetChecked(oldCheckAcs);
     }
 
     @Override
@@ -128,6 +131,9 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
                         if (activity_cj.checked) {
                             acIds += activity_cj.id + ",";
                         }
+                    }
+                    if (acIds.length() > 0) {
+                        acIds = acIds.substring(0, acIds.length() - 1);
                     }
                     if (!acIds.equals("")) {
                         saveData(userId, acIds);
@@ -166,6 +172,34 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
                 }
             });
         }
+    }
+
+    void getOldCheckedAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, 1, 300, 0, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                canGet = false;
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                getData();
+            }
+
+            @Override
+            public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
+                oldCheckAcs = arrayListResponse.data;
+                getData();
+            }
+        });
+
     }
 
     void saveData(String userId, String activityIds) {

@@ -28,7 +28,6 @@ public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.
         data = mData;
         context = mContext;
         layoutInflater = LayoutInflater.from(context);
-        data.get(0).checked = true;
     }
 
 
@@ -80,6 +79,16 @@ public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_available = (TextView) itemView.findViewById(R.id.tv_available);
             cb_staff = (CheckBox) itemView.findViewById(R.id.cb_staff);
+        }
+    }
+
+    public void resetChecked(ArrayList<Activity_cj> list) {
+        for(int i=0;i<data.size();i++) {
+            for (Activity_cj compareAc : list) {
+                if (data.get(i).id.equals(compareAc.id)) {
+                    data.get(i).checked = true;
+                }
+            }
         }
     }
 }

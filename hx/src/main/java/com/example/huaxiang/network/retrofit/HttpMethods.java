@@ -2,9 +2,7 @@ package com.example.huaxiang.network.retrofit;
 
 import android.util.Log;
 
-import com.example.huaxiang.hx.m.LoginData_pt;
 import com.example.huaxiang.model.Response;
-import com.example.huaxiang.network.ComposeResponseData;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -82,16 +80,16 @@ public class HttpMethods {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
-    public Observable<Response<LoginData_pt>> login(String username, String password) {
-        return demoService.doLogin_pt(username, password)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    public Observable<Response<LoginData_pt>> login2(String username, String password) {
-        return demoService.doLogin_pt(username, password)
-                .compose(new ComposeResponseData<Response<LoginData_pt>>());
-    }
+//    public Observable<Response<LoginData_pt>> login(String username, String password) {
+//        return demoService.doLogin_pt(username, password)
+//                .subscribeOn(Schedulers.io())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+//    }
+//
+//    public Observable<Response<LoginData_pt>> login2(String username, String password) {
+//        return demoService.doLogin_pt(username, password)
+//                .compose(new ComposeResponseData<Response<LoginData_pt>>());
+//    }
 
 }

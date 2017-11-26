@@ -61,7 +61,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
     int requestStatus;
 
-    String username, password;
+    String username, password, sysSign;
 
     @Override
     protected int getLayoutId() {
@@ -95,6 +95,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     protected void initData() {
         username = getIntent().getStringExtra("username");
         password = getIntent().getStringExtra("password");
+        sysSign = getIntent().getStringExtra("sysSign");
 
         if (password != null) {
             login();
@@ -232,21 +233,20 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     }
 
     void login() {
-        HttpMethods.getInstance().login(username, password).subscribe(new Subscriber<Response<LoginData_pt>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.doLogin_pt(username, password, sysSign), new Subscriber<Response<LoginData_pt>>() {
             @Override
             public void onStart() {
                 super.onStart();
-                Log.e("=============", "onStart");
             }
 
             @Override
             public void onCompleted() {
-                Log.e("=============", "onCompleted");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("=======onError", e.toString() + "");
+                Log.e("aaa login", e.toString() + "");
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

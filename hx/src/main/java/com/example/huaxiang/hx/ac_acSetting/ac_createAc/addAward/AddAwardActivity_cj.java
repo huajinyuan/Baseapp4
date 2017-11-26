@@ -210,18 +210,10 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             Log.e("aaa", award.name.length() + "");
             et_name.setSelection(award.name.length());
         }
-        if (award.price != 0) {
-            et_price.setText(award.price + "");
-        }
-        if (award.num != 0) {
-            et_num.setText(award.num + "");
-        }
-        if (award.awardOdds != 0) {
-            et_odds.setText(award.awardOdds + "");
-        }
-        if (award.replaceAwardOdds != 0) {
-            et_replaceOdds.setText(award.replaceAwardOdds + "");
-        }
+        et_price.setText(award.price + "");
+        et_num.setText(award.num + "");
+        et_odds.setText((award.awardOdds * 100) + "");
+        et_replaceOdds.setText((award.replaceAwardOdds * 100) + "");
         if (award.imgUrl != null) {
             imgUrl = award.imgUrl;
             UiUtil.setImage(iv_ac, imgUrl);
@@ -304,14 +296,15 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         awardOdds = et_odds.getText().toString().trim();
         replaceOdds = et_replaceOdds.getText().toString().trim();
 
+        if (imgUrl == null) {
+            imgUrl = "";
+        }
         if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty() || replaceOdds.isEmpty()) {
             Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
-        } else if (imgUrl == null) {
-            imgUrl = "";
         } else {
-            price = price.equals(".") ? ".0" : price;
-            awardOdds = awardOdds.equals(".") ? ".0" : awardOdds;
-            replaceOdds = replaceOdds.equals(".") ? ".0" : replaceOdds;
+            price = price.equals(".") ? "0" : price;
+            awardOdds = awardOdds.equals(".") ? "0" : awardOdds;
+            replaceOdds = replaceOdds.equals(".") ? "0" : replaceOdds;
 
             if (award == null) {
                 addAward();
@@ -510,7 +503,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     };
 
     void addAward(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, awardOdds, replaceOdds, imgUrl), new Subscriber<Response<Award>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, (Double.parseDouble(awardOdds) / 100) + "", (Double.parseDouble(replaceOdds) / 100) + "", imgUrl), new Subscriber<Response<Award>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -533,7 +526,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
 
     }
     void editAward(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, awardOdds, replaceOdds, imgUrl, award.id), new Subscriber<Response>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, (Double.parseDouble(awardOdds) / 100) + "", (Double.parseDouble(replaceOdds) / 100) + "", imgUrl, award.id), new Subscriber<Response>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");

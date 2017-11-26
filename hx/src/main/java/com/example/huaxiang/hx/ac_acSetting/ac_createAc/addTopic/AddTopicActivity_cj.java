@@ -30,6 +30,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(AddTopicPresenter_cj.class)
 public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
+    public static AddTopicActivity_cj instance;
     Context context;
     ACache aCache;
     public String token;
@@ -39,7 +40,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
 
     String id;
     CheckBox switch_duoxuan;
-    EditText et_question;
+    public EditText et_question;
     RecyclerView rv_addTopic;
     ArrayList<TopicEditData> data = new ArrayList<>();
 
@@ -52,6 +53,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -66,6 +68,13 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
         switch_duoxuan = findView(R.id.switch_duoxuan);
         et_question = findView(R.id.et_question);
         rv_addTopic = findView(R.id.rv_addTopic);
+
+        et_question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_question.setCursorVisible(true);
+            }
+        });
     }
 
     @Override
@@ -250,4 +259,9 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
+    }
 }

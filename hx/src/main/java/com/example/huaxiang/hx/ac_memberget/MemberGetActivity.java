@@ -100,7 +100,13 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
             @Override
             public void onClick(View v) {
                 if (cjHistory != null) {
-                    exchange();
+                    if (cjHistory.codeStatus.equals("0")) {
+                        exchange();
+                    } else {
+                        Toast.makeText(context, "已兑换过了", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "没有兑换信息", Toast.LENGTH_SHORT).show();
                 }
             }
         });

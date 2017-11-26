@@ -36,7 +36,7 @@ public interface ApiStores {
 //    String URL_BASE = "https://www.baby25.cn/jeesite";
 
     @POST("api/common/tokens")
-    Observable<Response<LoginData_pt>> doLogin_pt(@Query("name") String name, @Query("password") String password);
+    Observable<Response<LoginData_pt>> doLogin_pt(@Query("name") String name, @Query("password") String password, @Query("sysSign") String sysSign);
 
     @DELETE("api/common/tokens")
     Observable<Response<LoginData_pt>> doLogout(@Query("authorization") String authorization);

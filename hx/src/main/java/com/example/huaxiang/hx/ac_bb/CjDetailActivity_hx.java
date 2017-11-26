@@ -93,7 +93,13 @@ public class CjDetailActivity_hx extends BaseActivity<CjDetailPresenter_hx> {
         ((TextView) findView(R.id.tv_replaceTime)).setText(cjDetail.replaced + "/" + cjDetail.replaceTime);
 
         if (cjDetail.hxAwardDetails != null) {
-            setRv(cjDetail.hxAwardDetails);
+            ArrayList<CjHistory> list = new ArrayList<>();
+            for(int i=0;i<cjDetail.hxAwardDetails.size();i++) {
+                if (cjDetail.hxAwardDetails.get(i).type != 1) {
+                    list.add(cjDetail.hxAwardDetails.get(i));
+                }
+            }
+            setRv(list);
         }
     }
 

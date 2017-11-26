@@ -130,7 +130,9 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", userId));
+                Intent intent = new Intent(context, SelectAcActivity_pt.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
             }
         });
         setDrag(iv_qr_bottom);

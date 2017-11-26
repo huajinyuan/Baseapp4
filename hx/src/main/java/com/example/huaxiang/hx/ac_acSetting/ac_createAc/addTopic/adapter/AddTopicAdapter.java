@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.AddTopicActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.addTopic.m.TopicEditData;
 
 import java.util.ArrayList;
@@ -57,15 +58,20 @@ public class AddTopicAdapter extends RecyclerView.Adapter<AddTopicAdapter.Anchor
         holder.et_answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AddTopicActivity_cj.instance.et_question.setCursorVisible(false);
                 showDialogEdit(position, editData.text);
             }
         });
         holder.iv_add_reduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AddTopicActivity_cj.instance.et_question.setCursorVisible(false);
+
                 if (position == data.size() - 1) {
                     data.add(new TopicEditData());
                     notifyDataSetChanged();
+                    showDialogEdit(position + 1, "");
+
                 } else {
                     data.remove(position);
                     notifyItemRemoved(position);

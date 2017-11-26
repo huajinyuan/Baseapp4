@@ -46,5 +46,31 @@
             android:textColor="@color/color_white"
             android:text="直接进入上次账号"/>
 
+        <RadioGroup
+            android:id="@+id/rg_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+            <RadioButton
+                android:id="@+id/rb_null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="无"
+                android:layout_margin="10dp"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/rb_zt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="众途"
+                android:layout_margin="10dp"/>
+            <RadioButton
+                android:id="@+id/rb_tc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图创"
+                android:layout_margin="10dp"/>
+        </RadioGroup>
     </LinearLayout>
 </RelativeLayout>

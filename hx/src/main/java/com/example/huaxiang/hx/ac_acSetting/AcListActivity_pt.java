@@ -50,7 +50,7 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     boolean canGet = true;
     int page = 1;
     SwipeRefreshLayout swip_refresh;
-    int requestStatus;
+    int requestStatus=1;
 
     @Override
     protected int getLayoutId() {
@@ -169,6 +169,10 @@ public class AcListActivity_pt extends BaseActivity<AcListPresenter_pt> {
     }
 
     public void refresh(){
+        pinDan_pts.clear();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
         adapter = null;
         page = 1;
         getData();

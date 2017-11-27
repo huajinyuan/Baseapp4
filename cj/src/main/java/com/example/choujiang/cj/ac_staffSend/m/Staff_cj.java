@@ -17,6 +17,7 @@ public class Staff_cj implements Serializable{
     public String admin;
     public String roleNames;
     public String storeName;
+    public String storeId;
     public String phone;
     public String mobile;
     public double balance;

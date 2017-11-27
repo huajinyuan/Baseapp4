@@ -7,12 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.choujiang.R;
-import com.example.choujiang.cj.ac_acSetting.ac_createAc.AddWinListActivity_pt;
+import com.example.choujiang.cj.ac_staffSend.StaffSendActivity_pt;
 import com.example.choujiang.cj.ac_staffSend.m.StaffSend_cj;
 import com.example.choujiang.cj.ac_staffSend.staffDetail.StaffDetailActivity_pt;
 
@@ -64,7 +65,7 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
         holder.ll_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", staffSend_cj.userId));
+                context.startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", staffSend_cj.userId + "").putExtra("storeId", staffSend_cj.storeId + ""));
             }
         });
         holder.ll_view.setOnLongClickListener(new View.OnLongClickListener() {
@@ -108,19 +109,32 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
         }
     }
 
-    void showDeleteDialog(String id){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTransBackGround);
-        final AlertDialog mydialog = builder.create();
-        View view = LayoutInflater.from(context).inflate(R.layout.item_dialog_delete, null);
-        mydialog.show();
-        mydialog.setContentView(view);
+    public void showDeleteDialog(String id){
+        final AlertDialog dialog_finish;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.DialogTransBackGround);
+        dialog_finish = builder.create();
+        dialog_finish.setCancelable(true);
+        dialog_finish.show();
+        View view_dialog = LayoutInflater.from(context).inflate(R.layout.item_dialog_confirm, null);
+        dialog_finish.setContentView(view_dialog);
+        TextView tv_title = (TextView) view_dialog.findViewById(R.id.tv_dialog_title);
+        TextView tv_content = (TextView) view_dialog.findViewById(R.id.tv_dialog_content);
+        Button bt_yes = (Button) view_dialog.findViewById(R.id.bt_yes);
+        Button bt_no = (Button) view_dialog.findViewById(R.id.bt_no);
 
-        // dialog内部的点击事件
-        view.findViewById(R.id.bt_delete).setOnClickListener(new View.OnClickListener() {
+        tv_title.setText("提示");
+        tv_content.setText("是否删除？");
+        bt_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mydialog.dismiss();
-                AddWinListActivity_pt.instance.deleteItem(id);
+                dialog_finish.dismiss();
+            }
+        });
+        bt_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_finish.dismiss();
+                StaffSendActivity_pt.instance.deleteItem(id);
             }
         });
     }

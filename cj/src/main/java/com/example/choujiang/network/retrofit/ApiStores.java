@@ -67,6 +67,10 @@ public interface ApiStores {
     @GET("api/cj/cjActivity/list")
     Observable<Response<ArrayList<Activity_cj>>> getAc_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
+    //门店活动列表 状态 0全部 1可用 2暂停 3作废
+    @GET("api/cj/cjActivity/list")
+    Observable<Response<ArrayList<Activity_cj>>> getAcInStore_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("storeId") String storeId);
+
     //活动详情
     @GET("api/cj/cjActivity/info")
     Observable<Response<ActivityDetail_cj>> getAcDetail_cj(@Header("authorization") String authorization, @Query("actId") String actId);
@@ -97,7 +101,7 @@ public interface ApiStores {
 
     //员工活动列表
     @GET("api/cj/cjActivityStaff/act/list")
-    Observable<Response<ArrayList<Activity_cj>>> getStaffAcDetail_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("staffId") int staffId);
+    Observable<Response<ArrayList<Activity_cj>>> getStaffAcDetail_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("staffId") String staffId);
 
     //提交员工发送
     @POST("api/cj/cjActivityStaff/save")

@@ -81,4 +81,14 @@ public class SelectAcAdapter_pt extends RecyclerView.Adapter<SelectAcAdapter_pt.
             cb_staff = (CheckBox) itemView.findViewById(R.id.cb_staff);
         }
     }
+
+    public void resetChecked(ArrayList<Activity_cj> list) {
+        for(int i=0;i<data.size();i++) {
+            for (Activity_cj compareAc : list) {
+                if (data.get(i).id.equals(compareAc.id)) {
+                    data.get(i).checked = true;
+                }
+            }
+        }
+    }
 }

@@ -356,14 +356,10 @@
                 android:text="确定"
                 android:layout_marginRight="10dp" />
         </RelativeLayout>
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="720px"
-            android:layout_height="720px"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:scaleType="matrix"
-            android:background="@color/color_white"
-            android:adjustViewBounds="true"/>
+        <com.example.huaxiang.rxpicture.widget.cropview.CropImageView
+            android:id="@+id/cropView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rl_top"/>
     </RelativeLayout>
 </RelativeLayout>

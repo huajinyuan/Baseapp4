@@ -40,7 +40,8 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
 
     RecyclerView rv_staffSend;
     ImageView iv_qr_bottom;
-    int userId;
+    String userId;
+    String storeId;
 
     StaffDetailAdapter_pt adapter;
     LinearLayoutManager layoutManager;
@@ -77,7 +78,8 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     @Override
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
-        userId = getIntent().getIntExtra("userId", 0);
+        userId = getIntent().getStringExtra("userId");
+        storeId = getIntent().getStringExtra("storeId");
         getData();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -118,7 +120,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         findViewById(R.id.tv_topbar_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", userId + ""));
+                startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", userId).putExtra("storeId", storeId));
             }
         });
         setDrag(iv_qr_bottom);

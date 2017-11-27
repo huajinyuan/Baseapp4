@@ -69,6 +69,10 @@ public interface ApiStores {
     @GET("api/hx/hxActivity/list")
     Observable<Response<ArrayList<Activity_cj>>> getAc_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status);
 
+    //门店活动列表 状态 0全部 1可用 2暂停 3作废
+    @GET("api/hx/hxActivity/list")
+    Observable<Response<ArrayList<Activity_cj>>> getAcInStore_cj(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("status") int status, @Query("storeId") String storeId);
+
     //提交员工发送
     @POST("api/hx/hxActivityStaff/save")
     Observable<Response> saveStaffSend(@Header("authorization") String authorization, @Query("staffId") String staffId, @Query("actIds") String actIds);

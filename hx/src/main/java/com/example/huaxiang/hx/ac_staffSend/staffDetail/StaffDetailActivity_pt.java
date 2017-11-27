@@ -42,6 +42,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     RecyclerView rv_staffSend;
     ImageView iv_qr_bottom;
     String userId;
+    String storeId;
 
     StaffDetailAdapter_pt adapter;
     LinearLayoutManager layoutManager;
@@ -89,6 +90,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         userId = getIntent().getStringExtra("userId");
+        storeId = getIntent().getStringExtra("storeId");
         getData();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -131,7 +133,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SelectAcActivity_pt.class);
-                intent.putExtra("userId", userId);
+                intent.putExtra("userId", userId).putExtra("storeId", storeId);
                 startActivity(intent);
             }
         });
@@ -139,7 +141,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, page, 10, 0, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, page, 10, 1, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
             @Override
             public void onStart() {
                 super.onStart();

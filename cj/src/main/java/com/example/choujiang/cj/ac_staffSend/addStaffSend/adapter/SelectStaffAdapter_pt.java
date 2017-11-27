@@ -24,6 +24,7 @@ public class SelectStaffAdapter_pt extends RecyclerView.Adapter<SelectStaffAdapt
     LayoutInflater layoutInflater;
     int checkedPosition = 0;
     public String userId;
+    public String storeId;
 
     public SelectStaffAdapter_pt(Context mContext, ArrayList<Staff_cj> mData) {
         data = mData;
@@ -48,6 +49,7 @@ public class SelectStaffAdapter_pt extends RecyclerView.Adapter<SelectStaffAdapt
         holder.cb_staff.setChecked(position == checkedPosition ? true : false);
         if (position == checkedPosition) {
             userId = staff.id;
+            storeId = staff.storeId;
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

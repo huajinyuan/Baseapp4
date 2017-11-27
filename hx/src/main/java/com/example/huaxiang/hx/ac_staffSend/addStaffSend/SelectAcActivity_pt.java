@@ -44,12 +44,13 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     RecyclerView rv_staffSend;
     SelectAcAdapter_pt adapter;
     String userId;
+    String storeId;
 
     LinearLayoutManager layoutManager;
     ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
-    int requestStatus;
+    int requestStatus=1;
 
     ArrayList<Activity_cj> oldCheckAcs;
 
@@ -79,6 +80,7 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         userId = getIntent().getStringExtra("userId");
+        storeId = getIntent().getStringExtra("storeId");
         getOldCheckedAc();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -145,7 +147,7 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
 
     void getData(){
         if (userId != null) {
-            HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 10, requestStatus), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+            HttpMethods.start(HttpMethods.getInstance().demoService.getAcInStore_cj(token, page, 10, requestStatus, storeId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
                 @Override
                 public void onStart() {
                     super.onStart();

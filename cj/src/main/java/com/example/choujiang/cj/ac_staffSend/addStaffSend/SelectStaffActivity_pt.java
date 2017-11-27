@@ -128,7 +128,7 @@ public class SelectStaffActivity_pt extends BaseActivity<SelectStaffPresenter_pt
             @Override
             public void onClick(View v) {
                 if (adapter != null) {
-                    startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", adapter.userId));
+                    startActivity(new Intent(context, SelectAcActivity_pt.class).putExtra("userId", adapter.userId).putExtra("storeId", adapter.storeId));
                 }
             }
         });

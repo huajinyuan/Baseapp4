@@ -15,6 +15,7 @@ public class Staff_pt implements Serializable{
     public String admin;
     public String roleNames;
     public String storeName;
+    public String storeId;
 
     public String groupSize;
     public String cliqueNumber;

@@ -6,8 +6,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.example.choujiang.model.Response;
 import com.example.choujiang.module.base.BaseActivity;
 import com.example.choujiang.network.retrofit.HttpMethods;
 import com.example.choujiang.network.retrofit.QiniuUpload;
+import com.example.choujiang.rxpicture.widget.cropview.CropImageView;
 import com.example.choujiang.utils.ACache;
 import com.example.choujiang.utils.ACacheKey;
 import com.example.choujiang.utils.UiUtil;
@@ -40,6 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -70,6 +75,12 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     Award award;
     int position;
 
+    RelativeLayout rl_cuticon;
+    ImageView iv_cut_back;
+    TextView tv_cut_right;
+    CropImageView cropView;
+    Bitmap bitmap1000;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_create_add_award_cj;
@@ -95,9 +106,14 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
         bt_save = findView(R.id.bt_save);
 
+        rl_cuticon = findView(R.id.rl_cuticon);
+        iv_cut_back = findView(R.id.iv_cut_back);
+        tv_cut_right = findView(R.id.tv_cut_right);
+        cropView = findView(R.id.cropView);
+
         getPermissions(this);
-        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
-//        sdcardPath = Environment.getExternalStorageDirectory().getPath();
+//        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
+        sdcardPath = Environment.getExternalStorageDirectory().getPath();
 
         et_price.addTextChangedListener(new TextWatcher() {
             @Override
@@ -214,6 +230,34 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 showPhotodialog();
             }
         });
+
+        iv_cut_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rl_cuticon.setVisibility(View.GONE);
+            }
+        });
+        tv_cut_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if(new File(mPhotoPath).exists())
+                        new File(mPhotoPath).delete();
+
+                    FileOutputStream os = new FileOutputStream(mPhotoPath);
+                    cropView.getCroppedBitmap().compress(Bitmap.CompressFormat.PNG, 90, os);
+                    rl_cuticon.setVisibility(View.GONE);
+
+                    if (new File(mPhotoPath).exists()) {
+                        uploadphoto(new File(mPhotoPath));
+                    } else {
+                        Toast.makeText(context,"裁剪失败",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        });
     }
 
     void getPermissions(Activity mActivity){
@@ -296,8 +340,16 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 Uri uri = data.getData();
                 pathurl = MyBitmapUtil.getFilePath(context, uri);
             }
-            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), mPhotoPath));
+//            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), mPhotoPath));
+
+            rl_cuticon.setVisibility(View.VISIBLE);
+            bitmap1000 = MyBitmapUtil.getBitmap(pathurl);
+
+            cropView.setCropMode(CropImageView.CropMode.SQUARE);
+            cropView.setInitialFrameScale(0.9f);
+            cropView.setImageBitmap(bitmap1000);
         }
+
     }
 
     //qiniu

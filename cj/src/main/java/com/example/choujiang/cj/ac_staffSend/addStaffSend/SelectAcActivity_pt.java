@@ -37,11 +37,14 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     RecyclerView rv_staffSend;
     SelectAcAdapter_pt adapter;
     String userId;
+    String storeId;
 
     LinearLayoutManager layoutManager;
     ArrayList<Activity_cj> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
+
+    ArrayList<Activity_cj> oldCheckAcs;
 
     @Override
     protected int getLayoutId() {
@@ -69,7 +72,8 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
     protected void initData() {
         token = aCache.getAsString(ACacheKey.TOKEN);
         userId = getIntent().getStringExtra("userId");
-        getData();
+        storeId = getIntent().getStringExtra("storeId");
+        getOldCheckedAc();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -94,6 +98,7 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
             pinDan_pts.addAll(pinDans);
             adapter.notifyDataSetChanged();
         }
+        adapter.resetChecked(oldCheckAcs);
     }
 
     @Override
@@ -128,9 +133,37 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
         });
     }
 
+    void getOldCheckedAc(){
+        HttpMethods.start(HttpMethods.getInstance().demoService.getStaffAcDetail_cj(token, 1, 300, userId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                canGet = false;
+            }
+
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+                getData();
+            }
+
+            @Override
+            public void onNext(Response<ArrayList<Activity_cj>> arrayListResponse) {
+                oldCheckAcs = arrayListResponse.data;
+                getData();
+            }
+        });
+
+    }
+
     void getData(){
         if (userId != null) {
-            HttpMethods.start(HttpMethods.getInstance().demoService.getAc_cj(token, page, 10, 0), new Subscriber<Response<ArrayList<Activity_cj>>>() {
+            HttpMethods.start(HttpMethods.getInstance().demoService.getAcInStore_cj(token, page, 10, 1, storeId), new Subscriber<Response<ArrayList<Activity_cj>>>() {
                 @Override
                 public void onStart() {
                     super.onStart();

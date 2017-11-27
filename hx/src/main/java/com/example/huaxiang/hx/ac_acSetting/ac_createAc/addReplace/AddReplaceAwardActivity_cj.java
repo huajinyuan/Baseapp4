@@ -7,11 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PaintFlagsDrawFilter;
-import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -22,7 +17,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,6 +33,7 @@ import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.network.retrofit.QiniuUpload;
+import com.example.huaxiang.rxpicture.widget.cropview.CropImageView;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 import com.example.huaxiang.utils.UiUtil;
@@ -79,13 +74,8 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
     RelativeLayout rl_cuticon;
     ImageView iv_cut_back;
     TextView tv_cut_right;
-    ImageView iv_icon;
-    Matrix matrix = new Matrix();
-    int mode=0;
-    int DRAG=1;
-    int ZOOM=2;
-    PointF startPoint = new PointF();   //起始点
-    float startDis = 0;
+
+    CropImageView cropView;
     Bitmap bitmap1000;
 
     @Override
@@ -113,7 +103,7 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
         rl_cuticon = findView(R.id.rl_cuticon);
         iv_cut_back = findView(R.id.iv_cut_back);
         tv_cut_right = findView(R.id.tv_cut_right);
-        iv_icon = findView(R.id.iv_icon);
+        cropView = findView(R.id.cropView);
 
         getPermissions(this);
 //        sdcardPath = getApplicationContext().getFilesDir().getAbsolutePath();
@@ -189,7 +179,6 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
         iv_cut_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iv_icon.setImageBitmap(null);
                 rl_cuticon.setVisibility(View.GONE);
             }
         });
@@ -199,36 +188,18 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
                 try {
                     if(new File(mPhotoPath).exists())
                         new File(mPhotoPath).delete();
-                }catch (Exception e){
 
-                }
-
-                matrix.postTranslate(0, 0);//选中中心位置
-                try {
-                    Bitmap smallbitmap = Bitmap.createBitmap(720, 720, Bitmap.Config.RGB_565);
-                    Canvas canvas = new Canvas(smallbitmap);
-                    canvas.drawColor(0xffffffff);
-                    canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
-                    canvas.drawBitmap(bitmap1000, matrix, null);
                     FileOutputStream os = new FileOutputStream(mPhotoPath);
-                    smallbitmap.compress(Bitmap.CompressFormat.PNG, 90, os);
-                    os.close();
-                    matrix.reset();//清空matrix
-
-                    iv_icon.setImageBitmap(null);
+                    cropView.getCroppedBitmap().compress(Bitmap.CompressFormat.PNG, 90, os);
                     rl_cuticon.setVisibility(View.GONE);
-                    if((bitmap1000!=null)){//释放bitmap_normal
-                        bitmap1000.recycle();
-                        bitmap1000=null;
-                    }
 
                     if (new File(mPhotoPath).exists()) {
                         uploadphoto(new File(mPhotoPath));
                     } else {
                         Toast.makeText(context,"裁剪失败",Toast.LENGTH_SHORT).show();
                     }
-                }catch (Exception e){
-                    Log.e("dda", "wrong at 确定裁剪");
+                } catch (Exception e) {
+
                 }
             }
         });
@@ -335,67 +306,13 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
             }
 //            uploadphoto(MyBitmapUtil.saveBitmapFile(MyBitmapUtil.getBitmap(pathurl), mPhotoPath));
 
-            matrix.reset();
             rl_cuticon.setVisibility(View.VISIBLE);
             bitmap1000 = MyBitmapUtil.getBitmap(pathurl);
-            iv_icon.setImageBitmap(bitmap1000);
-            int oldwidth = bitmap1000.getWidth();
-            int oldheight = bitmap1000.getHeight();
 
-            float scale = oldwidth >= oldheight ? 720f / oldheight: 720f / oldwidth;
-            matrix.postScale(scale, scale);
-            iv_icon.setImageMatrix(matrix);
-            iv_icon.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    switch (event.getAction() & MotionEvent.ACTION_MASK){
-                        case MotionEvent.ACTION_DOWN:
-                            Log.e("sds","ACTION_DOWN");
-                            mode = DRAG;
-                            startPoint.set(event.getX(),event.getY());
-                            break;
-                        case MotionEvent.ACTION_POINTER_DOWN:
-                            Log.e("sds","ACTION_POINTER_DOWN");
-                            mode = ZOOM;
-                            startDis = distance(event);
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-                            Log.e("dsad", mode + "");
-                            if (mode == DRAG) {
-                                float dx = event.getX() - startPoint.x;
-                                float dy = event.getY() - startPoint.y;
-                                matrix.postTranslate(dx, dy);
-                                startPoint.set(event.getX(),event.getY());
-                                iv_icon.setImageMatrix(matrix);
-                            } else if(mode==ZOOM){
-                                float endDis = distance(event);
-                                float mscale = endDis / startDis;
-                                matrix.postScale(mscale, mscale);
-                                iv_icon.setImageMatrix(matrix);
-                                startDis = endDis;
-                            }
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            Log.e("dw", "ACTION_UP");
-                            mode = 0;
-                            break;
-                        case MotionEvent.ACTION_POINTER_UP:
-                            Log.e("dw", "ACTION_POINTER_UP");
-                            mode = 0;
-                            break;
-                    }
-                    return true;
-                }
-            });
-
+            cropView.setCropMode(CropImageView.CropMode.SQUARE);
+            cropView.setInitialFrameScale(0.9f);
+            cropView.setImageBitmap(bitmap1000);
         }
-    }
-
-    private static float distance(MotionEvent event){
-        //两根线的距离
-        float dx = event.getX(1) - event.getX(0);
-        float dy = event.getY(1) - event.getY(0);
-        return (float) Math.sqrt(dx*dx + dy*dy);
     }
 
     //qiniu

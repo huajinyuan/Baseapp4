@@ -33,6 +33,7 @@ import rx.Subscriber;
 
 @RequiresPresenter(AccountListPresenter_cj.class)
 public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj> {
+    public static AccountListActivity_cj instance;
     Context context;
     ACache aCache;
     public String token;
@@ -58,6 +59,7 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
 
     @Override
     protected void initView() {
+        instance = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -194,7 +196,7 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
         });
     }
 
-    void refresh(){
+    public void refresh(){
         pinDan_pts.clear();
         if(adapter!=null)
             adapter.notifyDataSetChanged();
@@ -246,4 +248,9 @@ public class AccountListActivity_cj extends BaseActivity<AccountListPresenter_cj
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        instance = null;
+        super.onDestroy();
+    }
 }

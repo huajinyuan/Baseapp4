@@ -67,6 +67,7 @@ public class StaffSendAdapter_pt extends RecyclerView.Adapter<StaffSendAdapter_p
                 Intent intent = new Intent(context, StaffDetailActivity_pt.class);
                 intent.putExtra("userId", staffSend_hx.userId + "");
                 intent.putExtra("storeId", staffSend_hx.storeId + "");
+                intent.putExtra("userName", staffSend_hx.userName);
                 context.startActivity(intent);
             }
         });

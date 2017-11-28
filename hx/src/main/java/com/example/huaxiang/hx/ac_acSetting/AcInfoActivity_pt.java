@@ -99,7 +99,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
             tv_stop.setText("启用");
             tv_abandon.setText("作废");
         } else if (data.status == 3) {
-            tv_stop.setText("停用");
+            tv_stop.setText("启用");
             tv_abandon.setText("已作废");
         } else if (data.status == 1) {
             tv_stop.setText("停用");
@@ -140,17 +140,18 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
             public void onClick(View v) {
                 if (data.status == 2) {
                     changeAcStatus(1);
-                } else {
+                } else if (data.status == 1) {
                     changeAcStatus(2);
+                } else if (data.status == 3) {
+                    Toast.makeText(context, "已作废，不能启用", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         findView(R.id.tv_abandon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.status == 3) {
-//                    changeAcStatus(1);
-                } else {
+                if (data.status != 3) {
                     changeAcStatus(3);
                 }
             }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -245,7 +246,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                 if (data.id == null) {
                     finish();
                 } else {
-                    if (data.award == null || data.awards == null || data.topics == null || data.awards.size() == 0 || data.topics.size() == 0) {
+                    if (data.awards == null || data.topics == null || data.awards.size() == 0 || data.topics.size() == 0) {
                         showDialogDelete();
                     } else {
                         finish();
@@ -260,8 +261,6 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
                     Toast.makeText(context, "未添加活动", Toast.LENGTH_SHORT).show();
                 } else if (data.name == null || data.beginTime == null || data.endTime == null) {
                     Toast.makeText(context, "请完善活动信息", Toast.LENGTH_SHORT).show();
-                } else if (data.award == null) {
-                    Toast.makeText(context, "未添加代抽", Toast.LENGTH_SHORT).show();
                 } else if (data.awards == null || data.awards.size() == 0) {
                     Toast.makeText(context, "未添加奖品", Toast.LENGTH_SHORT).show();
                 } else {
@@ -365,5 +364,23 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
     protected void onDestroy() {
         instance = null;
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (data.id == null) {
+                finish();
+            } else {
+                if (data.awards == null || data.topics == null || data.awards.size() == 0 || data.topics.size() == 0) {
+                    showDialogDelete();
+                } else {
+                    finish();
+                }
+            }
+            return true;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

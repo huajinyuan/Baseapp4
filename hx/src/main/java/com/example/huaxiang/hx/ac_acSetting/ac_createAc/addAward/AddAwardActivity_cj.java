@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.Award;
 import com.example.huaxiang.hx.ac_acSetting.m.MyBitmapUtil;
 import com.example.huaxiang.hx.ac_acSetting.m.QiniuToKen;
@@ -268,16 +269,17 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         awardOdds = et_odds.getText().toString().trim();
         replaceOdds = et_replaceOdds.getText().toString().trim();
 
-        if (imgUrl == null) {
-            imgUrl = "";
-        }
+        price = price.equals(".") ? "0" : price;
+        awardOdds = awardOdds.equals(".") ? "0" : awardOdds;
+        replaceOdds = replaceOdds.equals(".") ? "0" : replaceOdds;
+
         if (name.isEmpty() || price.isEmpty() || num.isEmpty() || awardOdds.isEmpty() || replaceOdds.isEmpty()) {
             Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
+        } else if (Double.parseDouble(awardOdds) > 100 || Double.parseDouble(replaceOdds) > 100) {
+            Toast.makeText(context, "中奖率不能大于100%", Toast.LENGTH_SHORT).show();
+        } else if (imgUrl == null) {
+            Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
         } else {
-            price = price.equals(".") ? "0" : price;
-            awardOdds = awardOdds.equals(".") ? "0" : awardOdds;
-            replaceOdds = replaceOdds.equals(".") ? "0" : replaceOdds;
-
             if (award == null) {
                 addAward();
             } else {
@@ -437,6 +439,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "添加奖品成功", Toast.LENGTH_SHORT).show();
                     AddAwardListActivity_pt.instance.getData();
+                    CreateAcActivity_cj.instance.getData();
                     finish();
                 }
             }
@@ -460,6 +463,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "修改奖品成功", Toast.LENGTH_SHORT).show();
                     AddAwardListActivity_pt.instance.getData();
+                    CreateAcActivity_cj.instance.getData();
                     finish();
                 }
             }

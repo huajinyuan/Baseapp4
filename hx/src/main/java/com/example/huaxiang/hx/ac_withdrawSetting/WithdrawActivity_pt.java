@@ -123,6 +123,9 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
                     finish();
                     Toast.makeText(context, "提现成功", Toast.LENGTH_SHORT).show();
                     AccountDetailActivity_pt.instance.refresh();
+                    if (AccountListActivity_cj.instance != null) {
+                        AccountListActivity_cj.instance.refresh();
+                    }
                 } else {
                     Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
                 }

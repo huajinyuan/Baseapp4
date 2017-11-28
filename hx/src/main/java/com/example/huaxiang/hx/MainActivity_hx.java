@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,6 +30,8 @@ import com.example.huaxiang.hx.ac_bb.StaffRankingActivity;
 import com.example.huaxiang.hx.ac_memberget.MemberGetActivity;
 import com.example.huaxiang.hx.ac_staffSend.StaffSendActivity_pt;
 import com.example.huaxiang.hx.ac_withdrawSetting.SettingActivity_pt;
+import com.example.huaxiang.hx.adapter.AppMenuAdapter;
+import com.example.huaxiang.hx.m.AppMenu;
 import com.example.huaxiang.hx.m.LoginData_pt;
 import com.example.huaxiang.hx.m.Report_hx;
 import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
@@ -62,6 +65,11 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     int requestStatus;
 
     String username, password, sysSign;
+    SwipeRefreshLayout swip_refresh;
+
+    RecyclerView rv_menu1;
+    RecyclerView rv_menu2;
+    LoginData_pt loginData;
 
     @Override
     protected int getLayoutId() {
@@ -86,8 +94,19 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         tv_intentionCount = (TextView) findViewById(R.id.tv_intentionCount);
         tv_conversionCount = (TextView) findViewById(R.id.tv_conversionCount);
 
+        rv_menu1 = findView(R.id.rv_menu1);
+        rv_menu2 = findView(R.id.rv_menu2);
+
         getPermissions(this);
 
+        swip_refresh = findView(R.id.swip_refresh);
+        swip_refresh.setColorSchemeResources(R.color.colorAppRed, R.color.colorMyGreen, R.color.colorMyBlue);
+        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
     }
 
@@ -99,14 +118,6 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
         if (password != null) {
             login();
-        } else {
-            if (aCache.getAsString(ACacheKey.TOKEN) == null) {
-                Toast.makeText(context, "没有登录记录", Toast.LENGTH_SHORT).show();
-            } else {
-                token = aCache.getAsString(ACacheKey.TOKEN);
-                Log.e("aaa", token);
-                getReport();
-            }
         }
     }
 
@@ -224,6 +235,27 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
         }
     }
 
+    void setMenu(){
+        ArrayList<AppMenu> menus1 = new ArrayList<>();
+        ArrayList<AppMenu> menus2 = new ArrayList<>();
+        for (AppMenu appMenu : loginData.menuList) {
+            if (appMenu.permission.startsWith("zt:hx:")) {
+                if (appMenu.sort.length() == 2) {
+                    menus1.add(appMenu);
+                } else if (appMenu.sort.length() == 3) {
+                    menus2.add(appMenu);
+                }
+            }
+        }
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rv_menu1.setLayoutManager(layoutManager1);
+        rv_menu1.setAdapter(new AppMenuAdapter(context,menus1));
+
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rv_menu2.setLayoutManager(layoutManager2);
+        rv_menu2.setAdapter(new AppMenuAdapter(context,menus2));
+    }
+
     void refresh(){
         tv_totalManCount.setText("0");
         tv_totalReplaceCount.setText("0");
@@ -251,7 +283,11 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
             @Override
             public void onNext(Response<LoginData_pt> logdResponse) {
-                if (logdResponse.code == 0) {
+                if (logdResponse != null) {
+                    loginData = logdResponse.data;
+                    if (loginData.menuList != null) {
+                        setMenu();
+                    }
                     aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
                     token = logdResponse.data.getToken();
                     getReport();
@@ -270,17 +306,20 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             public void onStart() {
                 super.onStart();
                 Log.e("aaa", "getReport onStart");
+                swip_refresh.setRefreshing(true);
             }
 
             @Override
             public void onCompleted() {
                 Log.e("aaa", "getReport onCompleted");
+                swip_refresh.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa getReport", e.toString() + "");
                 Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                swip_refresh.setRefreshing(false);
             }
 
             @Override

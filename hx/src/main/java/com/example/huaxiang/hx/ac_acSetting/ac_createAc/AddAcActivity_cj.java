@@ -17,7 +17,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -358,13 +357,6 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             cropView.setInitialFrameScale(0.9f);
             cropView.setImageBitmap(bitmap1000);
         }
-    }
-
-    private static float distance(MotionEvent event){
-        //两根线的距离
-        float dx = event.getX(1) - event.getX(0);
-        float dy = event.getY(1) - event.getY(0);
-        return (float) Math.sqrt(dx*dx + dy*dy);
     }
 
     //qiniu

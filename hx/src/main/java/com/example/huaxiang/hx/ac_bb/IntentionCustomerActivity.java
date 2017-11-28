@@ -44,7 +44,7 @@ public class IntentionCustomerActivity extends BaseActivity<IntentionCustomerPre
     ArrayList<IntentionCustomer> pinDan_pts = new ArrayList<>();
     boolean canGet = true;
     int page = 1;
-    String requestStatus;
+    int requestStatus;
     SwipeRefreshLayout swip_refresh;
 
     @Override
@@ -126,7 +126,7 @@ public class IntentionCustomerActivity extends BaseActivity<IntentionCustomerPre
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getIntentionCustomer(token, page, 10, requestStatus), new Subscriber<Response<ArrayList<IntentionCustomer>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getIntentionCustomer(token, page, 10, requestStatus + ""), new Subscriber<Response<ArrayList<IntentionCustomer>>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -194,26 +194,15 @@ public class IntentionCustomerActivity extends BaseActivity<IntentionCustomerPre
         RvDialogSelectAdapter selectAdapter = new RvDialogSelectAdapter(context, selectData);
         rv_dialog.setAdapter(selectAdapter);
 
-        selectAdapter.setSelectPosition(requestStatus == null ? 0 : requestStatus.equals("1") ? 1 : 2);
+        selectAdapter.setSelectPosition(requestStatus);
         selectAdapter.SetSelectListener(new RvDialogSelectAdapter.SelectListener() {
             @Override
             public void select(int position) {
-                requestStatus = getPositionCode(position);
+                requestStatus = position;
                 refresh();
                 dialog.dismiss();
             }
         });
-    }
-
-    String getPositionCode(int position){
-        if (position == 0) {
-            return null;
-        }
-        if (position == 1) {
-            return "1";
-        } else {
-            return "0";
-        }
     }
 
 }

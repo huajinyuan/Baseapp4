@@ -2,6 +2,8 @@ package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addReplace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -55,6 +57,23 @@ public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> 
 
         et_num = findView(R.id.et_num);
         et_award = findView(R.id.et_award);
+
+        et_num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                CreateAcActivity_cj.instance.replaceNum = s.toString();
+            }
+        });
     }
 
     @Override

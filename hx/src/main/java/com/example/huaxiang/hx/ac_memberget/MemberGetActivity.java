@@ -17,6 +17,9 @@ import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import rx.Subscriber;
 
 
@@ -169,6 +172,15 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
         });
     }
 
+    long getDateLong(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = sdf.parse(str);
+            return date.getTime();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 
     @Override
     protected void onDestroy() {

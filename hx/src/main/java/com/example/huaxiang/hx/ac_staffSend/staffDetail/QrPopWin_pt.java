@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
@@ -26,6 +27,7 @@ public class QrPopWin_pt extends PopupWindow {
     CloseListener listener;
     ImageView iv_staff_qr_pt;
     Bitmap bitmap;
+    TextView tv_name;
 
     public QrPopWin_pt(Context mContext){
         context = mContext;
@@ -69,6 +71,7 @@ public class QrPopWin_pt extends PopupWindow {
         });
 
         iv_staff_qr_pt = (ImageView) view.findViewById(R.id.iv_staff_qr_pt);
+        tv_name = (TextView) view.findViewById(R.id.tv_name);
     }
 
     public interface CloseListener{
@@ -82,6 +85,9 @@ public class QrPopWin_pt extends PopupWindow {
     public void setQr(Bitmap bitmapQr){
         bitmap = bitmapQr;
         iv_staff_qr_pt.setImageBitmap(bitmap);
+    }
+    public void setName(String name){
+        tv_name.setText(name);
     }
 
 }

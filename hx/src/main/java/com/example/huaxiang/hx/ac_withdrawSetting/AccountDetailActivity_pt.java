@@ -99,6 +99,9 @@ public class AccountDetailActivity_pt extends BaseActivity<AccountDetailPresente
         tv_balance.setText("￥" + staff_cj.balance);
     }
     void setRv(ArrayList<AccountDetail_cj> pinDans) {
+        tv_totalWithdraw.setText("￥" + String.format("%.2f", pinDans.get(0).totalWithdrawals));
+        tv_balance.setText("￥" + String.format("%.2f", pinDans.get(0).balance));
+
         if (adapter == null) {
             pinDan_pts.clear();
             pinDan_pts.addAll(pinDans);

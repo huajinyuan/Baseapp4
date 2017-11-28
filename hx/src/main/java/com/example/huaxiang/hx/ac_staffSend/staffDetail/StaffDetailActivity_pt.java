@@ -43,6 +43,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
     ImageView iv_qr_bottom;
     String userId;
     String storeId;
+    String userName;
 
     StaffDetailAdapter_pt adapter;
     LinearLayoutManager layoutManager;
@@ -91,6 +92,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
         token = aCache.getAsString(ACacheKey.TOKEN);
         userId = getIntent().getStringExtra("userId");
         storeId = getIntent().getStringExtra("storeId");
+        userName = getIntent().getStringExtra("userName");
         getData();
 
         rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -217,6 +219,7 @@ public class StaffDetailActivity_pt extends BaseActivity<StaffDetailPresenter_pt
             }
         });
         popWin_pt.setQr(BitmapUtil.createQrCode(userId, DisplayMetricsUtil.dip2px(context, 190), DisplayMetricsUtil.dip2px(context, 190)));
+        popWin_pt.setName(userName != null ? userName : "");
     }
 
     @Override

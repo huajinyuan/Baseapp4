@@ -51,13 +51,13 @@ public class LoginActivity_hx extends AppCompatActivity {
                 }
             }
         });
-        findViewById(R.id.bt_relogin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity_hx.this, MainActivity_hx.class);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.bt_relogin).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity_hx.this, MainActivity_hx.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 }

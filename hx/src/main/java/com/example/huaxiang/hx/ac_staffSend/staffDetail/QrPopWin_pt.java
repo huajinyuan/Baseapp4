@@ -1,8 +1,11 @@
 package com.example.huaxiang.hx.ac_staffSend.staffDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,8 +51,8 @@ public class QrPopWin_pt extends PopupWindow {
             @Override
             public void onClick(View view) {
                 if (bitmap != null) {
-                    String savePath = Environment.getExternalStorageDirectory().getPath() + "/二维码/";
-                    String mPhotoPath = savePath + "二维码.png";
+                    String savePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath();
+                    String mPhotoPath = savePath + "/UserQr.png";
                     File file = new File(savePath);
                     if (!file.exists()) {
                         file.mkdirs();
@@ -59,7 +62,10 @@ public class QrPopWin_pt extends PopupWindow {
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
                         os.close();
                         if (new File(mPhotoPath).exists()) {
-                            Toast.makeText(context, "已保存至 /二维码/二维码.png", Toast.LENGTH_SHORT).show();
+                            MediaStore.Images.Media.insertImage(context.getContentResolver(), mPhotoPath, "UserQr.png", null);
+                            Uri uri = Uri.fromFile(new File(mPhotoPath));
+                            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                            Toast.makeText(context, "已保存至相册", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show();
                         }

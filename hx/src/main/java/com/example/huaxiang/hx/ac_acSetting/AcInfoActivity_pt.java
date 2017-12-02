@@ -105,6 +105,7 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
             tv_stop.setText("停用");
             tv_abandon.setText("作废");
         }
+        tv_stop.setBackgroundResource(data.status == 3 ? R.drawable.shape_radius5_grey : R.drawable.shape_radius5_blue);
 
         //添加中奖列表
         if (data.details != null) {
@@ -142,8 +143,6 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
                     changeAcStatus(1);
                 } else if (data.status == 1) {
                     changeAcStatus(2);
-                } else if (data.status == 3) {
-                    Toast.makeText(context, "已作废，不能启用", Toast.LENGTH_SHORT).show();
                 }
 
             }

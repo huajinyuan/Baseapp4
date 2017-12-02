@@ -2,10 +2,9 @@ package com.example.huaxiang.hx.ac_acSetting.ac_createAc.addReplace;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> 
     TextView tv_topbar_title;
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
+    Button bt_save;
 
     EditText et_num;
     public EditText et_award;
@@ -57,23 +57,7 @@ public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> 
 
         et_num = findView(R.id.et_num);
         et_award = findView(R.id.et_award);
-
-        et_num.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CreateAcActivity_cj.instance.replaceNum = s.toString();
-            }
-        });
+        bt_save = findView(R.id.bt_save);
     }
 
     @Override
@@ -88,6 +72,12 @@ public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> 
         if (CreateAcActivity_cj.instance.replaceNum != null) {
             et_num.setText(CreateAcActivity_cj.instance.replaceNum);
         }
+        if (CreateAcActivity_cj.instance.replaceaward != null) {
+            et_award.setText(CreateAcActivity_cj.instance.replaceaward.name);
+        }
+    }
+
+    void setAwardName(){
         if (CreateAcActivity_cj.instance.replaceaward != null) {
             et_award.setText(CreateAcActivity_cj.instance.replaceaward.name);
         }
@@ -128,15 +118,24 @@ public class AddReplaceActivity_pt extends BaseActivity<AddReplacePresenter_pt> 
         HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, CreateAcActivity_cj.instance.data.name, CreateAcActivity_cj.instance.data.imgUrl, CreateAcActivity_cj.instance.data.videoUrl,
                 CreateAcActivity_cj.instance.data.beginTime, CreateAcActivity_cj.instance.data.endTime, CreateAcActivity_cj.instance.data.money + "", CreateAcActivity_cj.instance.data.num + "", "0",
                 CreateAcActivity_cj.instance.replaceNum, CreateAcActivity_cj.instance.data.carCheck, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                bt_save.setClickable(true);
             }
 
             @Override

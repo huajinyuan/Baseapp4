@@ -158,6 +158,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                Toast.makeText(context, "onError" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

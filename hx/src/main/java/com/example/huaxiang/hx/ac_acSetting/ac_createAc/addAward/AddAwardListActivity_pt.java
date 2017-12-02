@@ -40,7 +40,9 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
     RecyclerView rv_staffSend;
     AddAwardListAdapter_pt adapter;
     LinearLayoutManager layoutManager;
-    ArrayList<Award> awards = new ArrayList<>();
+    public ArrayList<Award> awards = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
     String id;
 
     @Override
@@ -64,6 +66,17 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
 
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
+
     }
 
     @Override
@@ -73,11 +86,18 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
         getData();
     }
 
-    void setRv() {
-        adapter = new AddAwardListAdapter_pt(context, awards);
-        layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
+    void setRv(ArrayList<Award> pinDans) {
+        if (adapter == null) {
+            awards.clear();
+            awards.addAll(pinDans);
+            adapter = new AddAwardListAdapter_pt(context, awards);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            awards.addAll(pinDans);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -97,10 +117,11 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
     }
 
     void getData() {
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAwardList(token, id, 1), new Subscriber<Response<ArrayList<Award>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAwardList(token, page, 5, id, 1), new Subscriber<Response<ArrayList<Award>>>() {
             @Override
             public void onStart() {
                 super.onStart();
+                canGet = false;
             }
 
             @Override
@@ -116,8 +137,9 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
             @Override
             public void onNext(Response<ArrayList<Award>> arrayListResponse) {
                 if (arrayListResponse.data != null) {
-                    awards = arrayListResponse.data;
-                    setRv();
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
                 }
             }
         });
@@ -128,6 +150,8 @@ public class AddAwardListActivity_pt extends BaseActivity<AddAwardListPresenter_
         awards.clear();
         if(adapter!=null)
             adapter.notifyDataSetChanged();
+        adapter = null;
+        page = 1;
         getData();
     }
 

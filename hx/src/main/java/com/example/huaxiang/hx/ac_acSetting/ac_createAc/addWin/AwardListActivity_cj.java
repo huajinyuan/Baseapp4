@@ -37,6 +37,8 @@ public class AwardListActivity_cj extends BaseActivity<AwardListPresenter_cj> {
     AwardListAdapter_cj adapter;
     LinearLayoutManager layoutManager;
     ArrayList<Award> pinDan_pts = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
     String id;
 
     @Override
@@ -59,6 +61,17 @@ public class AwardListActivity_cj extends BaseActivity<AwardListPresenter_cj> {
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
+
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
     }
 
     @Override
@@ -70,6 +83,7 @@ public class AwardListActivity_cj extends BaseActivity<AwardListPresenter_cj> {
 
     void setRv(ArrayList<Award> activity_cjs) {
         if (adapter == null) {
+            pinDan_pts.clear();
             pinDan_pts.addAll(activity_cjs);
             adapter = new AwardListAdapter_cj(context, pinDan_pts);
             layoutManager = new LinearLayoutManager(context);
@@ -92,7 +106,13 @@ public class AwardListActivity_cj extends BaseActivity<AwardListPresenter_cj> {
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getAwardList(token, id,1), new Subscriber<Response<ArrayList<Award>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getAwardList(token, page, 5, id, 1), new Subscriber<Response<ArrayList<Award>>>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                canGet = false;
+            }
+
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -105,7 +125,11 @@ public class AwardListActivity_cj extends BaseActivity<AwardListPresenter_cj> {
 
             @Override
             public void onNext(Response<ArrayList<Award>> arrayListResponse) {
-                setRv(arrayListResponse.data);
+                if (arrayListResponse.data != null) {
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
+                }
             }
         });
     }

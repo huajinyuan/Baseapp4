@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
     ImageView iv_topbar_right;
 
     EditText et_mobile;
+    Button bt_save;
     public EditText et_award;
     public Award award;
     String id;
@@ -58,6 +60,7 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
 
         et_mobile = findView(R.id.et_mobile);
         et_award = findView(R.id.et_award);
+        bt_save = findView(R.id.bt_save);
     }
 
     @Override
@@ -99,13 +102,21 @@ public class AddWinActivity_pt extends BaseActivity<AddWinPresenter_pt> {
     void addAward(String mobile){
         HttpMethods.start(HttpMethods.getInstance().demoService.addWinHistory(token, id, mobile, award.id), new Subscriber<Response>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override

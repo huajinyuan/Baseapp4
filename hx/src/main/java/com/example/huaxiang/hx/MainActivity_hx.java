@@ -291,7 +291,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
                     aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
                     token = logdResponse.data.getToken();
                     getReport();
-                    Log.e("aaa========Token:", token);
+                    Log.e("aaa==onNext==Token:", token);
 
                 } else {
                     Log.e("=======onNext", logdResponse.msg);

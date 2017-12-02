@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_appBlue"
-                    android:text="5块钱博"
+                    android:text="--块钱博"
                     android:layout_marginLeft="8dp"/>
                 <TextView
                     android:id="@+id/tv_name"

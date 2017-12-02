@@ -159,7 +159,7 @@ public interface ApiStores {
 
     //活动奖品列表  type  1正常 2代抽奖品
     @GET("api/hx/hxActivityAward/list")
-    Observable<Response<ArrayList<Award>>> getAwardList(@Header("authorization") String authorization, @Query("actId") String actId, @Query("type") int type);
+    Observable<Response<ArrayList<Award>>> getAwardList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("actId") String actId, @Query("type") int type);
 
     //创建奖品
     @POST("api/hx/hxActivityAward/save")
@@ -195,7 +195,7 @@ public interface ApiStores {
 
     //问卷调查列表
     @GET("api/hx/hxTopic/list")
-    Observable<Response<ArrayList<HxTopic>>> getTopicList(@Header("authorization") String authorization, @Query("actId") String actId);
+    Observable<Response<ArrayList<HxTopic>>> getTopicList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("actId") String actId);
 
     //创建问卷调查
     @POST("api/hx/hxTopic/save")

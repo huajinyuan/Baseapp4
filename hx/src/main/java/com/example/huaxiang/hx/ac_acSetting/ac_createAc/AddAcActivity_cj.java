@@ -77,6 +77,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     EditText et_videoUrl;
     ImageView iv_ac;
     CheckBox switch_carCheck;
+    Button bt_save;
     String sdcardPath;
 
     String name, beginTime, endTime, money, num, videoUrl;
@@ -115,6 +116,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         et_videoUrl = (EditText) findViewById(R.id.et_videoUrl);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
         switch_carCheck = (CheckBox) findView(R.id.switch_carCheck);
+        bt_save = findView(R.id.bt_save);
 
         rl_cuticon = findView(R.id.rl_cuticon);
         iv_cut_back = findView(R.id.iv_cut_back);
@@ -156,7 +158,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     }
 
     void setData(){
-        if (CreateAcActivity_cj.instance.data != null) {
+        if (CreateAcActivity_cj.instance. data != null) {
             if (CreateAcActivity_cj.instance.data.name != null) {
                 et_name.setText(CreateAcActivity_cj.instance.data.name);
                 et_name.setSelection(CreateAcActivity_cj.instance.data.name.length());
@@ -167,9 +169,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             if (CreateAcActivity_cj.instance.data.endTime != null) {
                 et_endTime.setText(CreateAcActivity_cj.instance.data.endTime);
             }
-            if (CreateAcActivity_cj.instance.data.money != 0) {
-                et_money.setText(CreateAcActivity_cj.instance.data.money + "");
-            }
+            et_money.setText(CreateAcActivity_cj.instance.data.money == 0 ? "0" : CreateAcActivity_cj.instance.data.money + "");
             et_num.setText(CreateAcActivity_cj.instance.data.num + "");
             if (CreateAcActivity_cj.instance.data.videoUrl != null) {
                 et_videoUrl.setText(CreateAcActivity_cj.instance.data.videoUrl);
@@ -445,12 +445,20 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     void addAc(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", CreateAcActivity_cj.instance.replaceNum, carCheck), new Subscriber<Response<ActivityDetail_cj>>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
+                bt_save.setClickable(true);
                 Log.e("aaa", "onCompleted");
             }
 
             @Override
             public void onError(Throwable e) {
+                bt_save.setClickable(true);
                 Log.e("aaa", "onError" + e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -459,6 +467,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             public void onNext(Response<ActivityDetail_cj> arrayListResponse) {
                 if (arrayListResponse.data != null) {
                     Toast.makeText(context, "添加活动成功", Toast.LENGTH_SHORT).show();
+                    changeAcStatus(arrayListResponse.data.id, 1);
                     CreateAcActivity_cj.instance.id = arrayListResponse.data.id;
                     CreateAcActivity_cj.instance.getData();
                     finish();
@@ -471,12 +480,20 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
     void editAc(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveAc(token, name, imgUrl, videoUrl, beginTime, endTime, money, num, "0", CreateAcActivity_cj.instance.replaceNum, carCheck, CreateAcActivity_cj.instance.data.id), new Subscriber<Response>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
+                bt_save.setClickable(true);
                 Log.e("aaa", "onError" + e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -487,6 +504,26 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                     Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
                     CreateAcActivity_cj.instance.getData();
                     finish();
+                }
+            }
+        });
+    }
+
+    void changeAcStatus(String id, int status){
+        HttpMethods.start(HttpMethods.getInstance().demoService.changeAcStatus(token, id, status), new Subscriber<Response>() {
+            @Override
+            public void onCompleted() {
+                Log.e("aaa", "onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("aaa", "onError" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(Response arrayListResponse) {
+                if (arrayListResponse.code == 0) {
                 }
             }
         });

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,10 +38,11 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
     TextView tv_topbar_title;
     TextView tv_topbar_right;
     ImageView iv_topbar_right;
-
     String id;
+
     CheckBox switch_duoxuan;
     public EditText et_question;
+    Button bt_save;
     RecyclerView rv_addTopic;
     ArrayList<TopicEditData> data = new ArrayList<>();
 
@@ -68,6 +70,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
         switch_duoxuan = findView(R.id.switch_duoxuan);
         et_question = findView(R.id.et_question);
         rv_addTopic = findView(R.id.rv_addTopic);
+        bt_save = findView(R.id.bt_save);
 
         et_question.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,20 +214,28 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
     void addAward(String question, int type, String option, String answer) {
         HttpMethods.start(HttpMethods.getInstance().demoService.addTopic(token, question, type, option, answer, id), new Subscriber<Response>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "添加问卷成功", Toast.LENGTH_SHORT).show();
-                    AddTopicListActivity_pt.instance.getData();
+                    AddTopicListActivity_pt.instance.refresh();
                     CreateAcActivity_cj.instance.getData();
 
                     finish();
@@ -249,7 +260,7 @@ public class AddTopicActivity_cj extends BaseActivity<AddTopicPresenter_cj> {
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "修改问卷成功", Toast.LENGTH_SHORT).show();
-                    AddTopicListActivity_pt.instance.getData();
+                    AddTopicListActivity_pt.instance.refresh();
                     CreateAcActivity_cj.instance.getData();
 
                     finish();

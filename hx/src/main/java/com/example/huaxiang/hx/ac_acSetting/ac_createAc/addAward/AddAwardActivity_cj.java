@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -70,6 +71,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     EditText et_odds;
     EditText et_replaceOdds;
     ImageView iv_ac;
+    Button bt_save;
 
     String sdcardPath;
 
@@ -106,6 +108,7 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
         et_odds = (EditText) findViewById(R.id.et_odds);
         et_replaceOdds = (EditText) findViewById(R.id.et_replaceOdds);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
+        bt_save = findView(R.id.bt_save);
 
         rl_cuticon = findView(R.id.rl_cuticon);
         iv_cut_back = findView(R.id.iv_cut_back);
@@ -277,15 +280,57 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
             Toast.makeText(context, "请填写完整", Toast.LENGTH_SHORT).show();
         } else if (Double.parseDouble(awardOdds) > 100 || Double.parseDouble(replaceOdds) > 100) {
             Toast.makeText(context, "中奖率不能大于100%", Toast.LENGTH_SHORT).show();
-        } else if (imgUrl == null) {
-            Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
-        } else {
-            if (award == null) {
-                addAward();
+        } else if (checkOddsOk(Double.parseDouble(awardOdds), Double.parseDouble(replaceOdds))) {
+            if (imgUrl == null) {
+                Toast.makeText(context, "请上传图片", Toast.LENGTH_SHORT).show();
             } else {
-                editAward();
+                if (award == null) {
+                    addAward();
+                } else {
+                    editAward();
+                }
             }
         }
+    }
+
+    boolean checkOddsOk(double odds1, double odds2) {
+        double addOdds = 0;
+        double addOddsreplace = 0;
+
+        if (award == null) {
+            for (Award awardItem : AddAwardListActivity_pt.instance.awards) {
+                addOdds += awardItem.awardOdds * 100;
+                addOddsreplace += awardItem.replaceAwardOdds * 100;
+            }
+            if ((addOdds + odds1) > 100) {
+                Toast.makeText(context, "抽奖中奖率累计不能大于100%", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if ((addOddsreplace + odds2) > 100) {
+                Toast.makeText(context, "代抽中奖率累计不能大于100%", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } else {
+            for (Award awardItem : AddAwardListActivity_pt.instance.awards) {
+                if (awardItem.id.equals(award.id)) {
+                    addOdds += odds1;
+                    addOddsreplace += odds2;
+                } else {
+                    addOdds += awardItem.awardOdds * 100;
+                    addOddsreplace += awardItem.replaceAwardOdds * 100;
+                }
+            }
+            if ((addOdds) > 100) {
+                Toast.makeText(context, "抽奖中奖率累计不能大于100%", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if ((addOddsreplace) > 100) {
+                Toast.makeText(context, "代抽中奖率累计不能大于100%", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+
+        return true;
     }
 
     void getPermissions(Activity mActivity){
@@ -424,21 +469,31 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
 
     void addAward(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, (Double.parseDouble(awardOdds) / 100) + "", (Double.parseDouble(replaceOdds) / 100) + "", imgUrl), new Subscriber<Response<Award>>() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+
+            }
+
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onNext(Response<Award> arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "添加奖品成功", Toast.LENGTH_SHORT).show();
-                    AddAwardListActivity_pt.instance.getData();
+                    AddAwardListActivity_pt.instance.refresh();
                     CreateAcActivity_cj.instance.getData();
                     finish();
                 }
@@ -449,20 +504,28 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
     void editAward(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveAward(token, id, name, price, num, (Double.parseDouble(awardOdds) / 100) + "", (Double.parseDouble(replaceOdds) / 100) + "", imgUrl, award.id), new Subscriber<Response>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "修改奖品成功", Toast.LENGTH_SHORT).show();
-                    AddAwardListActivity_pt.instance.getData();
+                    AddAwardListActivity_pt.instance.refresh();
                     CreateAcActivity_cj.instance.getData();
                     finish();
                 }

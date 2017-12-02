@@ -39,7 +39,7 @@ public class StaffRankingAdapter extends RecyclerView.Adapter<StaffRankingAdapte
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         Staff_cj staff_cj = data.get(position);
 
-        holder.tv_name.setText(staff_cj.userName);
+        holder.tv_name.setText(staff_cj.username);
         holder.tv_lotteryNumber.setText(staff_cj.lotteryNumber + "");
         holder.tv_replaceNum.setText(staff_cj.replaceNum + "");
         holder.tv_totalNum.setText(staff_cj.totalNum + "");

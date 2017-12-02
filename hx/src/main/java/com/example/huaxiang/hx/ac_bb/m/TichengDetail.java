@@ -22,7 +22,7 @@ public class TichengDetail implements Serializable {
     public String actName;
     public double commission;
 
-    User user;
-    Member member;
+    public User user;
+    public Member member;
 
 }

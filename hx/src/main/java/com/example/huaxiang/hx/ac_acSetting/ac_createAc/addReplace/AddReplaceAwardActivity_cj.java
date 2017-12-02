@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -67,6 +68,7 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
     EditText et_name;
     EditText et_price;
     ImageView iv_ac;
+    Button bt_save;
     String sdcardPath;
 
     String id;
@@ -99,6 +101,7 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
         et_name = (EditText) findViewById(R.id.et_name);
         et_price = (EditText) findViewById(R.id.et_price);
         iv_ac = (ImageView) findViewById(R.id.iv_ac);
+        bt_save = findView(R.id.bt_save);
 
         rl_cuticon = findView(R.id.rl_cuticon);
         iv_cut_back = findView(R.id.iv_cut_back);
@@ -361,13 +364,21 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
     void addAward(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveReplaceAward(token, id, name, price, imgUrl), new Subscriber<Response<Award>>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override
@@ -375,7 +386,7 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
                 if (arrayListResponse.data != null) {
                     Toast.makeText(context, "添加代抽奖品成功", Toast.LENGTH_SHORT).show();
                     CreateAcActivity_cj.instance.replaceaward = arrayListResponse.data;
-                    AddReplaceActivity_pt.instance.setData();
+                    AddReplaceActivity_pt.instance.setAwardName();
                     finish();
                 }
             }
@@ -385,13 +396,21 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
     void editAward(){
         HttpMethods.start(HttpMethods.getInstance().demoService.saveReplaceAward(token, id, name, price, imgUrl, CreateAcActivity_cj.instance.replaceaward.id), new Subscriber<Response>() {
             @Override
+            public void onStart() {
+                super.onStart();
+                bt_save.setClickable(false);
+            }
+
+            @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
+                bt_save.setClickable(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa", "onError" + e.getMessage());
+                bt_save.setClickable(true);
             }
 
             @Override
@@ -401,7 +420,7 @@ public class AddReplaceAwardActivity_cj extends BaseActivity<AddReplaceAwardPres
                     CreateAcActivity_cj.instance.replaceaward.name = name;
                     CreateAcActivity_cj.instance.replaceaward.price = Double.parseDouble(price);
                     CreateAcActivity_cj.instance.replaceaward.imgUrl = imgUrl;
-                    AddReplaceActivity_pt.instance.setData();
+                    AddReplaceActivity_pt.instance.setAwardName();
                     finish();
                 }
             }

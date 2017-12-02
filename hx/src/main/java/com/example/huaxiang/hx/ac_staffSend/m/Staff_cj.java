@@ -26,5 +26,5 @@ public class Staff_cj implements Serializable{
     public int replaceNum;
     public int totalNum;
     public int lotteryNumber;
-    public String userName;
+    public String username;
 }

@@ -43,7 +43,9 @@ public class TichengDetailAdapter extends RecyclerView.Adapter<TichengDetailAdap
         holder.tv_number.setText(cjHistory.number);
         holder.tv_name.setText(cjHistory.actName);
         holder.tv_staff.setText(cjHistory.userName);
-        holder.tv_cjPerson.setText(cjHistory.userName);
+        if (cjHistory.member != null) {
+            holder.tv_cjPerson.setText(cjHistory.member.name);
+        }
 //        holder.tv_getType.setText(cjHistory.awardName);
         holder.tv_ticheng.setText("提成￥ " + cjHistory.commission);
 

@@ -41,6 +41,8 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
     AddTopicListAdapter adapter;
     LinearLayoutManager layoutManager;
     ArrayList<HxTopic> topics = new ArrayList<>();
+    boolean canGet = true;
+    int page = 1;
     String id;
 
     @Override
@@ -64,6 +66,17 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
 
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
 
+        rv_staffSend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (layoutManager.findLastVisibleItemPosition() == layoutManager.getItemCount() - 1)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        if(canGet)
+                            getData();
+            }
+        });
+
     }
 
     @Override
@@ -73,11 +86,18 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
         getData();
     }
 
-    void setRv() {
-        adapter = new AddTopicListAdapter(context, topics);
-        layoutManager = new LinearLayoutManager(context);
-        rv_staffSend.setLayoutManager(layoutManager);
-        rv_staffSend.setAdapter(adapter);
+    void setRv(ArrayList<HxTopic> mTopics) {
+        if (adapter == null) {
+            topics.clear();
+            topics.addAll(mTopics);
+            adapter = new AddTopicListAdapter(context, topics);
+            layoutManager = new LinearLayoutManager(context);
+            rv_staffSend.setLayoutManager(layoutManager);
+            rv_staffSend.setAdapter(adapter);
+        } else {
+            topics.addAll(mTopics);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -97,10 +117,11 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
     }
 
     void getData() {
-        HttpMethods.start(HttpMethods.getInstance().demoService.getTopicList(token, id), new Subscriber<Response<ArrayList<HxTopic>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getTopicList(token, page, 5, id), new Subscriber<Response<ArrayList<HxTopic>>>() {
             @Override
             public void onStart() {
                 super.onStart();
+                canGet = false;
             }
 
             @Override
@@ -116,12 +137,23 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
             @Override
             public void onNext(Response<ArrayList<HxTopic>> arrayListResponse) {
                 if (arrayListResponse.data != null) {
-                    topics = arrayListResponse.data;
-                    setRv();
+                    setRv(arrayListResponse.data);
+                    canGet = true;
+                    page++;
                 }
             }
         });
 
+    }
+
+    public void refresh(){
+        topics.clear();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+        adapter = null;
+        page = 1;
+        getData();
     }
 
     public void deleteTopic(String topicId) {
@@ -145,7 +177,7 @@ public class AddTopicListActivity_pt extends BaseActivity<AddTopicListPresenter_
             public void onNext(Response arrayListResponse) {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "删除问卷成功", Toast.LENGTH_SHORT).show();
-                    getData();
+                    refresh();
                     CreateAcActivity_cj.instance.getData();
                 }
             }

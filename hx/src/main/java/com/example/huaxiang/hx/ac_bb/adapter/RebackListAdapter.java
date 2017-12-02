@@ -49,6 +49,11 @@ public class RebackListAdapter extends RecyclerView.Adapter<RebackListAdapter.An
         }
         holder.tv_phone.setText("手机：" + reback_hx.phone);
         holder.tv_carNumber.setText("车牌：" + reback_hx.licensePlate);
+        if (reback_hx.licensePlate == null || reback_hx.licensePlate.equals("")) {
+            holder.tv_carNumber.setVisibility(View.GONE);
+        } else {
+            holder.tv_carNumber.setVisibility(View.VISIBLE);
+        }
         holder.tv_staff.setText("员工：" + reback_hx.user.name);
 
         holder.tv_reback.setText("回访：" + "暂无");

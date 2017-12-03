@@ -79,7 +79,18 @@ public class MyBitmapUtil {
         options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
         options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例
         Bitmap bm = BitmapFactory.decodeFile(imagePath, options); // 解码文件
-        Log.e("TAG", "size: " + bm.getByteCount() / 1000 + " width:" + bm.getWidth() + " heigth:" + bm.getHeight()); // 输出图像数据
+
+        int newWidth, newHeight;
+        if (width > height) {
+            newHeight = 380;
+            newWidth = (int) (380d / height * width);
+        } else {
+            newWidth = 380;
+            newHeight = (int) (380d / width * height);
+        }
+        bm = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
+
+        Log.e("aaa", "size: " + bm.getByteCount() / 1024 + "KB " + bm.getWidth() + "x" + bm.getHeight()); // 输出图像数据
         return bm;
     }
 

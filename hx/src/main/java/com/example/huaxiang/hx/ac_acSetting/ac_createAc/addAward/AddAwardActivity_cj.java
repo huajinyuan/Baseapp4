@@ -250,7 +250,9 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                         new File(mPhotoPath).delete();
 
                     FileOutputStream os = new FileOutputStream(mPhotoPath);
-                    cropView.getCroppedBitmap().compress(Bitmap.CompressFormat.PNG, 90, os);
+                    Bitmap bitmapCut = cropView.getCroppedBitmap();
+                    Log.e("aaa", "sizeCut: " + bitmapCut.getByteCount() / 1024 + "KB " + bitmapCut.getWidth() + "x" + bitmapCut.getHeight()); // 输出图像数据
+                    bitmapCut.compress(Bitmap.CompressFormat.PNG, 90, os);
                     rl_cuticon.setVisibility(View.GONE);
 
                     if (new File(mPhotoPath).exists()) {

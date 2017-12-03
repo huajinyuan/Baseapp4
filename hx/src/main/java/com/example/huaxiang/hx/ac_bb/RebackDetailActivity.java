@@ -82,7 +82,7 @@ public class RebackDetailActivity extends BaseActivity<RebackDetailPresenter> {
     void setData(){
         ((TextView) findView(R.id.tv_carNumber)).setText("车牌：" + reback_hx.licensePlate);
         ((TextView) findView(R.id.tv_phone)).setText("手机：" + reback_hx.phone);
-        ((TextView) findView(R.id.tv_awardName)).setText("产品：" + reback_hx.awardName);
+        ((TextView) findView(R.id.tv_awardName)).setText("活动：" + reback_hx.actName);
         ((TextView) findView(R.id.tv_staff)).setText("员工：" + reback_hx.user.name);
 
         if (reback_hx.createDate != null) {

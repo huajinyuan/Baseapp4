@@ -43,7 +43,7 @@ public class RebackListAdapter extends RecyclerView.Adapter<RebackListAdapter.An
     public void onBindViewHolder(final AnchorHotViewHolder holder, final int position) {
         Reback_hx reback_hx = data.get(position);
 
-        holder.tv_awardName.setText("产品：" + reback_hx.awardName);
+        holder.tv_awardName.setText("活动：" + reback_hx.actName);
         if (reback_hx.createDate != null) {
             holder.tv_date.setText(reback_hx.createDate.length() > 10 ? reback_hx.createDate.substring(0, 10) : reback_hx.createDate);
         }

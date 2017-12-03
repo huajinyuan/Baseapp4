@@ -101,6 +101,7 @@ public class CreateAcActivity_cj extends BaseActivity<CreateAcPresenter_cj> {
         setData();
         id = getIntent().getStringExtra("id");
         if (id != null) {
+            tv_topbar_title.setText("编辑活动");
             getData();
         }
     }

@@ -41,6 +41,7 @@ public class RebackDetailActivity extends BaseActivity<RebackDetailPresenter> {
     ImageView iv_topbar_right;
     ImageView iv_topbar_right_detail;
 
+    TextView tv_carNumber;
     RecyclerView rv_staffSend;
     ArrayList<Record> records = new ArrayList<>();
 
@@ -67,6 +68,7 @@ public class RebackDetailActivity extends BaseActivity<RebackDetailPresenter> {
         iv_topbar_right.setVisibility(View.GONE);
         iv_topbar_right.setImageResource(R.mipmap.icon_top_right_hx);
 
+        tv_carNumber = findView(R.id.tv_carNumber);
         rv_staffSend = (RecyclerView) findViewById(R.id.rv_staffSend);
 
         et_record = (EditText) findView(R.id.et_record);
@@ -85,13 +87,16 @@ public class RebackDetailActivity extends BaseActivity<RebackDetailPresenter> {
         ((TextView) findView(R.id.tv_awardName)).setText("活动：" + reback_hx.actName);
         ((TextView) findView(R.id.tv_staff)).setText("员工：" + reback_hx.user.name);
 
+        if (reback_hx.licensePlate == null || reback_hx.licensePlate.equals("")) {
+            tv_carNumber.setVisibility(View.GONE);
+        }
+
         if (reback_hx.createDate != null) {
             ((TextView) findView(R.id.tv_date)).setText(reback_hx.createDate.length() > 10 ? reback_hx.createDate.substring(0, 10) : reback_hx.createDate);
         }
 
         if (reback_hx.recordList != null) {
             setRv();
-
         }
     }
     void setRv() {

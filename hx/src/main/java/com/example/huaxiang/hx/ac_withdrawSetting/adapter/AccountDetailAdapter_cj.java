@@ -41,7 +41,7 @@ public class AccountDetailAdapter_cj extends RecyclerView.Adapter<AccountDetailA
 
         holder.tv_change.setText((detail.type == 1 ? "-" : "+") + " ￥" + detail.amount);
         holder.tv_type.setText(getType(detail.billType));
-        holder.tv_balance.setText("￥" + detail.balance);
+        holder.tv_balance.setText("￥" + detail.end);
         holder.tv_date.setText(detail.createDate);
     }
 

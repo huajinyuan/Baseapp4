@@ -73,7 +73,6 @@
                 android:text="车牌："
                 android:textColor="@color/black"/>
 
-
             <TextView
                 android:id="@+id/tv_staff"
                 android:layout_width="match_parent"

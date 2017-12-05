@@ -24,7 +24,9 @@ import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 import com.example.huaxiang.utils.UiUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import nucleus.factory.RequiresPresenter;
 import rx.Subscriber;
@@ -140,7 +142,13 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
             @Override
             public void onClick(View v) {
                 if (data.status == 2) {
-                    changeAcStatus(1);
+                    if (data.surplusTotalNum < 1) {
+                        Toast.makeText(context, "剩余奖品数不足，请先编辑", Toast.LENGTH_SHORT).show();
+                    } else if (getDateLong(data.endTime) < getDateLong(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))) {
+                        Toast.makeText(context, "活动已过期，请先编辑", Toast.LENGTH_SHORT).show();
+                    } else {
+                        changeAcStatus(1);
+                    }
                 } else if (data.status == 1) {
                     changeAcStatus(2);
                 }
@@ -205,6 +213,16 @@ public class AcInfoActivity_pt extends BaseActivity<AcInfoPresenter_pt> {
                 getData();
             }
         });
+    }
+
+    long getDateLong(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = sdf.parse(str);
+            return date.getTime();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

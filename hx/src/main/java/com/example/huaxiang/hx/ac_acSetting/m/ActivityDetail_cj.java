@@ -30,6 +30,8 @@ public class ActivityDetail_cj implements Serializable{
     public int replaceTime;
     public int status;//1可用 2暂停 3作废 ,
     public double money;
+    public int surplusTotalNum;
+    public int ableTime;
 
     public ArrayList<Award> awards;
     public Award award;

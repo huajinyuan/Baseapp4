@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.ac_createAc.CreateAcActivity_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.Award;
 import com.example.huaxiang.hx.ac_acSetting.m.MyBitmapUtil;
@@ -497,6 +498,9 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                     Toast.makeText(context, "添加奖品成功", Toast.LENGTH_SHORT).show();
                     AddAwardListActivity_pt.instance.refresh();
                     CreateAcActivity_cj.instance.getData();
+                    if (AcInfoActivity_pt.instance != null) {
+                        AcInfoActivity_pt.instance.getData();
+                    }
                     finish();
                 }
             }
@@ -529,6 +533,9 @@ public class AddAwardActivity_cj extends BaseActivity<AddAwardPresenter_cj> {
                     Toast.makeText(context, "修改奖品成功", Toast.LENGTH_SHORT).show();
                     AddAwardListActivity_pt.instance.refresh();
                     CreateAcActivity_cj.instance.getData();
+                    if (AcInfoActivity_pt.instance != null) {
+                        AcInfoActivity_pt.instance.getData();
+                    }
                     finish();
                 }
             }

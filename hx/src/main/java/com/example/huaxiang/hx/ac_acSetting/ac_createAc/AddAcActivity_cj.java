@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huaxiang.R;
+import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.MyBitmapUtil;
 import com.example.huaxiang.hx.ac_acSetting.m.QiniuToKen;
@@ -503,6 +504,9 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                 if (arrayListResponse.code == 0) {
                     Toast.makeText(context, "修改活动成功", Toast.LENGTH_SHORT).show();
                     CreateAcActivity_cj.instance.getData();
+                    if (AcInfoActivity_pt.instance != null) {
+                        AcInfoActivity_pt.instance.getData();
+                    }
                     finish();
                 }
             }

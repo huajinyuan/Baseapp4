@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_bb.adapter.IntentionCustomerAdapter;
 import com.example.huaxiang.hx.ac_bb.m.IntentionCustomer;
+import com.example.huaxiang.hx.m.ShareData;
 import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
 import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
@@ -126,7 +127,7 @@ public class IntentionCustomerActivity extends BaseActivity<IntentionCustomerPre
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getIntentionCustomer(token, page, 10, requestStatus + ""), new Subscriber<Response<ArrayList<IntentionCustomer>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getIntentionCustomer(token, page, 10, requestStatus + "", ShareData.status_main), new Subscriber<Response<ArrayList<IntentionCustomer>>>() {
             @Override
             public void onStart() {
                 super.onStart();

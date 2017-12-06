@@ -97,7 +97,7 @@ public interface ApiStores {
     @GET("api/hx/hxOrder/list")
     Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
     @GET("api/hx/hxOrder/list")
-    Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward);
+    Observable<Response<ArrayList<IntentionCustomer>>> getIntentionCustomer(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("isAward") String isAward, @Query("status") int status);
 
     //抽奖详情
     @GET("api/hx/hxOrder/{number}")
@@ -119,7 +119,7 @@ public interface ApiStores {
 
     //回访记录
     @GET("api/hx/hxMemberVisit/list")
-    Observable<Response<ArrayList<Reback_hx>>> getRebackList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("type") int type);
+    Observable<Response<ArrayList<Reback_hx>>> getRebackList(@Header("authorization") String authorization, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize, @Query("type") int type, @Query("status") int status);
 
     //回访详情--提交
     @POST("api/hx/hxMemberVisit/submit")

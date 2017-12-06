@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_bb.adapter.RebackListAdapter;
 import com.example.huaxiang.hx.ac_bb.m.Reback_hx;
+import com.example.huaxiang.hx.m.ShareData;
 import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
 import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
@@ -129,7 +130,7 @@ public class RebackListActivity extends BaseActivity<RebackListPresenter> {
     }
 
     void getData(){
-        HttpMethods.start(HttpMethods.getInstance().demoService.getRebackList(token, page, 10, requestStatus), new Subscriber<Response<ArrayList<Reback_hx>>>() {
+        HttpMethods.start(HttpMethods.getInstance().demoService.getRebackList(token, page, 10, requestStatus, ShareData.status_main), new Subscriber<Response<ArrayList<Reback_hx>>>() {
             @Override
             public void onStart() {
                 super.onStart();

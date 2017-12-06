@@ -34,6 +34,7 @@ import com.example.huaxiang.hx.adapter.AppMenuAdapter;
 import com.example.huaxiang.hx.m.AppMenu;
 import com.example.huaxiang.hx.m.LoginData_pt;
 import com.example.huaxiang.hx.m.Report_hx;
+import com.example.huaxiang.hx.m.ShareData;
 import com.example.huaxiang.hx.utils.DisplayMetricsUtil;
 import com.example.huaxiang.hx.utils.RvDialogSelectAdapter;
 import com.example.huaxiang.model.Response;
@@ -369,6 +370,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             @Override
             public void select(int position) {
                 if (requestStatus != position) {
+                    ShareData.status_main = position;
                     requestStatus = position;
                     refresh();
                 }

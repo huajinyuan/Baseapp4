@@ -127,7 +127,7 @@ public class WithdrawActivity_pt extends BaseActivity<WithdrawPresenter_pt> {
                         AccountListActivity_cj.instance.refresh();
                     }
                 } else {
-                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, arrayListResponse.message, Toast.LENGTH_SHORT).show();
                 }
             }
         });

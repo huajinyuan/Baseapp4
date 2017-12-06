@@ -36,11 +36,11 @@ public class ComposeData<T> implements Observable.Transformer<Response<T>, T> {
         public Observable<E> call(Response<E> response) {
             if (response.isSuccess()) {
                 if (response.data instanceof BaseInfo) {
-                    ((BaseInfo) response.data).setSuccessHintMsg(response.msg);
+                    ((BaseInfo) response.data).setSuccessHintMsg(response.message);
                 }
                 return Observable.just(response.data);
             }
-            return Observable.error(new ErrorThrowable(response.code, response.msg));
+            return Observable.error(new ErrorThrowable(response.code, response.message));
         }
     }
 }

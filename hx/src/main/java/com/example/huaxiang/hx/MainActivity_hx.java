@@ -80,6 +80,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
     @Override
     protected void initView() {
         AppContext.getInstance().init(this);
+        ShareData.mainActivity = this;
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);
@@ -279,23 +280,25 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
             @Override
             public void onError(Throwable e) {
                 Log.e("aaa login", e.toString() + "");
-                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNext(Response<LoginData_pt> logdResponse) {
                 if (logdResponse != null) {
-                    loginData = logdResponse.data;
-                    if (loginData.menuList != null) {
-                        setMenu();
+                    if (logdResponse.code != 0) {
+                        Toast.makeText(context, logdResponse.message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        loginData = logdResponse.data;
+                        if (loginData.menuList != null) {
+                            setMenu();
+                        }
+                        aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
+                        token = logdResponse.data.getToken();
+                        getReport();
+                        Log.e("aaa==onNext==Token:", token);
                     }
-                    aCache.put(ACacheKey.TOKEN, logdResponse.data.getToken());
-                    token = logdResponse.data.getToken();
-                    getReport();
-                    Log.e("aaa==onNext==Token:", token);
-
                 } else {
-                    Log.e("=======onNext", logdResponse.msg);
+                    Log.e("=======onNext", logdResponse.message);
                 }
             }
         });
@@ -318,8 +321,6 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("aaa getReport", e.toString() + "");
-                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                 swip_refresh.setRefreshing(false);
             }
 
@@ -329,7 +330,7 @@ public class MainActivity_hx extends BaseActivity<MainPresenter_hx> {
                     setReport(response.data);
                     Log.e("aaa======onNext", response.data.toString());
                 } else {
-                    Log.e("aaa======onNext", response.msg);
+                    Log.e("aaa======onNext", response.message);
                 }
             }
         });

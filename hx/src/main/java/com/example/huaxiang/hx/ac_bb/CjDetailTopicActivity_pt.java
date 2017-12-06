@@ -16,7 +16,6 @@ import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
-import com.example.huaxiang.utils.AppContext;
 
 import java.util.ArrayList;
 
@@ -46,7 +45,6 @@ public class CjDetailTopicActivity_pt extends BaseActivity<CjDetailTopicPresente
 
     @Override
     protected void initView() {
-        AppContext.getInstance().init(this);
         context = this;
         aCache = ACache.get(context);
         tv_topbar_title = (TextView) findViewById(R.id.tv_topbar_title);

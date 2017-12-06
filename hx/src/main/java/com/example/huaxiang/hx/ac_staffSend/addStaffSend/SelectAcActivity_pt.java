@@ -228,7 +228,7 @@ public class SelectAcActivity_pt extends BaseActivity<SelectAcPresenter_pt> {
                         startActivity(new Intent(context, StaffDetailActivity_pt.class).putExtra("userId", userId));
                     }
                 } else {
-                    ToastUtil.showToast(arrayListResponse.msg);
+                    ToastUtil.showToast(arrayListResponse.message);
                 }
             }
         });

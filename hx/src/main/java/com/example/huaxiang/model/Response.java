@@ -14,15 +14,15 @@ public class Response<T> implements Serializable {
     @SerializedName("code")
     public int code;
 
-    @SerializedName("msg")
-    public String msg;
+    @SerializedName("message")
+    public String message;
 
     @SerializedName("data")
     public T data;
 
-    public Response(@ReturnCode.Exception int code, String msg) {
+    public Response(@ReturnCode.Exception int code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 
     public boolean isSuccess() {

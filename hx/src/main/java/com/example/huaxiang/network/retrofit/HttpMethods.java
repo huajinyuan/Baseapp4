@@ -1,10 +1,14 @@
 package com.example.huaxiang.network.retrofit;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.huaxiang.hx.m.ShareData;
 import com.example.huaxiang.model.Response;
+import com.example.huaxiang.utils.AppContext;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.HttpException;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
@@ -48,7 +52,7 @@ public class HttpMethods {
         @Override
         public T call(Response<T> httpResult) {
             if (httpResult.code != 0) {
-//                throw new ServerException(httpResult.code,httpResult.msg);
+//                throw new ServerException(httpResult.code,httpResult.message);
 //                return ErrorThrowable.convertErr();
                 Log.e("=================", "=========error  " + httpResult.code);
 
@@ -75,10 +79,32 @@ public class HttpMethods {
 //    }
 
     public static void start(Observable observable, Subscriber subscriber) {
-        observable.subscribeOn(Schedulers.io())
+        observable.onErrorResumeNext(new Func1<Throwable, Observable>() {
+            @Override
+            public Observable call(Throwable throwable) {
+                if (throwable instanceof HttpException) {
+                    HttpException httpException = (HttpException) throwable;
+                    int code = httpException.code();
+                    String msg = httpException.getMessage();
+                    if (code == 401) {
+                        msg = "登录信息已失效，请重新登录";
+                    }
+                    String finalMsg = msg;
+                    ShareData.mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(AppContext.getContext(), finalMsg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                return null;
+            }
+
+        })      .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+
     }
 //    public Observable<Response<LoginData_pt>> login(String username, String password) {
 //        return demoService.doLogin_pt(username, password)

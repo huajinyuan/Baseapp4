@@ -22,10 +22,13 @@ import com.example.huaxiang.model.Response;
 
 import java.util.ArrayList;
 
+import okhttp3.MultipartBody;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -225,4 +228,8 @@ public interface ApiStores {
     @POST("api/common/merchantConfig/save")
     Observable<Response> saveSetting(@Header("authorization") String authorization, @Query("model") String model, @Query("type") int type, @Query("value") int value);
 
+    //通用上传
+    @Multipart
+    @POST("api/common/upload")
+    Observable<Response<String>> uploadFile(@Header("authorization") String authorization, @Query("filePath") String filePath, @Part MultipartBody.Part file);
 }

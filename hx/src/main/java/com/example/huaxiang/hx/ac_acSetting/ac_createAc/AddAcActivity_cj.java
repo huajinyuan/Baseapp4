@@ -31,20 +31,13 @@ import com.example.huaxiang.R;
 import com.example.huaxiang.hx.ac_acSetting.AcInfoActivity_pt;
 import com.example.huaxiang.hx.ac_acSetting.m.ActivityDetail_cj;
 import com.example.huaxiang.hx.ac_acSetting.m.MyBitmapUtil;
-import com.example.huaxiang.hx.ac_acSetting.m.QiniuToKen;
 import com.example.huaxiang.model.Response;
 import com.example.huaxiang.module.base.BaseActivity;
 import com.example.huaxiang.network.retrofit.HttpMethods;
-import com.example.huaxiang.network.retrofit.QiniuUpload;
 import com.example.huaxiang.rxpicture.widget.cropview.CropImageView;
 import com.example.huaxiang.utils.ACache;
 import com.example.huaxiang.utils.ACacheKey;
 import com.example.huaxiang.utils.UiUtil;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,9 +46,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import nucleus.factory.RequiresPresenter;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Subscriber;
-
-import static com.example.huaxiang.hx.utils.StringConfig.QiniuBase;
 
 
 @RequiresPresenter(AddAcPresenter_cj.class)
@@ -360,9 +354,54 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
         }
     }
 
-    //qiniu
+//    //qiniu
+//    public void uploadphoto(final File file) {
+//        HttpMethods.start(HttpMethods.getInstance().demoService.getQiniuToken(token), new Subscriber<Response<QiniuToKen>>() {
+//            @Override
+//            public void onCompleted() {
+//                Log.e("aaa", "onCompleted");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("aaa", "onError" + e.getMessage());
+//            }
+//
+//            @Override
+//            public void onNext(Response<QiniuToKen> arrayListResponse) {
+//                String qiniuToken = arrayListResponse.data.token;
+//                if (qiniuToken != null) {
+//                    QiniuUpload.getInstance().uploadFile(qiniuToken, file, handler);
+//                }
+//            }
+//        });
+//    }
+//
+//    UpCompletionHandler handler = new UpCompletionHandler() {
+//        @Override
+//        public void complete(String key, ResponseInfo info, JSONObject res) {
+//            //res包含hash、key等信息，具体字段取决于上传策略的设置
+//            if (info.isOK()) {
+//                try {
+//                    Log.e("qiniu", "Upload Success token:" + res.getString("key"));
+//                    imgUrl = QiniuBase + res.getString("key");
+//                    UiUtil.setImage(iv_ac, imgUrl);
+//                } catch (JSONException e) {
+//                    Log.e("qiniu", "Upload Success, token getString wrong!");
+//                    Toast.makeText(context, "Upload Exception", Toast.LENGTH_SHORT).show();
+//                }
+//            } else {
+//                Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
+//                Log.e("aaa", info.toString()+" error:"+info.error);
+//            }
+//        }
+//    };
+
     public void uploadphoto(final File file) {
-        HttpMethods.start(HttpMethods.getInstance().demoService.getQiniuToken(token), new Subscriber<Response<QiniuToKen>>() {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+
+        HttpMethods.start(HttpMethods.getInstance().demoService.uploadFile(token, "image/hx", body), new Subscriber<Response<String>>() {
             @Override
             public void onCompleted() {
                 Log.e("aaa", "onCompleted");
@@ -374,34 +413,17 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
             }
 
             @Override
-            public void onNext(Response<QiniuToKen> arrayListResponse) {
-                String qiniuToken = arrayListResponse.data.token;
-                if (qiniuToken != null) {
-                    QiniuUpload.getInstance().uploadFile(qiniuToken, file, handler);
+            public void onNext(Response<String> arrayListResponse) {
+                if (arrayListResponse.code == 0) {
+                    Log.e("aaa Upload", "Upload Success:" + arrayListResponse.data);
+                    imgUrl = arrayListResponse.data;
+                    UiUtil.setImage(iv_ac, imgUrl);
+                } else {
+                    Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
-    UpCompletionHandler handler = new UpCompletionHandler() {
-        @Override
-        public void complete(String key, ResponseInfo info, JSONObject res) {
-            //res包含hash、key等信息，具体字段取决于上传策略的设置
-            if (info.isOK()) {
-                try {
-                    Log.e("qiniu", "Upload Success token:" + res.getString("key"));
-                    imgUrl = QiniuBase + res.getString("key");
-                    UiUtil.setImage(iv_ac, imgUrl);
-                } catch (JSONException e) {
-                    Log.e("qiniu", "Upload Success, token getString wrong!");
-                    Toast.makeText(context, "Upload Exception", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
-                Log.e("aaa", info.toString()+" error:"+info.error);
-            }
-        }
-    };
 
     public void showDialogDatePicker(EditText et) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.DialogTransBackGround);
@@ -473,7 +495,7 @@ public class AddAcActivity_cj extends BaseActivity<AddAcPresenter_cj> {
                     CreateAcActivity_cj.instance.getData();
                     finish();
                 } else {
-                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, arrayListResponse.message, Toast.LENGTH_SHORT).show();
                 }
             }
         });

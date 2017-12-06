@@ -167,7 +167,7 @@ public class MemberGetActivity extends BaseActivity<MemberGetPresenter> {
                     Toast.makeText(context, "兑换成功", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(context, arrayListResponse.msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, arrayListResponse.message, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -42,7 +42,7 @@ public abstract class BaseListPresenter<D, V extends IListView> extends BasePres
                                 mDataList = response.data;
                                 view.showListItems(mPageId == 1, mDataList);
                             } else {
-                                view.showLoadMoreState(response.code, response.msg);
+                                view.showLoadMoreState(response.code, response.message);
                             }
                         }
                     } else {

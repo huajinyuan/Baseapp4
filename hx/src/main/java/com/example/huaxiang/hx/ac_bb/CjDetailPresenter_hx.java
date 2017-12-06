@@ -47,7 +47,7 @@ public class CjDetailPresenter_hx extends BasePresenter<CjDetailActivity_hx> {
 //                    getReport(0);
 //
 //                }else {
-//                    Log.e("=======onNext", logdResponse.msg);
+//                    Log.e("=======onNext", logdResponse.message);
 //                }
 //            }
 //        });
@@ -77,7 +77,7 @@ public class CjDetailPresenter_hx extends BasePresenter<CjDetailActivity_hx> {
 //                    getView().setReport(response.data);
 //                    Log.e("aaa======onNext", response.data.toString());
 //                } else {
-//                    Log.e("aaa======onNext", response.msg);
+//                    Log.e("aaa======onNext", response.message);
 //                }
 //            }
 //        });

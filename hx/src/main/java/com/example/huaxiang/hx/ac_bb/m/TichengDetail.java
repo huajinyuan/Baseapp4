@@ -21,6 +21,7 @@ public class TichengDetail implements Serializable {
     public String userName;
     public String actName;
     public double commission;
+    public double actPrice;
 
     public User user;
     public Member member;
